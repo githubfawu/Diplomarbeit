@@ -5,7 +5,11 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VZEintrittsApp", "VZEintrittsApp\VZEintrittsApp.csproj", "{A5EF6F82-6F7B-4D15-8C81-97491DA39BBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prototyp1.PDFReader", "Prototyp1.PDFReader\Prototyp1.PDFReader.csproj", "{0041AA6E-4DD2-4B2B-B85E-0BD69EE56C45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prototyp1.PDFReader_IronPDF", "Prototyp1.PDFReader\Prototyp1.PDFReader_IronPDF.csproj", "{0041AA6E-4DD2-4B2B-B85E-0BD69EE56C45}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Prototypen", "Prototypen", "{333E1730-B0C4-4769-8FE1-33EFA21846F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prototyp2.PDFReader_Docnet", "Prototyp2.PDFReader\Prototyp2.PDFReader_Docnet.csproj", "{65323713-8067-4CE4-B074-236BCFF5B262}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +25,17 @@ Global
 		{0041AA6E-4DD2-4B2B-B85E-0BD69EE56C45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0041AA6E-4DD2-4B2B-B85E-0BD69EE56C45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0041AA6E-4DD2-4B2B-B85E-0BD69EE56C45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65323713-8067-4CE4-B074-236BCFF5B262}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65323713-8067-4CE4-B074-236BCFF5B262}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65323713-8067-4CE4-B074-236BCFF5B262}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65323713-8067-4CE4-B074-236BCFF5B262}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0041AA6E-4DD2-4B2B-B85E-0BD69EE56C45} = {333E1730-B0C4-4769-8FE1-33EFA21846F5}
+		{65323713-8067-4CE4-B074-236BCFF5B262} = {333E1730-B0C4-4769-8FE1-33EFA21846F5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AAE907FE-8FE8-40A1-AC4C-514659933AE7}
