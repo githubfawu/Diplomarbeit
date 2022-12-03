@@ -19,11 +19,11 @@ namespace Prototyp2.PDFReader_Docnet
                 {
                     using (var pageReader = docReader.GetPageReader(i))
                     {
-                        var text = pageReader.GetText();
-                        var splitString = Regex.Split(text, "\r\n", RegexOptions.IgnoreCase);
-
                         List<Mitarbeiter> mitarbeiterliste = new List<Mitarbeiter>();
                         Mitarbeiter? mitarbeiter = null;
+
+                        var text = pageReader.GetText();
+                        var splitString = Regex.Split(text, "\r\n", RegexOptions.IgnoreCase);
 
                         foreach (var entity in splitString)
                         {

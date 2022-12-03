@@ -1,0 +1,80 @@
+﻿<Window x:Class="Prototyp3.GUI_1Window.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Prototyp3.GUI_1Window"
+        mc:Ignorable="d"
+        Title="VZ Eintritte" Height="1050" Width="1200"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF4A6B74" Offset="1"/>
+                <GradientStop Color="#FF00020C" Offset="0.31"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Label Content="Übersicht der offenen Eintritte:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="20" FontWeight="Bold" Foreground="White"/>
+        <Line
+            X1="0" Y1="275"
+            X2="1200" Y2="275"
+            Stroke="#FFF4F4F4"
+            StrokeThickness="4" Margin="0,-2,0,2"/>
+        <DataGrid d:ItemsSource="{d:SampleData ItemCount=8}" Margin="10,42,625,787"/>
+        <Rectangle HorizontalAlignment="Left" Height="205" Margin="942,42,0,0" Stroke="Black" VerticalAlignment="Top" Width="227" Fill="#FFDAD8F2"/>
+        <Label Content="Drop-Off Fläche&#10;für Import-Dateien" HorizontalAlignment="Left" Margin="988,105,0,0" VerticalAlignment="Top" Height="58" Width="136" FontFamily="Calibri" FontSize="16" FontWeight="Bold"/>
+        <Button Content="Datensatz löschen" HorizontalAlignment="Left" Margin="600,203,0,0" VerticalAlignment="Top" Height="29" Width="301" Background="#FFFF7878" FontFamily="Calibri" FontSize="14" FontWeight="Bold"/>
+        <Button Content="Datensatz abschliessen" HorizontalAlignment="Left" Margin="600,160,0,0" VerticalAlignment="Top" Height="29" Width="301" Background="#FF49F325" FontFamily="Calibri" FontSize="14" FontWeight="Bold"/>
+        <TextBox HorizontalAlignment="Left" Margin="600,42,0,0" TextWrapping="Wrap" Text="Notizen / Bemerkungen" VerticalAlignment="Top" Width="301" Height="103" FontFamily="Calibri" FontSize="14"/>
+        <Label Content="Details zur Person:" HorizontalAlignment="Left" Margin="17,283,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="20" FontWeight="Bold" Foreground="White"/>
+        <Label Content="Anzeigename:" HorizontalAlignment="Left" Margin="17,383,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="22,410,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="231" Height="25" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF070000"/>
+        <Label Content="Vorname:" HorizontalAlignment="Left" Margin="17,447,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="22,475,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="231" Height="25" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF070000"/>
+        <Label Content="Nachname:" HorizontalAlignment="Left" Margin="17,513,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="22,540,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="231" Height="26" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF070000"/>
+        <Label Content="Geschäftsbereich:" HorizontalAlignment="Left" Margin="17,580,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="22,607,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="231" Height="23" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF070000"/>
+        <Label Content="Abteilungsname:" HorizontalAlignment="Left" Margin="17,643,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="22,670,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="231" Height="23" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF070000"/>
+        <Label Content="Pensum:" HorizontalAlignment="Left" Margin="288,383,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Width="145" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="291,410,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="164" Height="25" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF080000"/>
+        <Label Content="Rang:" HorizontalAlignment="Left" Margin="288,447,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Width="105" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="291,475,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="164" Height="25" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF080000"/>
+        <Label Content="Kaderstufe:" HorizontalAlignment="Left" Margin="288,513,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Width="119" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="291,540,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="164" Height="26" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF080000"/>
+        <Label Content="Geburtsdatum:" HorizontalAlignment="Left" Margin="288,580,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Width="179" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="291,607,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="164" Height="23" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF080000"/>
+        <Label Content="Standort:" HorizontalAlignment="Left" Margin="288,643,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Width="158" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="291,670,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="164" Height="23" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF080000"/>
+        <Label Content="Vorgesetzter:" HorizontalAlignment="Left" Margin="496,513,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Width="145" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="499,540,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="221" Height="25" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF100000"/>
+        <Label Content="Regionenleiter:" HorizontalAlignment="Left" Margin="496,577,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Width="136" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="499,605,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="221" Height="25" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF100000"/>
+        <Label Content="Bereichsleiter:" HorizontalAlignment="Left" Margin="496,643,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Width="119" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="499,670,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="221" Height="26" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF100000"/>
+        <Label Content="E-Mail Adresse:" HorizontalAlignment="Left" Margin="24,729,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Width="183" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="27,756,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="226" Height="23" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF0C0000"/>
+        <Label Content="Telefonnummer:" HorizontalAlignment="Left" Margin="24,792,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Width="162" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="27,819,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="226" Height="23" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF0C0000"/>
+        <Label Content="Eintrittsdatum:" HorizontalAlignment="Left" Margin="496,383,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Width="145" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="499,410,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="221" Height="25" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF100000"/>
+        <Label Content="Erster Arbeitstag:" HorizontalAlignment="Left" Margin="496,447,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Width="166" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="499,475,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="221" Height="25" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF100000"/>
+        <Button Content="Postfach erstellen" HorizontalAlignment="Left" Margin="292,756,0,0" VerticalAlignment="Top" Height="23" Width="163" Background="#FFE66D10" FontFamily="Calibri" FontSize="16" FontWeight="Bold" Foreground="White"/>
+        <Button Content="Tel Nr. suchen" HorizontalAlignment="Left" Margin="292,819,0,0" VerticalAlignment="Top" Height="23" Width="163" Background="#FFE66D10" FontFamily="Calibri" FontSize="16" FontWeight="Bold" Foreground="White"/>
+        <Label Content="Scanordner:" HorizontalAlignment="Left" Margin="24,853,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Width="162" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="28,880,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="226" Height="23" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF0C0000"/>
+        <Button Content="Ordner erstellen" HorizontalAlignment="Left" Margin="292,880,0,0" VerticalAlignment="Top" Height="23" Width="164" Background="#FFE66D10" FontFamily="Calibri" FontSize="16" FontWeight="Bold" Foreground="White"/>
+        <Label Content="Pers. Laufwerk:" HorizontalAlignment="Left" Margin="24,914,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Width="162" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="28,941,0,0" TextWrapping="Wrap" Text="TextTextTextText" VerticalAlignment="Top" Width="226" Height="23" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF0C0000"/>
+        <Button Content="Ordner erstellen" HorizontalAlignment="Left" Margin="292,941,0,0" VerticalAlignment="Top" Height="23" Width="164" Background="#FFE66D10" FontFamily="Calibri" FontSize="16" FontWeight="Bold" Foreground="White"/>
+        <Label Content="Kürzel:" HorizontalAlignment="Left" Margin="23,326,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Width="146" Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Margin="24,353,0,0" TextWrapping="Wrap" Text="FWue" VerticalAlignment="Top" Width="164" Height="25" TextChanged="TextBox_TextChanged" FontFamily="Calibri" FontSize="18" Foreground="#FF080000" IsReadOnly="True"/>
+        <DataGrid d:ItemsSource="{d:SampleData ItemCount=8}" Margin="773,410,15,255"/>
+        <Button Content="Auswahl entfernen" HorizontalAlignment="Left" Margin="773,769,0,0" VerticalAlignment="Top" Height="23" Width="163" Background="#FFE66D10" FontFamily="Calibri" FontSize="16" FontWeight="Bold" Foreground="White"/>
+        <Button Content="Gruppe hinzufügen" HorizontalAlignment="Left" Margin="1006,769,0,0" VerticalAlignment="Top" Height="23" Width="163" Background="#FFE66D10" FontFamily="Calibri" FontSize="16" FontWeight="Bold" Foreground="White"/>
+        <Label Content="Berechtigungen:" HorizontalAlignment="Left" Margin="769,383,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Width="145" Foreground="White"/>
+
+    </Grid>
+</Window>
