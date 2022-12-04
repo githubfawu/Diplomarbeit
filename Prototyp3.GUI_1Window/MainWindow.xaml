@@ -75,6 +75,7 @@
         <Button Content="Auswahl entfernen" HorizontalAlignment="Left" Margin="773,769,0,0" VerticalAlignment="Top" Height="23" Width="163" Background="#FFE66D10" FontFamily="Calibri" FontSize="16" FontWeight="Bold" Foreground="White"/>
         <Button Content="Gruppe hinzufügen" HorizontalAlignment="Left" Margin="1006,769,0,0" VerticalAlignment="Top" Height="23" Width="163" Background="#FFE66D10" FontFamily="Calibri" FontSize="16" FontWeight="Bold" Foreground="White"/>
         <Label Content="Berechtigungen:" HorizontalAlignment="Left" Margin="769,383,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="18" FontWeight="Bold" Width="145" Foreground="White"/>
+        <Button Content="Änderungen übernehmen" HorizontalAlignment="Left" Margin="868,935,0,0" VerticalAlignment="Top" Height="29" Width="301" Background="#FF49F325" FontFamily="Calibri" FontSize="14" FontWeight="Bold"/>
 
     </Grid>
 </Window>
