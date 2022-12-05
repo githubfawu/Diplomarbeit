@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Prototyp4.GUI_Tabs"
         mc:Ignorable="d"
         Title="VZ Eintritte" Height="1050" Width="1200"
-        WindowStartupLocation="CenterScreen" Background="#FF1D008D">
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="lblStandard" 
                TargetType="{x:Type Label}">
@@ -49,6 +49,12 @@
                     Value="25" />
         </Style>
     </Window.Resources>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Black"/>
+            <GradientStop Color="#FF3B6A98" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid Margin="0,220,0,0">
         <DockPanel Margin="0,103,0,0">
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="2,5">
@@ -56,7 +62,7 @@
                 <Button Name="btnNextTab" FontSize="20" Margin="10">Nächste</Button>
             </StackPanel>
 
-            <TabControl Name="Prototyp" Height="660" Background="#FF1D008D" Width="1197">
+            <TabControl Name="Prototyp" Height="660" Background="{x:Null}" Width="1197">
                 <TabItem Header="Details zur Person" FontSize="20">
                     <TabPanel>
                         <Grid MinWidth="1200" MinHeight="620" Margin="0,0,9,0">
@@ -110,7 +116,7 @@
                             <TextBox Style="{StaticResource tbStandard}" Grid.Column="2" Grid.Row="4" Text="TextTextTextText" IsEnabled="False"/>
                             <Label Style="{StaticResource lblStandard}" Grid.Column="2" Grid.Row="5" Content="Eintrittsdatum:"/>
                             <TextBox Style="{StaticResource tbStandard}" Grid.Column="2" Grid.Row="5" Text="TextTextTextText"/>
-                            <Button Grid.Column="2" Grid.Row="7" Margin="10,10,160,40"  Name="btnSave" FontSize="20">Speichern</Button>
+                            <Button Grid.Column="2" Grid.Row="7" Margin="10,10,160,40"  Name="btnSave" FontSize="20" Background="#FFDA632D">Speichern</Button>
                         </Grid>
                     </TabPanel>
                 </TabItem>
@@ -121,7 +127,7 @@
 
         </DockPanel>
         <DataGrid d:ItemsSource="{d:SampleData ItemCount=8}" Margin="10,-203,368,726"/>
-        <Rectangle HorizontalAlignment="Left" Height="241" Margin="908,-203,0,0" VerticalAlignment="Top" Width="252" Stroke="Black">
+        <Rectangle HorizontalAlignment="Left" Height="241" Margin="908,-203,0,0" VerticalAlignment="Top" Width="252" Stroke="Black" Fill="#FF006279">
             <Rectangle.OpacityMask>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -131,9 +137,6 @@
             <Rectangle.Effect>
                 <BlurEffect/>
             </Rectangle.Effect>
-            <Rectangle.Fill>
-                <ImageBrush ImageSource="/R.png"/>
-            </Rectangle.Fill>
         </Rectangle>
 
     </Grid>
