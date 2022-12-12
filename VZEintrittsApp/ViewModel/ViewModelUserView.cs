@@ -1,43 +1,48 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using Prism.Commands;
 using Prism.Mvvm;
+using VZEintrittsApp.Domain;
 
 namespace VZEintrittsApp.ViewModel
 {
     class ViewModelUserView : BindableBase
     {
         public DelegateCommand UpdateCommand { get; set; }
+        public ObservableCollection<Record> RecordList { get; set; }
+
         public ViewModelUserView()
         {
-            Abbreviation = "FWue";
-            UpdateCommand = new DelegateCommand(Execute, CanExecute).ObservesProperty(() => Abbreviation);
+            //UpdateCommand = new DelegateCommand(Execute, CanExecute).ObservesProperty(() => SelectedRecord);
+
+            var record = new Record
+            {
+                EmployeeNr = 1,
+                Abbreviation = "Test",
+                Status = "Open",
+            };
+
+            RecordList = new ObservableCollection<Record> { record };
         }
 
-
-        private int employeeNr;
-        public int EmployeeNr
+        private Record selectedRecord;
+        public Record SelectedRecord
         {
-            get => employeeNr;
-            set => SetProperty(ref employeeNr, value);
+            get => selectedRecord;
+            set => SetProperty(ref selectedRecord, value);
         }
 
-        private string abbreviation;
-        public string Abbreviation
-        {
-            get => abbreviation;
-            set => SetProperty(ref abbreviation, value);
-        }
 
-        private bool CanExecute()
-        {
-            return !String.IsNullOrEmpty(Abbreviation);
-        }
+        //private bool CanExecute()
+        //{
+        //    return !String.IsNullOrEmpty(SelectedRecord.Abbreviation);
+        //}
 
-        private void Execute()
-        {
-            MessageBox.Show("Speichert...");
-        }
+        //private void Execute()
+        //{
+        //    MessageBox.Show("Speichert...");
+        //}
 
 
 

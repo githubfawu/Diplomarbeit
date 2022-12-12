@@ -5,6 +5,6 @@ namespace VZEintrittsApp.Import
 {
     public interface IReadDocument
     {
-        public List<User> ProcessDocument(string file);
+        public List<Employee> ProcessDocument(string file);
     }
 }

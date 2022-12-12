@@ -8,9 +8,9 @@ namespace VZEintrittsApp.Import.PDFReader
 {
     internal class ReadPdfDocument : IReadDocument
     {
-        public List<User> ProcessDocument(string file)
+        public List<Employee> ProcessDocument(string file)
         {
-            List<User> employeeList = new List<User>();
+            List<Employee> employeeList = new List<Employee>();
 
             using (var docReader = DocLib.Instance.GetDocReader(file, new PageDimensions()))
             {
@@ -18,7 +18,7 @@ namespace VZEintrittsApp.Import.PDFReader
                 {
                     using (var pageReader = docReader.GetPageReader(i))
                     {
-                        User? user = null;
+                        Employee? user = null;
 
                         var text = pageReader.GetText();
                         var splitString = Regex.Split(text, "\r\n", RegexOptions.IgnoreCase);
@@ -30,12 +30,12 @@ namespace VZEintrittsApp.Import.PDFReader
                                 var employeeNrString = entity.Substring(13);
                                 var emplyeeNr = int.Parse(employeeNrString);
 
-                                var neuerMitarbeiter = new User()
+                                var newEmployee = new Employee()
                                 {
                                     EmployeeNr = emplyeeNr
                                 };
-                                employeeList.Add(neuerMitarbeiter);
-                                user = neuerMitarbeiter;
+                                employeeList.Add(newEmployee);
+                                user = newEmployee;
                             }
 
                             if (entity.Contains("Kürzel"))

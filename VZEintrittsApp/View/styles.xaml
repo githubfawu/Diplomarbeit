@@ -29,7 +29,7 @@
            TargetType="{x:Type TabItem}">
         <Setter Property="FontSize" Value="22" />
         <Setter Property="FontWeight" Value="SemiBold" />
-        <Setter Property="Width" Value="290" />
+        <Setter Property="Width" Value="286" />
         <Setter Property="MinHeight" Value="45" />
         <Setter Property="MaxHeight" Value="45" />
         <Setter Property="Background" Value="Silver" />
@@ -49,6 +49,14 @@
         <Setter Property="Width" Value="240" />
         <Setter Property="Fill" Value="#FF006279" />
         <Setter Property="AllowDrop" Value="True" />
+    </Style>
+
+    <Style x:Key="LabelListView" TargetType="Label">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="FontFamily" Value="Calibri"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="FontSize" Value="30"/>
+        <!--<Setter Property="Margin" Value="0,-4,0,-4"/>-->
     </Style>
 
 </ResourceDictionary>

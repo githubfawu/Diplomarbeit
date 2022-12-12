@@ -1,7 +1,7 @@
 ﻿
 namespace VZEintrittsApp.Domain
 {
-    public class User
+    public class Employee
     {
         public int EmployeeNr;
         public string Abbreviation;

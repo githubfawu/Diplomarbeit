@@ -7,12 +7,12 @@ namespace VZEintrittsApp.View
 {
     public partial class MainWindow : Window
     {
-        private Repository repository = new Repository();
+        private readonly Repository repository = new();
         public MainWindow()
         {
             InitializeComponent();
 
-            this.DataContext = new ViewModelUserView();
+            DataContext = new ViewModelUserView();
         }
 
         private void Document_Drop(object sender, DragEventArgs e)

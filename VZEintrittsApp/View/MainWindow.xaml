@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:VZEintrittsApp"
+        xmlns:viewModel="clr-namespace:VZEintrittsApp.ViewModel"
         mc:Ignorable="d"
-        Title="VZ Eintritte" Height="1050" Width="1200"
+        Title="VZ Eintritte" Height="1050" Width="1150"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary Source="/View/styles.xaml"/>
@@ -17,14 +17,9 @@
             <GradientStop Color="#FF3B6A98" Offset="1"/>
         </LinearGradientBrush>
     </Window.Background>
-    <Grid Margin="0,220,0,0">
-        <DockPanel Margin="0,100,0,0">
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="2,5">
-                <Button Name="btnPreviousTab" FontSize="20" Margin="10">Vorherige</Button>
-                <Button Name="btnNextTab" FontSize="20" Margin="10">Nächste</Button>
-            </StackPanel>
-
-            <TabControl Style="{StaticResource TabControl}" Name="Prototyp" Height="660" Width="1197">
+    <Grid Margin="0,365,0,0">
+        <DockPanel Margin="0,0,0,0">
+            <TabControl Style="{StaticResource TabControl}" Name="Prototyp" Height="660" Width="1150">
                 <TabItem Style="{StaticResource Tab}" Header="Details zur Person">
                     <TabPanel>
                         <Grid MinWidth="1200" MinHeight="620">
@@ -45,9 +40,9 @@
                             </Grid.RowDefinitions>
                             <Label Grid.Column="0" Grid.Row="0" Content="Details zur Person:" Foreground="White"/>
                             <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="1" Content="Kürzel:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="1" Text="{Binding Abbreviation, Mode=TwoWay}" IsEnabled="False"/>
+                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="1" Text="{Binding ElementName=ListViewOpenEntries, Path=SelectedItem.Abbreviation}" IsEnabled="False"/>
                             <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="2" Content="Anzeigename:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="2" Text=""/>
+                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="2" />
                             <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="3" Content="Vorname:"/>
                             <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="3" Text=""/>
                             <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="4" Content="Nachname:"/>
@@ -82,14 +77,54 @@
                         </Grid>
                     </TabPanel>
                 </TabItem>
+                <TabItem Style="{StaticResource Tab}" Header="Erweiterte Funktionen" />
                 <TabItem Style="{StaticResource Tab}" Header="Berechtigungen" />
-                <TabItem Style="{StaticResource Tab}" Header="Aktionen in Umsystemen" />
                 <TabItem Style="{StaticResource Tab}" Header="Datensatz" />
             </TabControl>
 
         </DockPanel>
-        <DataGrid d:ItemsSource="{d:SampleData ItemCount=8}" Margin="10,-203,368,726"/>
-        <Rectangle Style="{StaticResource Rectangle}" Margin="850,-950,0,0" Drop="Document_Drop">
+        <!--<ListView Margin="10,-350,360,680"
+                  Name="ListViewOpenEntries"
+                  ItemsSource="{Binding RecordList}"
+                  SelectedItem="{Binding SelectedRecord}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Label Style="{StaticResource LabelListView}" Content="{Binding EmployeeNr}" FontWeight="Bold"/>
+                        <Label Style="{StaticResource LabelListView}" Content="{Binding Abbreviation}"/>
+                        <Label Style="{StaticResource LabelListView}" Content="{Binding Status}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>-->
+
+        <ListView Name="ListViewOpenEntries" Margin="10,-350,360,680"
+                  ItemsSource="{Binding RecordList}"
+                  SelectedItem="{Binding SelectedRecord}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding EmployeeNr}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Abbreviation}" />
+                        <TextBlock Grid.Column="2" Text="{Binding Status}" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+
+
+        <Rectangle Style="{StaticResource Rectangle}" Margin="850,-1100,0,0" Drop="Document_Drop">
             <Rectangle.OpacityMask>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>

@@ -9,7 +9,7 @@ namespace VZEintrittsApp.Model
     public class Repository
     {
         private IReadDocument readDocument;
-        private List<User> userList = new List<User>();
+        private List<Employee> userList = new List<Employee>();
 
         public Repository()
         {
