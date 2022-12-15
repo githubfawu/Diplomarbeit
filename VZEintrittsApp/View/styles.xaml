@@ -51,13 +51,20 @@
         <Setter Property="AllowDrop" Value="True" />
     </Style>
 
-    <Style x:Key="LabelListView" TargetType="Label">
-        <Setter Property="HorizontalAlignment" Value="Left" />
+    <Style x:Key="GridViewColumnHeader" TargetType="GridViewColumnHeader">
         <Setter Property="FontFamily" Value="Calibri"/>
         <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="FontSize" Value="30"/>
-        <!--<Setter Property="Margin" Value="0,-4,0,-4"/>-->
+        <Setter Property="FontSize" Value="20"/>
     </Style>
+
+    <Style x:Key="TextBlockListView" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Calibri"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="FontSize" Value="20"/>
+    </Style>
+
+
+    
 
 </ResourceDictionary>
     

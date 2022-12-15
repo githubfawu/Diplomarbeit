@@ -29,7 +29,15 @@ namespace VZEintrittsApp.Model
             
             userList.AddRange(readDocument.ProcessDocument(file));
 
+            SaveDocument(System.IO.File.ReadAllBytes(file));
+
+
             MessageBox.Show(userList[0].Abbreviation.ToString());
+        }
+
+        private void SaveDocument(byte[] file)
+        {
+
         }
     }
 }

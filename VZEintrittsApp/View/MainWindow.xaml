@@ -68,7 +68,7 @@
                             <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="2" Content="Bereichsleiter:"/>
                             <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="2" Text=""/>
                             <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="3" Content="E-Mail Adresse:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="3" Text="" IsEnabled="False"/>
+                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="3" Text=""/>
                             <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="4" Content="Telefonnummer:"/>
                             <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="4" Text="" IsEnabled="False"/>
                             <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="5" Content="Eintrittsdatum:"/>
@@ -83,46 +83,61 @@
             </TabControl>
 
         </DockPanel>
-        <!--<ListView Margin="10,-350,360,680"
+        <ListView Margin="10,-350,360,680"
                   Name="ListViewOpenEntries"
                   ItemsSource="{Binding RecordList}"
                   SelectedItem="{Binding SelectedRecord}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <Label Style="{StaticResource LabelListView}" Content="{Binding EmployeeNr}" FontWeight="Bold"/>
-                        <Label Style="{StaticResource LabelListView}" Content="{Binding Abbreviation}"/>
-                        <Label Style="{StaticResource LabelListView}" Content="{Binding Status}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>-->
-
-        <ListView Name="ListViewOpenEntries" Margin="10,-350,360,680"
-                  ItemsSource="{Binding RecordList}"
-                  SelectedItem="{Binding SelectedRecord}">
             <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Foreground" Value="Black" />
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
             </ListView.ItemContainerStyle>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="100" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding EmployeeNr}"/>
-                        <TextBlock Grid.Column="1" Text="{Binding Abbreviation}" />
-                        <TextBlock Grid.Column="2" Text="{Binding Status}" />
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+            <ListView.View>
+                <GridView>
+
+                    <GridViewColumn Width="140">
+                        <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Status</GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Status}" Style="{StaticResource TextBlockListView}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="100">
+                        <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Kürzel</GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Abbreviation}" Style="{StaticResource TextBlockListView}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="120">
+                        <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">MA-Nr.</GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding EmployeeNr}" Style="{StaticResource TextBlockListView}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="180">
+                        <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Eintrittsdatum</GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding EntryDate}" Style="{StaticResource TextBlockListView}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+
+            </ListView.View>
         </ListView>
-
-
 
         <Rectangle Style="{StaticResource Rectangle}" Margin="850,-1100,0,0" Drop="Document_Drop">
             <Rectangle.OpacityMask>

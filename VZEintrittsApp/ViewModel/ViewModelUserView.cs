@@ -4,6 +4,7 @@ using System.Windows;
 using Prism.Commands;
 using Prism.Mvvm;
 using VZEintrittsApp.Domain;
+using VZEintrittsApp.Enums;
 
 namespace VZEintrittsApp.ViewModel
 {
@@ -20,10 +21,19 @@ namespace VZEintrittsApp.ViewModel
             {
                 EmployeeNr = 1,
                 Abbreviation = "Test",
-                Status = "Open",
+                Status = RecordStatus.Offen,
+                EntryDate = new DateTime(2022, 11, 11)
             };
 
-            RecordList = new ObservableCollection<Record> { record };
+            var record2 = new Record
+            {
+                EmployeeNr = 2,
+                Abbreviation = "Test2",
+                Status = RecordStatus.Abgeschlossen,
+                EntryDate = new DateTime(2022, 10, 1)
+            };
+
+            RecordList = new ObservableCollection<Record> { record, record2 };
         }
 
         private Record selectedRecord;
