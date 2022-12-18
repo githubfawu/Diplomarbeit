@@ -133,11 +133,11 @@
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="1" Content="Kürzel:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="1" Text="{Binding CurrentEmployee.Abbreviation}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="2" Content="Anzeigename:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="2" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="2" Text="{Binding CurrentEmployee.DisplayName}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="3" Content="Vorname:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="3" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="3" Text="{Binding CurrentEmployee.Name}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="4" Content="Nachname:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="4" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="4" Text="{Binding CurrentEmployee.LastName}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="5" Content="Abteilungsname:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="5" Text="{Binding CurrentEmployee.Abbreviation}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="6" Content="Geschäftsbereich:"/>
@@ -159,12 +159,12 @@
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="2" Content="Bereichsleiter:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="2" Text="{Binding CurrentEmployee.Abbreviation}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="3" Content="E-Mail Adresse:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="3" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="3" Text="{Binding CurrentEmployee.MailAdress}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="4" Content="Telefonnummer:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="4" Text="{Binding CurrentEmployee.Abbreviation}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="5" Content="Eintrittsdatum:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="5" Text="{Binding CurrentEmployee.Abbreviation}"/>
-                                <Button Grid.Column="2" Grid.Row="7" Margin="10,10,100,10"  Name="ButtonSave" Command="{Binding UpdateCommand}" FontSize="20" Background="#FFDA632D">Speichern</Button>
+                                <Button Grid.Column="2" Grid.Row="7" Margin="10,10,80,15"  Name="ButtonSave" Command="{Binding UpdateCommand}" FontSize="20" Background="#FFDA632D">Speichern</Button>
                             </Grid>
                         </TabPanel>
                     </TabItem>

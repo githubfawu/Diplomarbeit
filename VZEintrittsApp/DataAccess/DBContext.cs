@@ -3,10 +3,10 @@ using VZEintrittsApp.Domain;
 
 namespace VZEintrittsApp.DataAccess
 {
-    public class DBContext : DbContext
+    public class DbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         public string DbPath { get; }
-        public DBContext()
+        public DbContext()
         {
             DbPath = System.IO.Path.GetFullPath("C:\\Temp\\Eintritte.db");
         }

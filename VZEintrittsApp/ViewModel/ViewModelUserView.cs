@@ -67,8 +67,6 @@ namespace VZEintrittsApp.ViewModel
             }
         }
 
-        
-
         private Record selectedItem;
         public Record SelectedItem
         {
@@ -78,12 +76,16 @@ namespace VZEintrittsApp.ViewModel
                 {
                     return null;
                 }
-
-                CurrentEmployee = Repository.ReadAllAdAttributes(selectedItem.Abbreviation);
                 IsProgressBarVisible = true;
                 ProgressValue = 25;
                 ProgressText = "Lade AD-Attribute...";
+                CurrentEmployee = Repository.ReadAllAdAttributes(selectedItem.Abbreviation);
+                ProgressValue = 100;
+                ProgressText = "AD-Attribute geladen...";
+                IsProgressBarVisible = false;
+                ProgressText = "";
                 return selectedItem;
+
             }
             set => SetProperty(ref selectedItem, value);
         }
@@ -92,7 +94,7 @@ namespace VZEintrittsApp.ViewModel
         {
             UpdateCommand = new DelegateCommand(Execute, CanExecute).ObservesProperty(() => SelectedItem);
             Repository = repository;
-            RecordsList.AddRange(Repository.RecordsList);
+            RecordsList = Repository.RecordsList;
         }
 
         private bool CanExecute()

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using VZEintrittsApp.DataAccess;
-using VZEintrittsApp.Domain;
-using VZEintrittsApp.Enums;
 using VZEintrittsApp.Model;
 using VZEintrittsApp.ViewModel;
 
@@ -10,17 +7,18 @@ namespace VZEintrittsApp.View
 {
     public partial class MainWindow : Window
     {
-        private readonly Repository repository = new();
+        private readonly Repository repository;
 
         public MainWindow()
         {
-            using (DBContext context = new DBContext())
+            using (DbContext context = new DbContext())
             {
                 context.Database.EnsureCreated();
             }
             
             InitializeComponent();
 
+            repository = new Repository();
             DataContext = new ViewModelUserView(repository);
         }
 
