@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.IO;
-using System.Reflection;
 using VZEintrittsApp.Domain;
 
 namespace VZEintrittsApp.DataAccess

@@ -6,41 +6,15 @@ namespace VZEintrittsApp.Domain
 {
     public class Record
     {
-        private int employeeNr;
         [Key]
-        public int EmployeeNr
-        {
-            get => employeeNr;
-            set => employeeNr = value;
-        }
+        public int EmployeeNr { get; set; }
 
-        private string abbreviation;
-        public string Abbreviation
-        {
-            get => abbreviation;
-            set => abbreviation = value;
-        }
+        public string Abbreviation { get; set; }
 
-        private string associatedFile;
-        public string AssociatedFile
-        {
-            get => associatedFile;
-            set => associatedFile = value;
-        }
+        public string AssociatedFile { get; set; }
 
-        private RecordStatus status;
-        public RecordStatus Status
-        {
-            get => status;
-            set => status = value;
-        }
+        public RecordStatus Status { get; set; }
 
-        private DateTime entryDate;
-        public DateTime EntryDate
-        {
-            get => entryDate;
-            set => entryDate = value;
-        }
-
+        public DateTime EntryDate { get; set; }
     }
 }

@@ -5,56 +5,104 @@ using Prism.Commands;
 using Prism.Mvvm;
 using VZEintrittsApp.Domain;
 using VZEintrittsApp.Enums;
+using VZEintrittsApp.Model;
 
 namespace VZEintrittsApp.ViewModel
 {
     class ViewModelUserView : BindableBase
     {
+        private bool isProgressBarVisible = false;
+        public bool IsProgressBarVisible
+        {
+            get => isProgressBarVisible;
+            set => SetProperty(ref isProgressBarVisible, value);
+        }
+
+        private double progressValue;
+        public double ProgressValue
+        {
+            get
+            {
+                return progressValue;
+            }
+            set => SetProperty(ref progressValue, value);
+        }
+
+        private string progressText;
+        public string ProgressText
+        {
+            get
+            {
+                return progressText;
+            }
+            set => SetProperty(ref progressText, value);
+        }
         public DelegateCommand UpdateCommand { get; set; }
-        public ObservableCollection<Record> RecordList { get; set; }
+        private Repository Repository { get; set; }
 
-        public ViewModelUserView()
+
+        private ObservableCollection<Record> recordsList = new ObservableCollection<Record>();
+        public ObservableCollection<Record> RecordsList
         {
-            //UpdateCommand = new DelegateCommand(Execute, CanExecute).ObservesProperty(() => SelectedRecord);
-
-            var record = new Record
+            get => recordsList;
+            set
             {
-                EmployeeNr = 1,
-                Abbreviation = "Test",
-                Status = RecordStatus.Offen,
-                EntryDate = new DateTime(2022, 11, 11)
-            };
-
-            var record2 = new Record
-            {
-                EmployeeNr = 2,
-                Abbreviation = "Test2",
-                Status = RecordStatus.Abgeschlossen,
-                EntryDate = new DateTime(2022, 10, 1)
-            };
-
-            RecordList = new ObservableCollection<Record> { record, record2 };
+                if (value != recordsList)
+                {
+                    SetProperty(ref recordsList, value);
+                }
+            }
         }
 
-        private Record selectedRecord;
-        public Record SelectedRecord
+        private Employee currentEmployee;
+        public Employee CurrentEmployee
         {
-            get => selectedRecord;
-            set => SetProperty(ref selectedRecord, value);
+            get => currentEmployee;
+            set
+            {
+                if (value != currentEmployee)
+                {
+                    SetProperty(ref currentEmployee, value);
+                }
+            }
         }
 
+        
 
-        //private bool CanExecute()
-        //{
-        //    return !String.IsNullOrEmpty(SelectedRecord.Abbreviation);
-        //}
+        private Record selectedItem;
+        public Record SelectedItem
+        {
+            get
+            {
+                if (selectedItem == null)
+                {
+                    return null;
+                }
 
-        //private void Execute()
-        //{
-        //    MessageBox.Show("Speichert...");
-        //}
+                CurrentEmployee = Repository.ReadAllAdAttributes(selectedItem.Abbreviation);
+                IsProgressBarVisible = true;
+                ProgressValue = 25;
+                ProgressText = "Lade AD-Attribute...";
+                return selectedItem;
+            }
+            set => SetProperty(ref selectedItem, value);
+        }
 
+        public ViewModelUserView(Repository repository)
+        {
+            UpdateCommand = new DelegateCommand(Execute, CanExecute).ObservesProperty(() => SelectedItem);
+            Repository = repository;
+            RecordsList.AddRange(Repository.RecordsList);
+        }
 
+        private bool CanExecute()
+        {
+            return true; /*!String.IsNullOrEmpty(SelectedItem.Abbreviation);*/
+        }
 
+        private void Execute()
+        {
+            MessageBox.Show("Speichert...");
+        }
     }
 }

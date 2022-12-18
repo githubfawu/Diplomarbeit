@@ -5,151 +5,174 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:VZEintrittsApp.ViewModel"
         mc:Ignorable="d"
-        Title="VZ Eintritte" Height="1050" Width="1150"
+        Title="VZ Eintritte"
+        Width="1000"
+        Height="800"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
-        <ResourceDictionary Source="/View/styles.xaml"/>
+        <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter"></BooleanToVisibilityConverter>
     </Window.Resources>
-
+   
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="Black"/>
             <GradientStop Color="#FF3B6A98" Offset="1"/>
         </LinearGradientBrush>
     </Window.Background>
-    <Grid Margin="0,365,0,0">
-        <DockPanel Margin="0,0,0,0">
-            <TabControl Style="{StaticResource TabControl}" Name="Prototyp" Height="660" Width="1150">
-                <TabItem Style="{StaticResource Tab}" Header="Details zur Person">
-                    <TabPanel>
-                        <Grid MinWidth="1200" MinHeight="620">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="0.5*" />
-                                <RowDefinition Height="0.75*" />
-                                <RowDefinition Height="0.75*" />
-                                <RowDefinition Height="0.75*" />
-                                <RowDefinition Height="0.75*" />
-                                <RowDefinition Height="0.75*" />
-                                <RowDefinition Height="0.75*" />
-                                <RowDefinition Height="0.75*" />
-                            </Grid.RowDefinitions>
-                            <Label Grid.Column="0" Grid.Row="0" Content="Details zur Person:" Foreground="White"/>
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="1" Content="Kürzel:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="1" Text="{Binding ElementName=ListViewOpenEntries, Path=SelectedItem.Abbreviation}" IsEnabled="False"/>
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="2" Content="Anzeigename:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="2" />
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="3" Content="Vorname:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="3" Text=""/>
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="4" Content="Nachname:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="4" Text=""/>
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="5" Content="Abteilungsname:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="5" Text=""/>
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="6" Content="Geschäftsbereich:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="6" Text=""/>
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="1" Content="Pensum:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="1" Text=""/>
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="2" Content="Rang:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="2" Text=""/>
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="3" Content="Kaderstufe:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="3" Text=""/>
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="4" Content="Geburtsdatum:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="4" Text=""/>
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="5" Content="Standort:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="5" Text=""/>
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="6" Content="Vorgesetzter:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="6" Text=""/>
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="1" Content="Regionenleiter:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="1" Text=""/>
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="2" Content="Bereichsleiter:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="2" Text=""/>
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="3" Content="E-Mail Adresse:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="3" Text=""/>
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="4" Content="Telefonnummer:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="4" Text="" IsEnabled="False"/>
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="5" Content="Eintrittsdatum:"/>
-                            <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="5" Text=""/>
-                            <Button Grid.Column="2" Grid.Row="7" Margin="10,10,160,40"  Name="ButtonSave" Command="{Binding UpdateCommand}" FontSize="20" Background="#FFDA632D">Speichern</Button>
-                        </Grid>
-                    </TabPanel>
-                </TabItem>
-                <TabItem Style="{StaticResource Tab}" Header="Erweiterte Funktionen" />
-                <TabItem Style="{StaticResource Tab}" Header="Berechtigungen" />
-                <TabItem Style="{StaticResource Tab}" Header="Datensatz" />
-            </TabControl>
 
-        </DockPanel>
-        <ListView Margin="10,-350,360,680"
-                  Name="ListViewOpenEntries"
-                  ItemsSource="{Binding RecordList}"
-                  SelectedItem="{Binding SelectedRecord}">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Foreground" Value="Black" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
 
-                    <GridViewColumn Width="140">
-                        <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Status</GridViewColumnHeader>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Status}" Style="{StaticResource TextBlockListView}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+        <Grid Column="2" Row="0" Margin="70, 230,70,5">
+            <ProgressBar Minimum="0" Maximum="100" Value="{Binding ProgressValue}" Visibility="{Binding IsProgressBarVisible, Converter={StaticResource boolToVisibilityConverter}}"/>
+            <Label Margin="40,-2,20,0" FontSize="10"  Content="{Binding ProgressText}" Visibility="{Binding IsProgressBarVisible, Converter={StaticResource boolToVisibilityConverter}}"/>
+        </Grid>
 
-                    <GridViewColumn Width="100">
-                        <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Kürzel</GridViewColumnHeader>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Abbreviation}" Style="{StaticResource TextBlockListView}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+        <Grid Column="2" Row="0">
+            <Rectangle Style="{StaticResource Rectangle}" Margin="40, 15,40,40" Drop="Document_Drop">
+                <Rectangle.OpacityMask>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.OpacityMask>
+                <Rectangle.Effect>
+                    <BlurEffect/>
+                </Rectangle.Effect>
+            </Rectangle>
+        </Grid>
+        
+        <Grid Column="0" Row="0" Grid.ColumnSpan="2">
+                <ListView 
+                      Name="ListViewOpenEntries"
+                      ItemsSource="{Binding RecordsList}"
+                      SelectedItem="{Binding SelectedItem}"
+                      Margin="5">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="true">
+                                    <Setter Property="Foreground" Value="Black" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="140">
+                                <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Status</GridViewColumnHeader>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Status}" Style="{StaticResource TextBlockListView}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-                    <GridViewColumn Width="120">
-                        <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">MA-Nr.</GridViewColumnHeader>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding EmployeeNr}" Style="{StaticResource TextBlockListView}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                            <GridViewColumn Width="100">
+                                <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Kürzel</GridViewColumnHeader>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Abbreviation}" Style="{StaticResource TextBlockListView}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-                    <GridViewColumn Width="180">
-                        <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Eintrittsdatum</GridViewColumnHeader>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding EntryDate}" Style="{StaticResource TextBlockListView}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
+                            <GridViewColumn Width="100">
+                                <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">MA-Nr.</GridViewColumnHeader>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding EmployeeNr}" Style="{StaticResource TextBlockListView}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-            </ListView.View>
-        </ListView>
+                            <GridViewColumn Width="180">
+                                <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Eintrittsdatum</GridViewColumnHeader>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding EntryDate}" Style="{StaticResource TextBlockListView}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
 
-        <Rectangle Style="{StaticResource Rectangle}" Margin="850,-1100,0,0" Drop="Document_Drop">
-            <Rectangle.OpacityMask>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="White" Offset="1"/>
-                </LinearGradientBrush>
-            </Rectangle.OpacityMask>
-            <Rectangle.Effect>
-                <BlurEffect/>
-            </Rectangle.Effect>
-        </Rectangle>
-
+        <Grid Column="0" Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2">
+            <DockPanel>
+                <TabControl Style="{StaticResource TabControl}" Name="Prototyp">
+                    <TabItem Style="{StaticResource Tab}" Header="Details zur Person">
+                        <TabPanel>
+                            <Grid Margin="25,0,-275,-25">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.75*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Content="Details zur Person:" Foreground="White"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="1" Content="Kürzel:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="1" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="2" Content="Anzeigename:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="2" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="3" Content="Vorname:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="3" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="4" Content="Nachname:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="4" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="5" Content="Abteilungsname:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="5" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="6" Content="Geschäftsbereich:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="6" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="1" Content="Pensum:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="1" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="2" Content="Rang:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="2" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="3" Content="Kaderstufe:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="3" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="4" Content="Geburtsdatum:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="4" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="5" Content="Standort:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="5" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="6" Content="Vorgesetzter:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="6" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="1" Content="Regionenleiter:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="1" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="2" Content="Bereichsleiter:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="2" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="3" Content="E-Mail Adresse:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="3" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="4" Content="Telefonnummer:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="4" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="5" Content="Eintrittsdatum:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="5" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <Button Grid.Column="2" Grid.Row="7" Margin="10,10,100,10"  Name="ButtonSave" Command="{Binding UpdateCommand}" FontSize="20" Background="#FFDA632D">Speichern</Button>
+                            </Grid>
+                        </TabPanel>
+                    </TabItem>
+                    <TabItem Style="{StaticResource Tab}" Header="Erweiterte Funktionen" />
+                    <TabItem Style="{StaticResource Tab}" Header="Berechtigungen" />
+                    <TabItem Style="{StaticResource Tab}" Header="Datensatz" />
+                </TabControl>
+            </DockPanel>
+        </Grid>
     </Grid>
 </Window>

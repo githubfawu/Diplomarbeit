@@ -18,7 +18,7 @@ namespace VZEintrittsApp.Import.PDFReader
                 {
                     using (var pageReader = docReader.GetPageReader(i))
                     {
-                        Employee? user = null;
+                        Employee? eomployee = null;
 
                         var text = pageReader.GetText();
                         var splitString = Regex.Split(text, "\r\n", RegexOptions.IgnoreCase);
@@ -35,13 +35,22 @@ namespace VZEintrittsApp.Import.PDFReader
                                     EmployeeNr = emplyeeNr
                                 };
                                 employeeList.Add(newEmployee);
-                                user = newEmployee;
+                                eomployee = newEmployee;
                             }
 
                             if (entity.Contains("Kürzel"))
                             {
-                                var maAbbreviation = entity.Substring(8);
-                                if (user != null) user.Abbreviation = maAbbreviation;
+                                if (eomployee != null) eomployee.Abbreviation = entity.Substring(8);
+                            }
+
+                            if (entity.Contains("Vorname"))
+                            {
+                                if (eomployee != null) eomployee.Name = entity.Substring(9);
+                            }
+
+                            if (entity.Contains("Name"))
+                            {
+                                if (eomployee != null) eomployee.LastName = entity.Substring(6);
                             }
 
                         }
