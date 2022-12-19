@@ -139,9 +139,9 @@
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="4" Content="Nachname:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="4" Text="{Binding CurrentEmployee.LastName}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="5" Content="Abteilungsname:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="5" Text="{Binding CurrentEmployee.Abbreviation}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="6" Content="Geschäftsbereich:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="6" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="5" Text="{Binding CurrentEmployee.Department}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="6" Content="Geschäftsbereich/Firma:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="6" Text="{Binding CurrentEmployee.Company}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="1" Content="Pensum:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="1" Text="{Binding CurrentEmployee.Abbreviation}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="2" Content="Rang:"/>

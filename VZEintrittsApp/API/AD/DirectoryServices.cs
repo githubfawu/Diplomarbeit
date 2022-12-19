@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Windows;
 using VZEintrittsApp.Domain;
@@ -45,6 +46,10 @@ namespace VZEintrittsApp.API.AD
                         DisplayName = user.DisplayName,
                         MailAdress = user.EmailAddress
                     };
+                    DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
+                    employee.Company = userEntry.Properties["Company"].Value?.ToString();
+                    employee.Department = userEntry.Properties["Department"].Value?.ToString();
+
                     return employee;
                 }
             }
@@ -56,10 +61,11 @@ namespace VZEintrittsApp.API.AD
         {
             foreach (var employee in employeeList)
             {
-                using (var context = new PrincipalContext(ContextType.Domain, "vz.ch", "OU=Standarduser,OU=VZ_Users,DC=vz,DC=ch"))
+                using (var context = new PrincipalContext(ContextType.Domain, "vz.ch", "OU=Standarduser,OU=VZ_Users,DC=vz,DC=ch"))//Pfade auslagern (in DB?)
                 using (var user = new UserPrincipal(context)
                        {
-                           UserPrincipalName = employee.Abbreviation,
+                           Name = $"{employee.Name} {employee.LastName}",
+                           UserPrincipalName = employee.Abbreviation + "@vzch.com",
                            SamAccountName = employee.Abbreviation,
                            Surname = employee.LastName,
                            GivenName = employee.Name,
@@ -70,6 +76,11 @@ namespace VZEintrittsApp.API.AD
                 {
                     user.SetPassword("Sonne100");
                     user.Save();
+
+                    DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
+                    userEntry.Properties["Company"].Value = employee.Company;
+                    userEntry.Properties["Department"].Value = employee.Department;
+                    userEntry.CommitChanges();
                 }
             }
             return true;

@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using Docnet.Core;
 using Docnet.Core.Models;
 using VZEintrittsApp.Domain;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace VZEintrittsApp.Import.PDFReader
 {
@@ -41,39 +42,68 @@ namespace VZEintrittsApp.Import.PDFReader
 
                             if (entity.Contains("Kürzel"))
                             {
-                                if (employee != null) employee.Abbreviation = entity.Substring(8);
+                                if (employee != null)
+                                {
+                                    if (entity.Substring(8).Length == 4)
+                                    {
+                                        string abbreviation = ExtractionHelper(entity, 8); ;
+                                        employee.Abbreviation = abbreviation.Substring(0, 2) + abbreviation.Substring(2, 2).ToLower();
+                                    }
+                                    else
+                                    {
+                                        employee.Abbreviation = entity.Substring(8);
+                                    }
+                                }
                             }
 
                             if (entity.Contains("Vorname"))
                             {
-                                if (employee != null) employee.Name = entity.Substring(9);
+                                if (employee != null) employee.Name = ExtractionHelper(entity, 9);
                             }
 
                             if (entity.Contains("Name"))
                             {
-                                if (employee != null) employee.LastName = entity.Substring(6);
+                                if (employee != null) employee.LastName = ExtractionHelper(entity, 6);
+                            }
+
+                            if (entity.Contains("Firmen E-Mail"))
+                            {
+                                if (employee != null) employee.MailAdress = ExtractionHelper(entity, 15);
                             }
 
                             if (entity.Contains("Stellen-Nr"))
                             {
-                                if (employee != null) employee.Title = entity.Substring(21);
+                                if (employee != null) employee.Title = ExtractionHelper(entity, 21);
                             }
 
                             if (entity.Contains("Pensum"))
                             {
-                                if (employee != null) employee.Workload = entity.Substring(8);
+                                if (employee != null) employee.Workload = ExtractionHelper(entity, 8);
                             }
 
                             if (entity.Contains("Geschäftsbereich"))
                             {
-                                if (employee != null) employee.Company = entity.Substring(18);
+                                if (employee != null) employee.Company = ExtractionHelper(entity, 18);
                             }
 
+                            if (entity.Contains("Abteilungsname"))
+                            {
+                                if (employee != null) employee.Department = ExtractionHelper(entity, 16);
+                            }
                         }
                     }
                 }
             }
             return employeeList;
+        }
+
+        public string ExtractionHelper(string property, int length)
+        {
+            if (property.Length > length)
+            {
+                return property.Substring(length);
+            }
+            return null;
         }
 
         public List<Record> ReadRecords(string file)
@@ -108,7 +138,18 @@ namespace VZEintrittsApp.Import.PDFReader
 
                             if (entity.Contains("Kürzel"))
                             {
-                                if (record != null) record.Abbreviation = entity.Substring(8);
+                                if (record != null)
+                                {
+                                    if (entity.Substring(8).Length == 4)
+                                    {
+                                        string abbreviation = entity.Substring(8);
+                                        record.Abbreviation = abbreviation.Substring(0, 2) + abbreviation.Substring(2, 2).ToLower();
+                                    }
+                                    else
+                                    {
+                                        record.Abbreviation = entity.Substring(8);
+                                    }
+                                }
                             }
 
                             if (entity.Contains("Eintrittsdatum") && entity.Length <= 30)
