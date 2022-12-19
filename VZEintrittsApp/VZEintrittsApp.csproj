@@ -13,6 +13,7 @@
     <PackageReference Include="NLog" Version="5.1.0" />
     <PackageReference Include="PostSharp.Patterns.Model" Version="6.10.16" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>

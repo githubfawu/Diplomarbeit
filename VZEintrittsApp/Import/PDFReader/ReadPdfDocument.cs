@@ -54,6 +54,21 @@ namespace VZEintrittsApp.Import.PDFReader
                                 if (employee != null) employee.LastName = entity.Substring(6);
                             }
 
+                            if (entity.Contains("Stellen-Nr"))
+                            {
+                                if (employee != null) employee.Title = entity.Substring(21);
+                            }
+
+                            if (entity.Contains("Pensum"))
+                            {
+                                if (employee != null) employee.Workload = entity.Substring(8);
+                            }
+
+                            if (entity.Contains("Geschäftsbereich"))
+                            {
+                                if (employee != null) employee.Company = entity.Substring(18);
+                            }
+
                         }
                     }
                 }

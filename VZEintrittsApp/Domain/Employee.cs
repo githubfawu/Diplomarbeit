@@ -10,6 +10,7 @@ namespace VZEintrittsApp.Domain
         public string? LastName { get; set; }
         public string? MailAdress { get; set; }
         public string? Department { get; set; }
+        public string? Title { get; set; }
         public string? Company { get; set; }
         public string? Workload { get; set; }
     }

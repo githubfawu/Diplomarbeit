@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 using System.Windows;
 using VZEintrittsApp.DataAccess;
 using VZEintrittsApp.Domain;
@@ -18,7 +16,6 @@ namespace VZEintrittsApp.Model
         private RecordsHandler recordsHandler = new RecordsHandler();
         private DirectoryServices activeDirectory = new DirectoryServices();
         private IReadDocument documentReader;
-        private List<Employee> userList = new List<Employee>();
         public ObservableCollection<Record> RecordsList = new ObservableCollection<Record>();
 
         public Repository()
@@ -47,8 +44,6 @@ namespace VZEintrittsApp.Model
                 MessageBox.Show("Kein gültiges Dateiformat erkannt!");
                 return;
             }
-            
-            userList.AddRange(documentReader.ReadUsers(file));
 
             var fileName = ($"{DateTime.Now.Ticks}{Path.GetFileName(file)}");
             foreach (var recordFromDocument in documentReader.ReadRecords(file))
@@ -70,7 +65,8 @@ namespace VZEintrittsApp.Model
             
             recordsHandler.SaveNewFile(fileToSave);
 
+            activeDirectory.CreateNewAdAccount(documentReader.ReadUsers(file));
+
         }
-        
     }
 }
