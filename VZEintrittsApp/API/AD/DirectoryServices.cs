@@ -41,6 +41,7 @@ namespace VZEintrittsApp.API.AD
                     Employee employee = new Employee()
                     {
                         Abbreviation = user.SamAccountName,
+                        NameOfAdObject = user.Name,
                         Name = user.GivenName,
                         LastName = user.Surname,
                         DisplayName = user.DisplayName,

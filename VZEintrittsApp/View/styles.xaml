@@ -21,7 +21,7 @@
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="TextWrapping" Value="Wrap" />
-        <Setter Property="Width" Value="230" />
+        <Setter Property="Width" Value="200" />
         <Setter Property="Height" Value="25" />
     </Style>
 

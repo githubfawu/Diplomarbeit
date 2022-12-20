@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Windows;
 using Docnet.Core;
 using Docnet.Core.Models;
 using VZEintrittsApp.Domain;
@@ -46,7 +47,7 @@ namespace VZEintrittsApp.Import.PDFReader
                                 {
                                     if (entity.Substring(8).Length == 4)
                                     {
-                                        string abbreviation = ExtractionHelper(entity, 8); ;
+                                        string abbreviation = CheckForEmptyStrings(entity, 8); ;
                                         employee.Abbreviation = abbreviation.Substring(0, 2) + abbreviation.Substring(2, 2).ToLower();
                                     }
                                     else
@@ -58,37 +59,36 @@ namespace VZEintrittsApp.Import.PDFReader
 
                             if (entity.Contains("Vorname"))
                             {
-                                if (employee != null) employee.Name = ExtractionHelper(entity, 9);
+                                if (employee != null) employee.Name = CheckForEmptyStrings(entity, 9);
                             }
-
                             if (entity.Contains("Name"))
                             {
-                                if (employee != null) employee.LastName = ExtractionHelper(entity, 6);
+                                if (employee != null) employee.LastName = CheckForEmptyStrings(entity, 6);
                             }
-
                             if (entity.Contains("Firmen E-Mail"))
                             {
-                                if (employee != null) employee.MailAdress = ExtractionHelper(entity, 15);
+                                if (employee != null) employee.MailAdress = CheckForEmptyStrings(entity, 15);
                             }
-
                             if (entity.Contains("Stellen-Nr"))
                             {
-                                if (employee != null) employee.Title = ExtractionHelper(entity, 21);
+                                if (employee != null) employee.Title = CheckForEmptyStrings(entity, 21);
                             }
-
                             if (entity.Contains("Pensum"))
                             {
-                                if (employee != null) employee.Workload = ExtractionHelper(entity, 8);
+                                if (employee != null) employee.Workload = CheckForEmptyStrings(entity, 8);
                             }
-
                             if (entity.Contains("Geschäftsbereich"))
                             {
-                                if (employee != null) employee.Company = ExtractionHelper(entity, 18);
+                                if (employee != null) employee.Company = CheckForEmptyStrings(entity, 18);
                             }
-
                             if (entity.Contains("Abteilungsname"))
                             {
-                                if (employee != null) employee.Department = ExtractionHelper(entity, 16);
+                                if (employee != null) employee.Department = CheckForEmptyStrings(entity, 16);
+                            }
+                            if (entity.Contains("Standort"))
+                            {
+                                if (employee != null) employee.Street = CheckForEmptyStrings(entity, 10);
+                                MessageBox.Show(employee.Street);
                             }
                         }
                     }
@@ -97,7 +97,7 @@ namespace VZEintrittsApp.Import.PDFReader
             return employeeList;
         }
 
-        public string ExtractionHelper(string property, int length)
+        public string CheckForEmptyStrings(string property, int length)
         {
             if (property.Length > length)
             {

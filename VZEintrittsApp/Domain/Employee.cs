@@ -5,6 +5,7 @@ namespace VZEintrittsApp.Domain
     {
         public int? EmployeeNr { get; set; }
         public string? Abbreviation { get; set; }
+        public string? NameOfAdObject { get; set; }
         public string? DisplayName { get; set; }
         public string? Name { get; set; }
         public string? LastName { get; set; }
@@ -13,5 +14,7 @@ namespace VZEintrittsApp.Domain
         public string? Title { get; set; }
         public string? Company { get; set; }
         public string? Workload { get; set; }
+        public string? Street { get; set; }
+        public string? PostOfficeBox { get; set; }
     }
 }
