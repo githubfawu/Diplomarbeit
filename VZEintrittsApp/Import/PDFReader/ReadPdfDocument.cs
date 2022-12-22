@@ -1,16 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Windows;
 using Docnet.Core;
 using Docnet.Core.Models;
+using VZEintrittsApp.DataAccess;
 using VZEintrittsApp.Domain;
-using static System.Net.Mime.MediaTypeNames;
+using VZEintrittsApp.Model;
 
 namespace VZEintrittsApp.Import.PDFReader
 {
     internal class ReadPdfDocument : IReadDocument
     {
+        private ContextHelper ContextHelper { get; set; }
+
+        private FinalizeEmployee Finalize { get; set; }
+
+    public ReadPdfDocument (ContextHelper contextHelper)
+        {
+            this.ContextHelper = contextHelper;
+            Finalize = new FinalizeEmployee(contextHelper);
+        }
         public List<Employee> ReadUsers(string file)
         {
             List<Employee> employeeList = new List<Employee>();
@@ -47,7 +56,7 @@ namespace VZEintrittsApp.Import.PDFReader
                                 {
                                     if (entity.Substring(8).Length == 4)
                                     {
-                                        string abbreviation = CheckForEmptyStrings(entity, 8); ;
+                                        string abbreviation = CheckForNullValues(entity, 8); ;
                                         employee.Abbreviation = abbreviation.Substring(0, 2) + abbreviation.Substring(2, 2).ToLower();
                                     }
                                     else
@@ -59,45 +68,63 @@ namespace VZEintrittsApp.Import.PDFReader
 
                             if (entity.Contains("Vorname"))
                             {
-                                if (employee != null) employee.Name = CheckForEmptyStrings(entity, 9);
+                                if (employee != null) employee.FirstName = CheckForNullValues(entity, 9);
                             }
                             if (entity.Contains("Name"))
                             {
-                                if (employee != null) employee.LastName = CheckForEmptyStrings(entity, 6);
+                                if (employee != null) employee.LastName = CheckForNullValues(entity, 6);
+                            }
+                            if (entity.Contains("Rufname"))
+                            {
+                                if (employee != null) employee.CallSignName = CheckForNullValues(entity, 9);
+                            }
+                            if (entity.Contains("Rufnachname"))
+                            {
+                                if (employee != null) employee.CallSignLastName = CheckForNullValues(entity, 13);
                             }
                             if (entity.Contains("Firmen E-Mail"))
                             {
-                                if (employee != null) employee.MailAdress = CheckForEmptyStrings(entity, 15);
+                                if (employee != null) employee.MailAdress = CheckForNullValues(entity, 15);
                             }
                             if (entity.Contains("Stellen-Nr"))
                             {
-                                if (employee != null) employee.Title = CheckForEmptyStrings(entity, 21);
+                                if (employee != null) employee.Title = CheckForNullValues(entity, 21);
                             }
                             if (entity.Contains("Pensum"))
                             {
-                                if (employee != null) employee.Workload = CheckForEmptyStrings(entity, 8);
+                                if (employee != null) employee.Workload = CheckForNullValues(entity, 8);
                             }
                             if (entity.Contains("Geschäftsbereich"))
                             {
-                                if (employee != null) employee.Company = CheckForEmptyStrings(entity, 18);
+                                if (employee != null) employee.Company = CheckForNullValues(entity, 18);
                             }
                             if (entity.Contains("Abteilungsname"))
                             {
-                                if (employee != null) employee.Department = CheckForEmptyStrings(entity, 16);
+                                if (employee != null) employee.Department = CheckForNullValues(entity, 16);
                             }
                             if (entity.Contains("Standort"))
                             {
-                                if (employee != null) employee.Street = CheckForEmptyStrings(entity, 10);
-                                MessageBox.Show(employee.Street);
+                                var entityString = "";
+                                if (employee != null) entityString = CheckForNullValues(entity, 10);
+                                if (entityString != null)
+                                {
+                                    string[] adressParts = ExtractAdressFromEntity(entityString);
+                                    employee.City = adressParts[0];
+                                    employee.PostalCode = adressParts[1];
+                                    employee.Street = adressParts[2];
+                                }
                             }
                         }
                     }
                 }
             }
+
+            employeeList = Finalize.FinalizeEmployees(employeeList);
             return employeeList;
         }
 
-        public string CheckForEmptyStrings(string property, int length)
+
+        public string CheckForNullValues(string property, int length)
         {
             if (property.Length > length)
             {
@@ -105,6 +132,13 @@ namespace VZEintrittsApp.Import.PDFReader
             }
             return null;
         }
+
+        public string [] ExtractAdressFromEntity(string completeAdress)
+        {
+            return completeAdress.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+
 
         public List<Record> ReadRecords(string file)
         {
@@ -150,6 +184,13 @@ namespace VZEintrittsApp.Import.PDFReader
                                         record.Abbreviation = entity.Substring(8);
                                     }
                                 }
+                            }
+
+                            if (entity.Contains("erster Arbeitstag") && entity.Length <= 30)
+                            {
+                                DateTime FirstWorkingDay = DateTime.Parse(entity.Substring(19));
+                                if (record != null) record.FirstWorkingDay = FirstWorkingDay;
+
                             }
 
                             if (entity.Contains("Eintrittsdatum") && entity.Length <= 30)

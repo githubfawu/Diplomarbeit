@@ -12,6 +12,7 @@ namespace VZEintrittsApp.DataAccess
         }
         public DbSet<Record> Records { get; set; }
         public DbSet<SavedFile> SavedFiles { get; set; }
+        public DbSet<StateAndCountry?> StatesAndCountries { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite($"Data Source={DbPath}");
@@ -23,6 +24,11 @@ namespace VZEintrittsApp.DataAccess
 
             modelBuilder.Entity<SavedFile>()
                 .HasKey(p => p.FileName);
+
+            modelBuilder.Entity<StateAndCountry>()
+                .HasKey(p => p.CityId);
+
+            modelBuilder.Entity<StateAndCountry>().HasData(StateCountrySeeder.GetSeeds());
         }
     }
 }

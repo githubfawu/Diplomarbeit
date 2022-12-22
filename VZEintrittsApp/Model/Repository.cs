@@ -13,7 +13,7 @@ namespace VZEintrittsApp.Model
 {
     public class Repository
     {
-        private RecordsHandler recordsHandler = new RecordsHandler();
+        private ContextHelper contextHelper = new ContextHelper();
         private DirectoryServices activeDirectory = new DirectoryServices();
         private IReadDocument documentReader;
         public ObservableCollection<Record> RecordsList = new ObservableCollection<Record>();
@@ -25,7 +25,7 @@ namespace VZEintrittsApp.Model
 
         public void ReadAllRecords()
         {
-            RecordsList.AddRange(recordsHandler.GetAllRecords());
+            RecordsList.AddRange(contextHelper.GetAllRecords());
         }
 
         public Employee ReadAllAdAttributes(string abbreviation)
@@ -33,11 +33,15 @@ namespace VZEintrittsApp.Model
             return activeDirectory.GetAttributes(abbreviation);
         }
 
+        public StateAndCountry? GetStateAndCountry(string cityName)
+        {
+            return contextHelper.GetStateAndCountry(cityName);
+        }
         public void ImportDocument(string file)
         {
             if(file.Contains(".pdf"))
             {
-                documentReader = new ReadPdfDocument();
+                documentReader = new ReadPdfDocument(contextHelper);
             }
             else
             {
@@ -53,7 +57,7 @@ namespace VZEintrittsApp.Model
                 recordFromDocument.Recorder = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
                 recordFromDocument.RecordRead = DateTime.Now;
 
-                recordsHandler.SaveNewRecord(recordFromDocument);
+                contextHelper.SaveNewRecord(recordFromDocument);
                 RecordsList.Add(recordFromDocument);
             }
 
@@ -63,7 +67,7 @@ namespace VZEintrittsApp.Model
                 File = File.ReadAllBytes(file)
             };
             
-            recordsHandler.SaveNewFile(fileToSave);
+            contextHelper.SaveNewFile(fileToSave);
 
             activeDirectory.CreateNewAdAccount(documentReader.ReadUsers(file));
 

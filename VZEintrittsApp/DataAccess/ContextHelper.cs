@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using VZEintrittsApp.Domain;
 
 namespace VZEintrittsApp.DataAccess
 {
-    public class RecordsHandler 
+    public class ContextHelper 
     {
         private DbContext dbContext = new DbContext();
-        public RecordsHandler() { }
+        public ContextHelper() { }
 
         public List<Record> GetAllRecords()
         {
@@ -28,7 +29,17 @@ namespace VZEintrittsApp.DataAccess
             return true;
         }
 
-
-
+        public StateAndCountry? GetStateAndCountry (string cityName)
+        {
+            if (dbContext.StatesAndCountries.SingleOrDefault(x => x.CityName == cityName) != null)
+            {
+                return dbContext.StatesAndCountries.SingleOrDefault(x => x.CityName == cityName);
+            }
+            else
+            {
+                MessageBox.Show("Fehler beim Laden des Kantons und des Landes!");
+                return null;
+            }
+        }
     }
 }

@@ -96,10 +96,10 @@
                             </GridViewColumn>
 
                             <GridViewColumn Width="180">
-                                <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Eintrittsdatum</GridViewColumnHeader>
+                                <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Erster Arbeitstag</GridViewColumnHeader>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding EntryDate}" Style="{StaticResource TextBlockListView}"/>
+                                        <TextBlock Text="{Binding FirstWorkingDay}" Style="{StaticResource TextBlockListView}"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -138,7 +138,7 @@
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="3" Content="Anzeigename:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="3" Text="{Binding CurrentEmployee.DisplayName}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="4" Content="Vorname:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="4" Text="{Binding CurrentEmployee.Name}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="4" Text="{Binding CurrentEmployee.FirstName}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="5" Content="Nachname:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="5" Text="{Binding CurrentEmployee.LastName}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="5" Content="Abteilungsname:"/>
@@ -168,15 +168,15 @@
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="6" Content="Postfach(Scan):"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="6" Text="{Binding CurrentEmployee.PostOfficeBox}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="1" Content="Strasse:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="1" Text="{Binding CurrentEmployee}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="1" Text="{Binding CurrentEmployee.Street}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="2" Content="Ort:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="2" Text="{Binding CurrentEmployee}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="2" Text="{Binding CurrentEmployee.City}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="3" Content="Bundesland/Kanton"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="3" Text="{Binding CurrentEmployee}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="3" Text="{Binding CurrentEmployee.State}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="4" Content="PLZ"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="4" Text="{Binding CurrentEmployee}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="4" Text="{Binding CurrentEmployee.PostalCode}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="5" Content="Land"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="5" Text="{Binding CurrentEmployee}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="5" Text="{Binding CurrentEmployee.Country}"/>
 
                                 <Button Grid.Column="3" Grid.Row="7" Margin="15,10,15,15"  Name="ButtonSave" Command="{Binding UpdateCommand}" FontSize="20" Background="#FFDA632D">Speichern</Button>
                             </Grid>

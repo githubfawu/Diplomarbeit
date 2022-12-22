@@ -13,6 +13,7 @@ namespace VZEintrittsApp.Domain
         public string? Recorder { get; set; }
         public RecordStatus Status { get; set; }
         public DateTime EntryDate { get; set; }
+        public DateTime FirstWorkingDay { get; set; }
         public DateTime RecordRead { get; set; }
 
     }
