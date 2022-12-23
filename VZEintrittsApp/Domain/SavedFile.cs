@@ -19,7 +19,5 @@ namespace VZEintrittsApp.Domain
             get => file;
             set => file = value;
         }
-
-
     }
 }

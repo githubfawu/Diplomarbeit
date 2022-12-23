@@ -29,6 +29,12 @@ namespace VZEintrittsApp.DataAccess
             return true;
         }
 
+        public byte[] GetEntryDocument(string filename)
+        {
+            SavedFile file = dbContext.SavedFiles.SingleOrDefault(x => x.FileName == filename);
+            return file?.File;
+        }
+
         public StateAndCountry? GetStateAndCountry (string cityName)
         {
             if (dbContext.StatesAndCountries.SingleOrDefault(x => x.CityName == cityName) != null)

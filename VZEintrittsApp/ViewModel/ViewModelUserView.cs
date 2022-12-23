@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Security.Policy;
 using System.Windows;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -76,6 +78,8 @@ namespace VZEintrittsApp.ViewModel
                 {
                     return null;
                 }
+                Repository.GetOriginalDocument(selectedItem.AssociatedFile);
+                OpenWithDefaultProgram();
                 IsProgressBarVisible = true;
                 ProgressValue = 25;
                 ProgressText = "Lade AD-Attribute...";
@@ -97,6 +101,8 @@ namespace VZEintrittsApp.ViewModel
             RecordsList = Repository.RecordsList;
         }
 
+
+
         private bool CanExecute()
         {
             return true; /*!String.IsNullOrEmpty(SelectedItem.Abbreviation);*/
@@ -105,6 +111,11 @@ namespace VZEintrittsApp.ViewModel
         private void Execute()
         {
             MessageBox.Show("Speichert...");
+        }
+
+        public void OpenWithDefaultProgram()
+        {
+            Process.Start(new ProcessStartInfo { FileName = "C:\\Temp\\PDF\\EintrittsPDF.pdf", UseShellExecute = true });
         }
     }
 }

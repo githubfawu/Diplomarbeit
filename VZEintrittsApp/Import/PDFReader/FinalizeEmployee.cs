@@ -8,17 +8,20 @@ namespace VZEintrittsApp.Import.PDFReader
     public class FinalizeEmployee
     {
         private ContextHelper ContextHelper { get; set; }
+        private List<Employee> EmployeeList { get; set; }
 
-        public FinalizeEmployee(ContextHelper contextHelper)
+        public FinalizeEmployee(ContextHelper contextHelper, List<Employee> employeeList)
         {
             this.ContextHelper = contextHelper;
+            EmployeeList = employeeList;
         }
-        public List<Employee> FinalizeEmployees(List<Employee> employeeList)
+        public List<Employee> FinalizeEmployees()
         {
-            employeeList = CheckForCallSigns(employeeList);
-            employeeList = AddStateAndCountry(employeeList);
+            CheckForCallSigns(EmployeeList);
+            CheckForCompany(EmployeeList);
+            AddStateAndCountry(EmployeeList);
 
-            return employeeList;
+            return EmployeeList;
         }
 
         private List<Employee> CheckForCallSigns(List<Employee> employeeList)
@@ -39,6 +42,19 @@ namespace VZEintrittsApp.Import.PDFReader
             return employeeList;
         }
 
+        private List<Employee> CheckForCompany(List<Employee> employeeList)
+        {
+            foreach (var employee in employeeList)
+            {
+                if (string.IsNullOrWhiteSpace(employee.Company))
+                {
+                    employee.Company = employee.BusinessArea;
+                }
+            }
+
+            return employeeList;
+        }
+
         private List<Employee> AddStateAndCountry(List<Employee> employeeList)
         {
             foreach (var employee in employeeList)
@@ -48,6 +64,19 @@ namespace VZEintrittsApp.Import.PDFReader
                     var stateAndCountry = ContextHelper.GetStateAndCountry(employee.City);
                     employee.State = stateAndCountry.StateName;
                     employee.Country = stateAndCountry.CountryCode;
+                }
+            }
+
+            return employeeList;
+        }
+
+        private List<Employee> CheckForMailfooter(List<Employee> employeeList)
+        {
+            foreach (var employee in employeeList)
+            {
+                if (employee.TitleInMailFooter == false)
+                {
+                    employee.VzTitle = null;
                 }
             }
 

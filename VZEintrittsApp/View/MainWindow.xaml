@@ -52,7 +52,7 @@
         </Grid>
         
         <Grid Column="0" Row="0" Grid.ColumnSpan="2">
-                <ListView 
+            <ListView 
                       Name="ListViewOpenEntries"
                       ItemsSource="{Binding RecordsList}"
                       SelectedItem="{Binding SelectedItem}"
@@ -141,32 +141,34 @@
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="4" Text="{Binding CurrentEmployee.FirstName}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="5" Content="Nachname:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="5" Text="{Binding CurrentEmployee.LastName}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="5" Content="Abteilungsname:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="5" Text="{Binding CurrentEmployee.Department}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="6" Content="Geschäftsbereich/Firma:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="6" Text="{Binding CurrentEmployee.Company}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="1" Content="Pensum:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="1" Text="{Binding CurrentEmployee}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="2" Content="Rang:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="2" Text="{Binding CurrentEmployee}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="3" Content="Kaderstufe:"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="6" Content="Firma:"/>
+                                <TextBox Style="{StaticResource TextboxLarge}" Grid.Column="0" Grid.Row="6" Text="{Binding CurrentEmployee.Company}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="1" Content="Position:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="1" Text="{Binding CurrentEmployee.Title}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="2" Content="Pensum:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="2" Text="{Binding CurrentEmployee.VzPensum}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="3" Content="Rang:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="3" Text="{Binding CurrentEmployee}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="4" Content="Geburtsdatum:"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="4" Content="Kaderstufe:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="4" Text="{Binding CurrentEmployee}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="6" Content="Vorgesetzter:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="6" Text="{Binding CurrentEmployee}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="1" Content="Regionenleiter:"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="5" Content="Geburtsdatum:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="5" Text="{Binding CurrentEmployee}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="6" Content="Abteilungsname:"/>
+                                <TextBox Style="{StaticResource TextboxLarge}" Grid.Column="1" Grid.Row="6" Text="{Binding CurrentEmployee.Department}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="1" Content="Vorgesetzter:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="1" Text="{Binding CurrentEmployee}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="2" Content="Bereichsleiter:"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="2" Content="Regionenleiter:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="2" Text="{Binding CurrentEmployee}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="3" Content="E-Mail Adresse:"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="3" Content="Bereichsleiter:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="3" Text="{Binding CurrentEmployee}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="4" Content="Telefonnummer:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="4" Text="{Binding CurrentEmployee}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="5" Content="Eintrittsdatum:"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="4" Content="E-Mail Adresse:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="4" Text="{Binding CurrentEmployee.MailAdress}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="5" Content="Telefonnummer:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="5" Text="{Binding CurrentEmployee}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="6" Content="Postfach(Scan):"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="6" Text="{Binding CurrentEmployee.PostOfficeBox}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="6" Content="Eintrittsdatum:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="6" Text="{Binding CurrentEmployee}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="6" Content="Postfach(Scan):"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="6" Text="{Binding CurrentEmployee.PostOfficeBox}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="1" Content="Strasse:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="1" Text="{Binding CurrentEmployee.Street}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="2" Content="Ort:"/>

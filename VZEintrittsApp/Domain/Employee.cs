@@ -14,13 +14,17 @@ namespace VZEintrittsApp.Domain
         public string? MailAdress { get; set; }
         public string? Department { get; set; }
         public string? Title { get; set; }
+        public string? BusinessArea { get; set; }
         public string? Company { get; set; }
-        public string? Workload { get; set; }
         public string? Street { get; set; }
         public string? City { get; set; }
         public string? State { get; set; }
         public string? PostalCode { get; set; }
         public string? PostOfficeBox { get; set; }
         public string? Country { get; set; }
+        public bool? TitleInMailFooter { get; set; }
+        public string? VzTitle { get; set; }
+        public string? VzPensum { get; set; }
+
     }
 }

@@ -50,12 +50,15 @@ namespace VZEintrittsApp.API.AD
                     DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
                     employee.Company = userEntry.Properties["Company"].Value?.ToString();
                     employee.Department = userEntry.Properties["Department"].Value?.ToString();
+                    employee.Title = userEntry.Properties["title"].Value?.ToString();
                     employee.City = userEntry.Properties["l"].Value?.ToString();
                     employee.PostalCode = userEntry.Properties["postalCode"].Value?.ToString();
                     employee.Street = userEntry.Properties["streetAddress"].Value?.ToString();
                     employee.State = userEntry.Properties["st"].Value?.ToString();
                     employee.Country = userEntry.Properties["c"].Value?.ToString();
-                    
+                    employee.VzTitle = userEntry.Properties["vzAcademicTitle"].Value?.ToString();
+                    employee.VzPensum = userEntry.Properties["vzEmployeePensum"].Value?.ToString();
+
                     return employee;
                 }
             }
@@ -86,11 +89,14 @@ namespace VZEintrittsApp.API.AD
                     DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
                     userEntry.Properties["Company"].Value = employee.Company;
                     userEntry.Properties["Department"].Value = employee.Department;
+                    userEntry.Properties["title"].Value = employee.Title;
                     userEntry.Properties["l"].Value = employee.City;
                     userEntry.Properties["postalCode"].Value = employee.PostalCode;
                     userEntry.Properties["streetAddress"].Value = employee.Street;
                     userEntry.Properties["st"].Value = employee.State;
                     userEntry.Properties["c"].Value = employee.Country;
+                    userEntry.Properties["vzAcademicTitle"].Value = employee.VzTitle;
+                    userEntry.Properties["vzEmployeePensum"].Value = employee.VzPensum;
                     userEntry.CommitChanges();
                 }
             }

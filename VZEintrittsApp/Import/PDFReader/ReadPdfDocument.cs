@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 using Docnet.Core;
 using Docnet.Core.Models;
@@ -18,7 +19,6 @@ namespace VZEintrittsApp.Import.PDFReader
     public ReadPdfDocument (ContextHelper contextHelper)
         {
             this.ContextHelper = contextHelper;
-            Finalize = new FinalizeEmployee(contextHelper);
         }
         public List<Employee> ReadUsers(string file)
         {
@@ -92,15 +92,35 @@ namespace VZEintrittsApp.Import.PDFReader
                             }
                             if (entity.Contains("Pensum"))
                             {
-                                if (employee != null) employee.Workload = CheckForNullValues(entity, 8);
+                                if (employee != null)
+                                {
+                                    var pensum = CheckForNullValues(entity, 8);
+                                    employee.VzPensum = RemoveSpecialCharacters(pensum);
+                                }
                             }
                             if (entity.Contains("Geschäftsbereich"))
                             {
-                                if (employee != null) employee.Company = CheckForNullValues(entity, 18);
+                                if (employee != null) employee.BusinessArea = CheckForNullValues(entity, 18);
+                            }
+                            if (entity.Contains("Unternehmen"))
+                            {
+                                if (employee != null) employee.Company = CheckForNullValues(entity, 13);
                             }
                             if (entity.Contains("Abteilungsname"))
                             {
                                 if (employee != null) employee.Department = CheckForNullValues(entity, 16);
+                            }
+                            if (entity.Contains("Titel in Mailfuss"))
+                            {
+                                if (employee != null)
+                                {
+                                    var value = CheckForNullValues(entity, 19);
+                                    employee.TitleInMailFooter = CheckForTitleInMailfooter(value);
+                                }
+                            }
+                            if (entity.Contains("Titel 1"))
+                            {
+                                if (employee != null) employee.VzTitle = CheckForNullValues(entity, 9);
                             }
                             if (entity.Contains("Standort"))
                             {
@@ -119,8 +139,22 @@ namespace VZEintrittsApp.Import.PDFReader
                 }
             }
 
-            employeeList = Finalize.FinalizeEmployees(employeeList);
+            Finalize = new FinalizeEmployee(ContextHelper, employeeList);
+            Finalize.FinalizeEmployees();
             return employeeList;
+        }
+
+        public static string RemoveSpecialCharacters(string str)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in str)
+            {
+                if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '.' || c == '_')
+                {
+                    sb.Append(c);
+                }
+            }
+            return sb.ToString();
         }
 
 
@@ -138,6 +172,14 @@ namespace VZEintrittsApp.Import.PDFReader
             return completeAdress.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
         }
 
+        public bool CheckForTitleInMailfooter(string value)
+        {
+            if (value.Contains("Ja"))
+            {
+                return true;
+            }
+            return false;
+        }
 
 
         public List<Record> ReadRecords(string file)

@@ -8,6 +8,7 @@ using VZEintrittsApp.Enums;
 using VZEintrittsApp.Import;
 using VZEintrittsApp.Import.PDFReader;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace VZEintrittsApp.Model
 {
@@ -71,6 +72,12 @@ namespace VZEintrittsApp.Model
 
             activeDirectory.CreateNewAdAccount(documentReader.ReadUsers(file));
 
+        }
+
+        public void GetOriginalDocument(string filename)
+        {
+            var document = contextHelper.GetEntryDocument(filename);
+            File.WriteAllBytes("C:\\Temp\\PDF\\EintrittsPDF.pdf", document);
         }
     }
 }
