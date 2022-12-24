@@ -9,6 +9,7 @@ using VZEintrittsApp.Import;
 using VZEintrittsApp.Import.PDFReader;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.IO.Pipes;
 
 namespace VZEintrittsApp.Model
 {
@@ -74,10 +75,12 @@ namespace VZEintrittsApp.Model
 
         }
 
-        public void GetOriginalDocument(string filename)
+        public byte[] GetOriginalDocument(string filename)
         {
             var document = contextHelper.GetEntryDocument(filename);
-            File.WriteAllBytes("C:\\Temp\\PDF\\EintrittsPDF.pdf", document);
+            return document;
+
+            //File.WriteAllBytes("EintrittsPDF.pdf", document);
         }
     }
 }

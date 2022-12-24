@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewModel="clr-namespace:VZEintrittsApp.ViewModel"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="VZ Eintritte"
         Width="1000"
@@ -57,7 +57,14 @@
                       ItemsSource="{Binding RecordsList}"
                       SelectedItem="{Binding SelectedItem}"
                       Margin="5">
-                    <ListView.ItemContainerStyle>
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="MouseDoubleClick">
+                        <b:InvokeCommandAction 
+                            Command="{Binding OpenDocumentCommand}"
+                            CommandParameter="{Binding ElementName=ListViewOpenEntries, Path=SelectedItem}"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+                <ListView.ItemContainerStyle>
                         <Style TargetType="{x:Type ListViewItem}">
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="true">
@@ -65,7 +72,7 @@
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </ListView.ItemContainerStyle>
+                </ListView.ItemContainerStyle>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="140">

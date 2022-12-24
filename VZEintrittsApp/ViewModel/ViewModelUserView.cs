@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Security.Policy;
 using System.Windows;
 using Prism.Commands;
@@ -8,6 +10,7 @@ using Prism.Mvvm;
 using VZEintrittsApp.Domain;
 using VZEintrittsApp.Enums;
 using VZEintrittsApp.Model;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace VZEintrittsApp.ViewModel
 {
@@ -40,6 +43,8 @@ namespace VZEintrittsApp.ViewModel
             set => SetProperty(ref progressText, value);
         }
         public DelegateCommand UpdateCommand { get; set; }
+        public DelegateCommand OpenDocumentCommand { get; set; }
+        
         private Repository Repository { get; set; }
 
 
@@ -78,8 +83,6 @@ namespace VZEintrittsApp.ViewModel
                 {
                     return null;
                 }
-                Repository.GetOriginalDocument(selectedItem.AssociatedFile);
-                OpenWithDefaultProgram();
                 IsProgressBarVisible = true;
                 ProgressValue = 25;
                 ProgressText = "Lade AD-Attribute...";
@@ -97,11 +100,10 @@ namespace VZEintrittsApp.ViewModel
         public ViewModelUserView(Repository repository)
         {
             UpdateCommand = new DelegateCommand(Execute, CanExecute).ObservesProperty(() => SelectedItem);
+            OpenDocumentCommand = new DelegateCommand(OpenDocumentWithDefaultProgram);
             Repository = repository;
             RecordsList = Repository.RecordsList;
         }
-
-
 
         private bool CanExecute()
         {
@@ -113,9 +115,16 @@ namespace VZEintrittsApp.ViewModel
             MessageBox.Show("Speichert...");
         }
 
-        public void OpenWithDefaultProgram()
+        public void OpenDocumentWithDefaultProgram()
         {
-            Process.Start(new ProcessStartInfo { FileName = "C:\\Temp\\PDF\\EintrittsPDF.pdf", UseShellExecute = true });
+            var document = Repository.GetOriginalDocument(selectedItem.AssociatedFile);
+            if (document.Length > 0)
+            {
+                var temp = Path.GetTempPath() + "Eintritte.pdf";
+                File.WriteAllBytes(temp, document);
+                Process.Start(new ProcessStartInfo { FileName = temp, UseShellExecute = true });
+            }
+            
         }
     }
 }
