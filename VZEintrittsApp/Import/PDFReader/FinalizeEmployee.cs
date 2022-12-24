@@ -20,6 +20,7 @@ namespace VZEintrittsApp.Import.PDFReader
             CheckForCallSigns(EmployeeList);
             CheckForCompany(EmployeeList);
             AddStateAndCountry(EmployeeList);
+            CheckForMailfooter(EmployeeList);
 
             return EmployeeList;
         }
@@ -76,7 +77,7 @@ namespace VZEintrittsApp.Import.PDFReader
             {
                 if (employee.TitleInMailFooter == false)
                 {
-                    employee.VzTitle = null;
+                    employee.VzAcademicTitle = null;
                 }
             }
 

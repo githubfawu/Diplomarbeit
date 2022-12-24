@@ -13,7 +13,7 @@ namespace VZEintrittsApp.Domain
         public string? CallSignLastName { get; set; }
         public string? MailAdress { get; set; }
         public string? Department { get; set; }
-        public string? Title { get; set; }
+        public string? Position { get; set; }
         public string? BusinessArea { get; set; }
         public string? Company { get; set; }
         public string? Street { get; set; }
@@ -23,8 +23,9 @@ namespace VZEintrittsApp.Domain
         public string? PostOfficeBox { get; set; }
         public string? Country { get; set; }
         public bool? TitleInMailFooter { get; set; }
-        public string? VzTitle { get; set; }
+        public string? VzAcademicTitle { get; set; }
         public string? VzPensum { get; set; }
+        public string? VzEntryDate { get; set; }
 
     }
 }

@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Documents;
 using Docnet.Core;
 using Docnet.Core.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using VZEintrittsApp.DataAccess;
 using VZEintrittsApp.Domain;
 using VZEintrittsApp.Model;
@@ -33,7 +38,7 @@ namespace VZEintrittsApp.Import.PDFReader
                         Employee? employee = null;
 
                         var text = pageReader.GetText();
-                        var splitString = Regex.Split(text, "\r\n", RegexOptions.IgnoreCase);
+                        var splitString = Regex.Split(text, "\r\n", RegexOptions.IgnoreCase).ToList();
 
                         foreach (var entity in splitString)
                         {
@@ -50,88 +55,78 @@ namespace VZEintrittsApp.Import.PDFReader
                                 employee = newEmployee;
                             }
 
-                            if (entity.Contains("Kürzel"))
+                            if (employee != null)
                             {
-                                if (employee != null)
+                                if (entity.Contains("Kürzel:"))
                                 {
-                                    if (entity.Substring(8).Length == 4)
-                                    {
-                                        string abbreviation = CheckForNullValues(entity, 8); ;
-                                        employee.Abbreviation = abbreviation.Substring(0, 2) + abbreviation.Substring(2, 2).ToLower();
-                                    }
-                                    else
-                                    {
-                                        employee.Abbreviation = entity.Substring(8);
-                                    }
+                                    string abbreviation = CheckForNullAndNewLines(entity, 8, splitString);
+                                    employee.Abbreviation = CorrectUpperLower(abbreviation);
                                 }
-                            }
 
-                            if (entity.Contains("Vorname"))
-                            {
-                                if (employee != null) employee.FirstName = CheckForNullValues(entity, 9);
-                            }
-                            if (entity.Contains("Name"))
-                            {
-                                if (employee != null) employee.LastName = CheckForNullValues(entity, 6);
-                            }
-                            if (entity.Contains("Rufname"))
-                            {
-                                if (employee != null) employee.CallSignName = CheckForNullValues(entity, 9);
-                            }
-                            if (entity.Contains("Rufnachname"))
-                            {
-                                if (employee != null) employee.CallSignLastName = CheckForNullValues(entity, 13);
-                            }
-                            if (entity.Contains("Firmen E-Mail"))
-                            {
-                                if (employee != null) employee.MailAdress = CheckForNullValues(entity, 15);
-                            }
-                            if (entity.Contains("Stellen-Nr"))
-                            {
-                                if (employee != null) employee.Title = CheckForNullValues(entity, 21);
-                            }
-                            if (entity.Contains("Pensum"))
-                            {
-                                if (employee != null)
+                                if (entity.Contains("Vorname:"))
                                 {
-                                    var pensum = CheckForNullValues(entity, 8);
+                                    employee.FirstName = CheckForNullAndNewLines(entity, 9, splitString);
+                                }
+                                if (entity.Contains("Name:"))
+                                {
+                                    employee.LastName = CheckForNullAndNewLines(entity, 6, splitString);
+                                }
+                                if (entity.Contains("Rufname:"))
+                                {
+                                    employee.CallSignName = CheckForNullAndNewLines(entity, 9, splitString);
+                                }
+                                if (entity.Contains("Rufnachname:"))
+                                {
+                                    employee.CallSignLastName = CheckForNullAndNewLines(entity, 13, splitString);
+                                }
+                                if (entity.Contains("Firmen E-Mail:"))
+                                {
+                                    employee.MailAdress = CheckForNullAndNewLines(entity, 15, splitString);
+                                }
+                                if (entity.Contains("Stellen-Nr.:"))
+                                {
+                                    employee.Position = CheckForNullAndNewLines(entity, 21, splitString);
+                                }
+                                if (entity.Contains("Pensum:"))
+                                {
+                                    var pensum = CheckForNullAndNewLines(entity, 8, splitString);
                                     employee.VzPensum = RemoveSpecialCharacters(pensum);
                                 }
-                            }
-                            if (entity.Contains("Geschäftsbereich"))
-                            {
-                                if (employee != null) employee.BusinessArea = CheckForNullValues(entity, 18);
-                            }
-                            if (entity.Contains("Unternehmen"))
-                            {
-                                if (employee != null) employee.Company = CheckForNullValues(entity, 13);
-                            }
-                            if (entity.Contains("Abteilungsname"))
-                            {
-                                if (employee != null) employee.Department = CheckForNullValues(entity, 16);
-                            }
-                            if (entity.Contains("Titel in Mailfuss"))
-                            {
-                                if (employee != null)
+                                if (entity.Contains("Geschäftsbereich:"))
                                 {
-                                    var value = CheckForNullValues(entity, 19);
+                                    employee.BusinessArea = CheckForNullAndNewLines(entity, 18, splitString);
+                                }
+                                if (entity.Contains("Unternehmen:"))
+                                {
+                                    employee.Company = CheckForNullAndNewLines(entity, 13, splitString);
+                                }
+                                if (entity.Contains("Abteilungsname:"))
+                                {
+                                    employee.Department = CheckForNullAndNewLines(entity, 16, splitString);
+                                }
+                                if (entity.Contains("Titel in Mailfuss:"))
+                                {
+                                    var value = CheckForNullAndNewLines(entity, 19, splitString);
                                     employee.TitleInMailFooter = CheckForTitleInMailfooter(value);
                                 }
-                            }
-                            if (entity.Contains("Titel 1"))
-                            {
-                                if (employee != null) employee.VzTitle = CheckForNullValues(entity, 9);
-                            }
-                            if (entity.Contains("Standort"))
-                            {
-                                var entityString = "";
-                                if (employee != null) entityString = CheckForNullValues(entity, 10);
-                                if (entityString != null)
+                                if (entity.Contains("Titel 1:"))
                                 {
-                                    string[] adressParts = ExtractAdressFromEntity(entityString);
-                                    employee.City = adressParts[0];
-                                    employee.PostalCode = adressParts[1];
-                                    employee.Street = adressParts[2];
+                                    if (employee != null) employee.VzAcademicTitle = CheckForNullAndNewLines(entity, 9, splitString);
+                                }
+                                //if (entity.Contains("Eintrittsdatum"))
+                                //{
+                                //    if (employee != null) employee.VzTitle = CheckForNullValues(entity, 9);
+                                //}
+                                if (entity.Contains("Standort:"))
+                                {
+                                    var entityString = CheckForNullAndNewLines(entity, 10, splitString);
+                                    if (entityString != null)
+                                    {
+                                        string[] adressParts = ExtractAdressFromEntity(entityString);
+                                        employee.City = adressParts[0];
+                                        employee.PostalCode = adressParts[1];
+                                        employee.Street = adressParts[2];
+                                    }
                                 }
                             }
                         }
@@ -156,13 +151,21 @@ namespace VZEintrittsApp.Import.PDFReader
             }
             return sb.ToString();
         }
-
-
-        public string CheckForNullValues(string property, int length)
+        
+        public string? CheckForNullAndNewLines(string entity, int length, List<string> list)
         {
-            if (property.Length > length)
+            if (entity.Length > length)
             {
-                return property.Substring(length);
+                if ((list.IndexOf(entity) + 1) <= list.Count)
+                {
+                    var index = list.IndexOf(entity) + 1;
+                    if (!list[index].Contains(":"))
+                    {
+                        return (entity.Substring(length) + " " + list[index]);
+                    }
+                    return entity.Substring(length);
+                }
+                return null;
             }
             return null;
         }
@@ -179,6 +182,17 @@ namespace VZEintrittsApp.Import.PDFReader
                 return true;
             }
             return false;
+        }
+
+        public string CorrectUpperLower(string abbreviation)
+        {
+            return abbreviation.Length switch
+            {
+                4 => abbreviation.Substring(0, 2).ToUpper() + abbreviation.Substring(2, 2).ToLower(),
+                3 => abbreviation.Substring(0, 2) + abbreviation.Substring(2, 1).ToLower(),
+                2 => abbreviation.Substring(0, 2).ToUpper(),
+                _ => abbreviation
+            };
         }
 
 
@@ -212,7 +226,7 @@ namespace VZEintrittsApp.Import.PDFReader
                                 record = newRecord;
                             }
 
-                            if (entity.Contains("Kürzel"))
+                            if (entity.Contains("Kürzel:"))
                             {
                                 if (record != null)
                                 {
@@ -228,14 +242,14 @@ namespace VZEintrittsApp.Import.PDFReader
                                 }
                             }
 
-                            if (entity.Contains("erster Arbeitstag") && entity.Length <= 30)
+                            if (entity.Contains("erster Arbeitstag:"))
                             {
                                 DateTime FirstWorkingDay = DateTime.Parse(entity.Substring(19));
                                 if (record != null) record.FirstWorkingDay = FirstWorkingDay;
 
                             }
 
-                            if (entity.Contains("Eintrittsdatum") && entity.Length <= 30)
+                            if (entity.Contains("Eintrittsdatum:"))
                             {
                                 DateTime EntryDate = DateTime.Parse(entity.Substring(16));
                                 if (record != null) record.EntryDate = EntryDate;
