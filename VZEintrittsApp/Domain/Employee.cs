@@ -25,7 +25,11 @@ namespace VZEintrittsApp.Domain
         public bool? TitleInMailFooter { get; set; }
         public string? VzAcademicTitle { get; set; }
         public string? VzPensum { get; set; }
-        public string? VzEntryDate { get; set; }
+        public string? VzStartDate { get; set; }
+        public string? VzGrade { get; set; }//Rang
+        public string? VzBusinessUnitSupervisor { get; set; }
+        public string? VzRegionalSupervisor { get; set; }
+        public string? VzManagementLevel { get; set; }//Kaderstufe
 
     }
 }

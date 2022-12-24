@@ -58,7 +58,9 @@ namespace VZEintrittsApp.API.AD
                     employee.Country = userEntry.Properties["c"].Value?.ToString();
                     employee.VzAcademicTitle = userEntry.Properties["vzAcademicTitle"].Value?.ToString();
                     employee.VzPensum = userEntry.Properties["vzEmployeePensum"].Value?.ToString();
-
+                    employee.VzStartDate = userEntry.Properties["vzEmployeeStartDate"].Value?.ToString();
+                    employee.VzBusinessUnitSupervisor = userEntry.Properties["vzBusinessUnitSupervisor"].Value?.ToString();
+                    employee.VzRegionalSupervisor = userEntry.Properties["vzRegionalSupervisor"].Value?.ToString();
                     return employee;
                 }
             }
@@ -66,11 +68,12 @@ namespace VZEintrittsApp.API.AD
             return null;
         }
 
-        public bool CreateNewAdAccount(List<Employee> employeeList)
+        public bool CreateNewAdAccount(Employee employee)
         {
-            foreach (var employee in employeeList)
+            try
             {
-                using (var context = new PrincipalContext(ContextType.Domain, "vz.ch", "OU=Standarduser,OU=VZ_Users,DC=vz,DC=ch"))//Pfade auslagern (in DB?)
+                using (var context = new PrincipalContext(ContextType.Domain, "vz.ch",
+                           "OU=Standarduser,OU=VZ_Users,DC=vz,DC=ch")) //Pfade auslagern (in DB?)
                 using (var user = new UserPrincipal(context)
                        {
                            Name = $"{employee.FirstName} {employee.LastName}",
@@ -86,7 +89,7 @@ namespace VZEintrittsApp.API.AD
                     user.SetPassword("Sonne100");
                     user.Save();
 
-                    DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
+                    DirectoryEntry userEntry = (DirectoryEntry) user.GetUnderlyingObject();
                     userEntry.Properties["Company"].Value = employee.Company;
                     userEntry.Properties["Department"].Value = employee.Department;
                     userEntry.Properties["title"].Value = employee.Position;
@@ -97,10 +100,20 @@ namespace VZEintrittsApp.API.AD
                     userEntry.Properties["c"].Value = employee.Country;
                     userEntry.Properties["vzAcademicTitle"].Value = employee.VzAcademicTitle;
                     userEntry.Properties["vzEmployeePensum"].Value = employee.VzPensum;
+                    userEntry.Properties["vzEmployeeStartDate"].Value = employee.VzStartDate;
+                    userEntry.Properties["vzBusinessUnitSupervisor"].Value = employee.VzBusinessUnitSupervisor;
+                    userEntry.Properties["vzRegionalSupervisor"].Value = employee.VzRegionalSupervisor;
                     userEntry.CommitChanges();
+
+                    return true;
                 }
             }
-            return true;
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+                throw;
+            }
         }
     }
 }

@@ -59,7 +59,15 @@ namespace VZEintrittsApp.Model
                 recordFromDocument.Recorder = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
                 recordFromDocument.RecordRead = DateTime.Now;
 
-                contextHelper.SaveNewRecord(recordFromDocument);
+                if (contextHelper.GetRecord(recordFromDocument) == false)
+                {
+                    contextHelper.SaveNewRecord(recordFromDocument);
+                }
+                else
+                {
+                    MessageBox.Show($"Für den Benutzer {recordFromDocument.Abbreviation} existiert bereits ein Eintrag in der Datenbank!");
+                }
+                
                 RecordsList.Add(recordFromDocument);
             }
 
@@ -71,16 +79,24 @@ namespace VZEintrittsApp.Model
             
             contextHelper.SaveNewFile(fileToSave);
 
-            activeDirectory.CreateNewAdAccount(documentReader.ReadUsers(file));
-
+            var users = documentReader.ReadUsers(file);
+            foreach (var user in users)
+            {
+                if (activeDirectory.CheckIfUserExists(user.Abbreviation) == false)
+                {
+                    activeDirectory.CreateNewAdAccount(user);
+                }
+                else
+                {
+                    MessageBox.Show($"Der Benutzer {user.Abbreviation} existiert bereits im AD!");
+                }
+            }
         }
 
         public byte[] GetOriginalDocument(string filename)
         {
             var document = contextHelper.GetEntryDocument(filename);
             return document;
-
-            //File.WriteAllBytes("EintrittsPDF.pdf", document);
         }
     }
 }

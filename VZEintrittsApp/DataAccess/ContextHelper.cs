@@ -15,6 +15,11 @@ namespace VZEintrittsApp.DataAccess
             var getRecords = dbContext.Records.ToList();
             return getRecords;
         }
+        public bool GetRecord(Record record)
+        {
+            if(dbContext.Records.FirstOrDefault(r => r.EmployeeNr == record.EmployeeNr) != null) return true;
+            return false;
+        }
         public bool SaveNewRecord(Record record)
         {
             dbContext.Records.AddRange(record);

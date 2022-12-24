@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="VZ Eintritte"
         Width="1000"
-        Height="800"
+        Height="850"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter"></BooleanToVisibilityConverter>
@@ -24,17 +24,29 @@
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="0.15*" />
             <RowDefinition Height="1*" />
             <RowDefinition Height="1*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
 
-        <Grid Column="2" Row="0" Margin="70, 230,70,5">
+        <Grid Column="0" Row="0">
+            <Label FontSize="28" Margin="6,0,0,0" Content="VZ Eintritts-App" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
+        </Grid>
+        <Grid Column="2" Row="0">
+            <Rectangle Margin="280, 5,0,0">
+                <Rectangle.Fill>
+                    <ImageBrush Stretch="Uniform" ImageSource="/View/Ressources/vzlogo.png"/>
+                </Rectangle.Fill>
+            </Rectangle>
+        </Grid>
+
+        <Grid Column="2" Row="1" Margin="70, 230,70,5">
             <ProgressBar Minimum="0" Maximum="100" Value="{Binding ProgressValue}" Visibility="{Binding IsProgressBarVisible, Converter={StaticResource boolToVisibilityConverter}}"/>
             <Label Margin="40,-2,20,0" FontSize="10"  Content="{Binding ProgressText}" Visibility="{Binding IsProgressBarVisible, Converter={StaticResource boolToVisibilityConverter}}"/>
         </Grid>
 
-        <Grid Column="2" Row="0">
+        <Grid Column="2" Row="1">
             <Rectangle Style="{StaticResource Rectangle}" Margin="40, 15,40,40" Drop="Document_Drop">
                 <Rectangle.Fill>
                     <ImageBrush ImageSource="/View/Ressources/drag-and-drop2.tif"/>
@@ -48,7 +60,7 @@
             </Rectangle>
         </Grid>
         
-        <Grid Column="0" Row="0" Grid.ColumnSpan="2">
+        <Grid Column="0" Row="1" Grid.ColumnSpan="2">
             <ListView 
                       Name="ListViewOpenEntries"
                       ItemsSource="{Binding RecordsList}"
@@ -113,12 +125,12 @@
                 </ListView>
             </Grid>
 
-        <Grid Column="0" Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2">
+        <Grid Column="0" Row="2" Grid.ColumnSpan="3" Grid.RowSpan="2">
             <DockPanel>
                 <TabControl Style="{StaticResource TabControl}" Name="Prototyp">
                     <TabItem Style="{StaticResource Tab}" Header="Details zur Person">
                         <TabPanel>
-                            <Grid Margin="15,0,-145,-25">
+                            <Grid Margin="15,0,-145,-55">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"/>
                                     <ColumnDefinition Width="1*" />
@@ -153,7 +165,7 @@
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="2" Content="Pensum:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="2" Text="{Binding CurrentEmployee.VzPensum}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="3" Content="Rang:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="3" Text="{Binding CurrentEmployee}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="3" Text="{Binding CurrentEmployee.VzGrade}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="4" Content="Kaderstufe:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="4" Text="{Binding CurrentEmployee}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="5" Content="Geburtsdatum:"/>
@@ -163,15 +175,15 @@
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="1" Content="Vorgesetzter:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="1" Text="{Binding CurrentEmployee}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="2" Content="Regionenleiter:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="2" Text="{Binding CurrentEmployee}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="2" Text="{Binding CurrentEmployee.VzRegionalSupervisor}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="3" Content="Bereichsleiter:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="3" Text="{Binding CurrentEmployee}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="3" Text="{Binding CurrentEmployee.VzBusinessUnitSupervisor}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="4" Content="E-Mail Adresse:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="4" Text="{Binding CurrentEmployee.MailAdress}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="5" Content="Telefonnummer:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="5" Text="{Binding CurrentEmployee}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="6" Content="Eintrittsdatum:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="6" Text="{Binding CurrentEmployee}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="6" Content="Erster Arbeitstag:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="6" Text="{Binding CurrentEmployee.VzStartDate}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="6" Content="Postfach(Scan):"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="6" Text="{Binding CurrentEmployee.PostOfficeBox}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="1" Content="Strasse:"/>

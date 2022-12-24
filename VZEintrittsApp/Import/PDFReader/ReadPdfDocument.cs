@@ -111,12 +111,29 @@ namespace VZEintrittsApp.Import.PDFReader
                                 }
                                 if (entity.Contains("Titel 1:"))
                                 {
-                                    if (employee != null) employee.VzAcademicTitle = CheckForNullAndNewLines(entity, 9, splitString);
+                                    employee.VzAcademicTitle = CheckForNullAndNewLines(entity, 9, splitString);
                                 }
-                                //if (entity.Contains("Eintrittsdatum"))
-                                //{
-                                //    if (employee != null) employee.VzTitle = CheckForNullValues(entity, 9);
-                                //}
+                                if (entity.Contains("erster Arbeitstag:"))
+                                {
+                                    employee.VzStartDate = CheckForNullAndNewLines(entity, 19, splitString);
+                                }
+                                if (entity.Contains("Rang:"))
+                                {
+                                    employee.VzGrade = CheckForNullAndNewLines(entity, 6, splitString);
+                                }
+                                if (entity.Contains("Bereichsleiter:"))
+                                {
+                                    employee.VzBusinessUnitSupervisor = CheckForNullAndNewLines(entity, 16, splitString);
+                                }
+                                if (entity.Contains("Regionenleiter:"))
+                                {
+                                    employee.VzRegionalSupervisor = CheckForNullAndNewLines(entity, 16, splitString);
+                                }
+                                if (entity.Contains("Kaderstufe:"))
+                                {
+                                    employee.VzManagementLevel = CheckForNullAndNewLines(entity, 12, splitString);
+                                }
+
                                 if (entity.Contains("Standort:"))
                                 {
                                     var entityString = CheckForNullAndNewLines(entity, 10, splitString);

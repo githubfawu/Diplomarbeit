@@ -10,6 +10,7 @@
   <ItemGroup>
     <None Remove="View\bg.jpg" />
     <None Remove="View\drag-and-drop2.tif" />
+    <None Remove="View\vzlogo.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +34,7 @@
   <ItemGroup>
     <Resource Include="View\Ressources\bg.jpg" />
     <Resource Include="View\Ressources\drag-and-drop2.tif" />
+    <Resource Include="View\Ressources\vzlogo.png" />
   </ItemGroup>
 
 </Project>
