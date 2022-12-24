@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="View\bg.jpg" />
+    <None Remove="View\drag-and-drop2.tif" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Docnet.Core" Version="2.3.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.1" />
     <PackageReference Include="NLog" Version="5.1.0" />
@@ -23,6 +28,11 @@
   <ItemGroup>
     <Folder Include="API\File\" />
     <Folder Include="API\Exchange\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="View\Ressources\bg.jpg" />
+    <Resource Include="View\Ressources\drag-and-drop2.tif" />
   </ItemGroup>
 
 </Project>

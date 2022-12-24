@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Input;
 using VZEintrittsApp.DataAccess;
 using VZEintrittsApp.Model;
 using VZEintrittsApp.ViewModel;

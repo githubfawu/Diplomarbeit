@@ -12,7 +12,7 @@ namespace VZEintrittsApp.DataAccess
         }
         public DbSet<Record> Records { get; set; }
         public DbSet<SavedFile> SavedFiles { get; set; }
-        public DbSet<StateAndCountry?> StatesAndCountries { get; set; }
+        public DbSet<StateAndCountry> StatesAndCountries { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite($"Data Source={DbPath}");

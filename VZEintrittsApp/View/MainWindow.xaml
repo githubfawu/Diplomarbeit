@@ -12,12 +12,9 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter"></BooleanToVisibilityConverter>
     </Window.Resources>
-   
+
     <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="Black"/>
-            <GradientStop Color="#FF3B6A98" Offset="1"/>
-        </LinearGradientBrush>
+        <ImageBrush ImageSource="/View/Ressources/bg.jpg"/>
     </Window.Background>
 
     <Grid>
@@ -39,15 +36,15 @@
 
         <Grid Column="2" Row="0">
             <Rectangle Style="{StaticResource Rectangle}" Margin="40, 15,40,40" Drop="Document_Drop">
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="/View/Ressources/drag-and-drop2.tif"/>
+                </Rectangle.Fill>
                 <Rectangle.OpacityMask>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="Black"/>
                         <GradientStop Color="White" Offset="1"/>
                     </LinearGradientBrush>
                 </Rectangle.OpacityMask>
-                <Rectangle.Effect>
-                    <BlurEffect/>
-                </Rectangle.Effect>
             </Rectangle>
         </Grid>
         
@@ -69,7 +66,8 @@
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="true">
                                     <Setter Property="Foreground" Value="Black" />
-                                </Trigger>
+                                    <Setter Property="ToolTip" Value="Doppelklick für das Original-Dokument" />
+                            </Trigger>
                             </Style.Triggers>
                         </Style>
                 </ListView.ItemContainerStyle>
@@ -187,7 +185,7 @@
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="5" Content="Land"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="5" Text="{Binding CurrentEmployee.Country}"/>
 
-                                <Button Grid.Column="3" Grid.Row="7" Margin="15,10,15,15"  Name="ButtonSave" Command="{Binding UpdateCommand}" FontSize="20" Background="#FFDA632D">Speichern</Button>
+                                <Button Grid.Column="3" Grid.Row="7" Margin="15,10,15,15"  Name="ButtonSave" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
                             </Grid>
                         </TabPanel>
                     </TabItem>
