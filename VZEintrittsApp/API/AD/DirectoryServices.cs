@@ -1,15 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
+using System.Security.Principal;
 using System.Windows;
+using VZEintrittsApp.DataAccess;
 using VZEintrittsApp.Domain;
 
 namespace VZEintrittsApp.API.AD
 {
     public class DirectoryServices
-    { 
-        public DirectoryServices() { }
+    {
+        private LoggerContext Log;
+
+        public DirectoryServices(LoggerContext loggerContext)
+        {
+            Log = loggerContext;
+        }
 
         public bool CheckIfUserExists (string abbreviation)
         {
@@ -105,6 +111,7 @@ namespace VZEintrittsApp.API.AD
                     userEntry.Properties["vzRegionalSupervisor"].Value = employee.VzRegionalSupervisor;
                     userEntry.CommitChanges();
 
+                    Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, employee.Abbreviation, "Ein neues Benutzerkonto wurde erstellt.");
                     return true;
                 }
             }

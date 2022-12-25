@@ -17,11 +17,11 @@ namespace VZEintrittsApp.Import.PDFReader
 {
     internal class ReadPdfDocument : IReadDocument
     {
-        private ContextHelper ContextHelper { get; set; }
+        private RecordContext ContextHelper { get; set; }
 
         private FinalizeEmployee Finalize { get; set; }
 
-    public ReadPdfDocument (ContextHelper contextHelper)
+    public ReadPdfDocument (RecordContext contextHelper)
         {
             this.ContextHelper = contextHelper;
         }

@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using VZEintrittsApp.DataAccess;
 using VZEintrittsApp.Model;
 using VZEintrittsApp.ViewModel;
 
@@ -7,19 +6,13 @@ namespace VZEintrittsApp.View
 {
     public partial class MainWindow : Window
     {
-        private readonly Repository repository;
-
-        public MainWindow()
+        private readonly Repository Repository;
+        public MainWindow(Repository repository)
         {
-            using (DbContext context = new DbContext())
-            {
-                context.Database.EnsureCreated();
-            }
-            
             InitializeComponent();
 
-            repository = new Repository();
-            DataContext = new ViewModelUserView(repository);
+            Repository = repository;
+            DataContext = new ViewModelUserView(Repository);
         }
 
         private void Document_Drop(object sender, DragEventArgs e)
@@ -30,7 +23,7 @@ namespace VZEintrittsApp.View
 
                 foreach (string file in files)
                 {
-                    repository.ImportDocument(file);
+                    Repository.ImportDocument(file);
                 }
             }
         }

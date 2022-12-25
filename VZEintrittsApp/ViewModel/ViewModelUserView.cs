@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Security.Policy;
 using System.Windows;
 using Prism.Commands;
 using Prism.Mvvm;
 using VZEintrittsApp.Domain;
-using VZEintrittsApp.Enums;
 using VZEintrittsApp.Model;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace VZEintrittsApp.ViewModel
 {
@@ -44,9 +39,8 @@ namespace VZEintrittsApp.ViewModel
         }
         public DelegateCommand UpdateCommand { get; set; }
         public DelegateCommand OpenDocumentCommand { get; set; }
-        
-        private Repository Repository { get; set; }
 
+        private Repository Repository { get; set; }
 
         private ObservableCollection<Record> recordsList = new ObservableCollection<Record>();
         public ObservableCollection<Record> RecordsList

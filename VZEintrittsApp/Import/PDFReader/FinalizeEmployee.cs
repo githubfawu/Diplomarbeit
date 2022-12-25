@@ -7,10 +7,10 @@ namespace VZEintrittsApp.Import.PDFReader
 {
     public class FinalizeEmployee
     {
-        private ContextHelper ContextHelper { get; set; }
+        private RecordContext ContextHelper { get; set; }
         private List<Employee> EmployeeList { get; set; }
 
-        public FinalizeEmployee(ContextHelper contextHelper, List<Employee> employeeList)
+        public FinalizeEmployee(RecordContext contextHelper, List<Employee> employeeList)
         {
             this.ContextHelper = contextHelper;
             EmployeeList = employeeList;

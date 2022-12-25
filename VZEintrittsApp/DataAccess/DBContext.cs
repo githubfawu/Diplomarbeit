@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VZEintrittsApp.Domain;
+using VZEintrittsApp.Logger;
 
 namespace VZEintrittsApp.DataAccess
 {
@@ -13,6 +14,7 @@ namespace VZEintrittsApp.DataAccess
         public DbSet<Record> Records { get; set; }
         public DbSet<SavedFile> SavedFiles { get; set; }
         public DbSet<StateAndCountry> StatesAndCountries { get; set; }
+        public DbSet<Log> Logs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite($"Data Source={DbPath}");
@@ -24,6 +26,9 @@ namespace VZEintrittsApp.DataAccess
 
             modelBuilder.Entity<SavedFile>()
                 .HasKey(p => p.FileName);
+
+            modelBuilder.Entity<Log>()
+                .HasKey(p => p.LogNr);
 
             modelBuilder.Entity<StateAndCountry>()
                 .HasKey(p => p.CityId);

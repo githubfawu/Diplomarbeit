@@ -8,26 +8,29 @@ using VZEintrittsApp.Enums;
 using VZEintrittsApp.Import;
 using VZEintrittsApp.Import.PDFReader;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO.Pipes;
+using System.Security.Principal;
 
 namespace VZEintrittsApp.Model
 {
     public class Repository
     {
-        private ContextHelper contextHelper = new ContextHelper();
-        private DirectoryServices activeDirectory = new DirectoryServices();
+        private RecordContext RecordContext;
+        private LoggerContext Log;
+        private DirectoryServices activeDirectory;
         private IReadDocument documentReader;
         public ObservableCollection<Record> RecordsList = new ObservableCollection<Record>();
 
-        public Repository()
+        public Repository(RecordContext recordContext, LoggerContext log, DirectoryServices directoryServices)
         {
+            activeDirectory = directoryServices;
+            RecordContext = recordContext;
             ReadAllRecords();
+            Log = log;
         }
 
         public void ReadAllRecords()
         {
-            RecordsList.AddRange(contextHelper.GetAllRecords());
+            RecordsList.AddRange(RecordContext.GetAllRecords());
         }
 
         public Employee ReadAllAdAttributes(string abbreviation)
@@ -37,13 +40,14 @@ namespace VZEintrittsApp.Model
 
         public StateAndCountry? GetStateAndCountry(string cityName)
         {
-            return contextHelper.GetStateAndCountry(cityName);
+            return RecordContext.GetStateAndCountry(cityName);
         }
+
         public void ImportDocument(string file)
         {
             if(file.Contains(".pdf"))
             {
-                documentReader = new ReadPdfDocument(contextHelper);
+                documentReader = new ReadPdfDocument(RecordContext);
             }
             else
             {
@@ -56,12 +60,13 @@ namespace VZEintrittsApp.Model
             {
                 recordFromDocument.Status = RecordStatus.Offen;
                 recordFromDocument.AssociatedFile = fileName;
-                recordFromDocument.Recorder = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+                recordFromDocument.Recorder = WindowsIdentity.GetCurrent().Name;
                 recordFromDocument.RecordRead = DateTime.Now;
 
-                if (contextHelper.GetRecord(recordFromDocument) == false)
+                if (RecordContext.GetRecord(recordFromDocument) == false)
                 {
-                    contextHelper.SaveNewRecord(recordFromDocument);
+                    RecordContext.SaveNewRecord(recordFromDocument);
+                    Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, recordFromDocument.Abbreviation, "Ein neuer Eintrittsdatensatz wurde erstellt.");
                 }
                 else
                 {
@@ -77,7 +82,7 @@ namespace VZEintrittsApp.Model
                 File = File.ReadAllBytes(file)
             };
             
-            contextHelper.SaveNewFile(fileToSave);
+            RecordContext.SaveNewFile(fileToSave);
 
             var users = documentReader.ReadUsers(file);
             foreach (var user in users)
@@ -95,7 +100,7 @@ namespace VZEintrittsApp.Model
 
         public byte[] GetOriginalDocument(string filename)
         {
-            var document = contextHelper.GetEntryDocument(filename);
+            var document = RecordContext.GetEntryDocument(filename);
             return document;
         }
     }

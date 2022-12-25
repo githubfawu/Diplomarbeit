@@ -5,46 +5,50 @@ using VZEintrittsApp.Domain;
 
 namespace VZEintrittsApp.DataAccess
 {
-    public class ContextHelper 
+    public class RecordContext 
     {
-        private DbContext dbContext = new DbContext();
-        public ContextHelper() { }
+        private DbContext DbContext;
+
+        public RecordContext(DbContext dbContext)
+        {
+            DbContext = dbContext;
+        }
 
         public List<Record> GetAllRecords()
         {
-            var getRecords = dbContext.Records.ToList();
+            var getRecords = DbContext.Records.ToList();
             return getRecords;
         }
         public bool GetRecord(Record record)
         {
-            if(dbContext.Records.FirstOrDefault(r => r.EmployeeNr == record.EmployeeNr) != null) return true;
+            if(DbContext.Records.FirstOrDefault(r => r.EmployeeNr == record.EmployeeNr) != null) return true;
             return false;
         }
         public bool SaveNewRecord(Record record)
         {
-            dbContext.Records.AddRange(record);
-            dbContext.SaveChanges();
+            DbContext.Records.AddRange(record);
+            DbContext.SaveChanges();
             return true;
         }
 
         public bool SaveNewFile(SavedFile file)
         {
-            dbContext.SavedFiles.AddRange(file);
-            dbContext.SaveChanges();
+            DbContext.SavedFiles.AddRange(file);
+            DbContext.SaveChanges();
             return true;
         }
 
         public byte[] GetEntryDocument(string filename)
         {
-            SavedFile file = dbContext.SavedFiles.SingleOrDefault(x => x.FileName == filename);
+            SavedFile file = DbContext.SavedFiles.SingleOrDefault(x => x.FileName == filename);
             return file?.File;
         }
 
         public StateAndCountry? GetStateAndCountry (string cityName)
         {
-            if (dbContext.StatesAndCountries.SingleOrDefault(x => x.CityName == cityName) != null)
+            if (DbContext.StatesAndCountries.SingleOrDefault(x => x.CityName == cityName) != null)
             {
-                return dbContext.StatesAndCountries.SingleOrDefault(x => x.CityName == cityName);
+                return DbContext.StatesAndCountries.SingleOrDefault(x => x.CityName == cityName);
             }
             else
             {

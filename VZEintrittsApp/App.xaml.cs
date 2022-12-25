@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
+using VZEintrittsApp.API.AD;
+using VZEintrittsApp.DataAccess;
+using VZEintrittsApp.Model;
+using VZEintrittsApp.View;
 
 namespace VZEintrittsApp
 {
@@ -13,5 +12,32 @@ namespace VZEintrittsApp
     /// </summary>
     public partial class App : Application
     {
+        private ServiceProvider serviceProvider;
+        public App()
+        {
+            ServiceCollection services = new ServiceCollection();
+            ConfigureServices(services);
+            serviceProvider = services.BuildServiceProvider();
+
+            using (DbContext context = new DbContext())
+            {
+                context.Database.EnsureCreated();
+            }
+
+        }
+        private void ConfigureServices(ServiceCollection services)
+        {
+            services.AddSingleton<MainWindow>();
+            services.AddSingleton<DbContext>();
+            services.AddSingleton<RecordContext>();
+            services.AddSingleton<LoggerContext>();
+            services.AddSingleton<Repository>();
+            services.AddSingleton<DirectoryServices>();
+        }
+        private void OnStartup(object sender, StartupEventArgs e)
+        {
+            var mainWindow = serviceProvider.GetService<MainWindow>();
+            mainWindow.Show();
+        }
     }
 }
