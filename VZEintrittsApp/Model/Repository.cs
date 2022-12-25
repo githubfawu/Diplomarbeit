@@ -15,15 +15,19 @@ namespace VZEintrittsApp.Model
     public class Repository
     {
         private RecordContext RecordContext;
+        private FinalizeContext FinalizeContext;
         private LoggerContext Log;
         private DirectoryServices activeDirectory;
+        private ReadPdfDocument ReadPdfDocument;
         private IReadDocument documentReader;
         public ObservableCollection<Record> RecordsList = new ObservableCollection<Record>();
 
-        public Repository(RecordContext recordContext, LoggerContext log, DirectoryServices directoryServices)
+        public Repository(RecordContext recordContext, LoggerContext log, FinalizeContext finalizeContext, DirectoryServices directoryServices, ReadPdfDocument readPdfDocument)
         {
             activeDirectory = directoryServices;
+            FinalizeContext = finalizeContext;
             RecordContext = recordContext;
+            ReadPdfDocument = readPdfDocument;
             ReadAllRecords();
             Log = log;
         }
@@ -40,14 +44,14 @@ namespace VZEintrittsApp.Model
 
         public StateAndCountry? GetStateAndCountry(string cityName)
         {
-            return RecordContext.GetStateAndCountry(cityName);
+            return FinalizeContext.GetStateAndCountry(cityName);
         }
 
         public void ImportDocument(string file)
         {
             if(file.Contains(".pdf"))
             {
-                documentReader = new ReadPdfDocument(RecordContext);
+                documentReader = ReadPdfDocument;
             }
             else
             {
@@ -67,13 +71,12 @@ namespace VZEintrittsApp.Model
                 {
                     RecordContext.SaveNewRecord(recordFromDocument);
                     Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, recordFromDocument.Abbreviation, "Ein neuer Eintrittsdatensatz wurde erstellt.");
+                    RecordsList.Add(recordFromDocument);
                 }
                 else
                 {
                     MessageBox.Show($"Für den Benutzer {recordFromDocument.Abbreviation} existiert bereits ein Eintrag in der Datenbank!");
                 }
-                
-                RecordsList.Add(recordFromDocument);
             }
 
             var fileToSave = new SavedFile()

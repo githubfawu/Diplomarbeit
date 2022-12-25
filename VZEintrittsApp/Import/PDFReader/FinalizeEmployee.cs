@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using VZEintrittsApp.DataAccess;
 using VZEintrittsApp.Domain;
 using VZEintrittsApp.Model;
@@ -7,20 +8,21 @@ namespace VZEintrittsApp.Import.PDFReader
 {
     public class FinalizeEmployee
     {
-        private RecordContext ContextHelper { get; set; }
+        private FinalizeContext FinalizeContext { get; set; }
         private List<Employee> EmployeeList { get; set; }
 
-        public FinalizeEmployee(RecordContext contextHelper, List<Employee> employeeList)
+        public FinalizeEmployee(FinalizeContext finalizeContext)
         {
-            this.ContextHelper = contextHelper;
-            EmployeeList = employeeList;
+            this.FinalizeContext = finalizeContext;
         }
-        public List<Employee> FinalizeEmployees()
+        public List<Employee> FinalizeEmployees(List<Employee> employeeList)
         {
+            EmployeeList = employeeList;
             CheckForCallSigns(EmployeeList);
             CheckForCompany(EmployeeList);
             AddStateAndCountry(EmployeeList);
             CheckForMailfooter(EmployeeList);
+            AddDescriptionAndOffice(EmployeeList);
 
             return EmployeeList;
         }
@@ -62,9 +64,26 @@ namespace VZEintrittsApp.Import.PDFReader
             {
                 if (employee.City != null)
                 {
-                    var stateAndCountry = ContextHelper.GetStateAndCountry(employee.City);
+                    var stateAndCountry = FinalizeContext.GetStateAndCountry(employee.City);
                     employee.State = stateAndCountry.StateName;
                     employee.Country = stateAndCountry.CountryCode;
+                }
+            }
+
+            return employeeList;
+        }
+        private List<Employee> AddDescriptionAndOffice(List<Employee> employeeList)
+        {
+            foreach (var employee in employeeList)
+            {
+                if (!string.IsNullOrWhiteSpace(employee.City) && !string.IsNullOrWhiteSpace(employee.Company))
+                {
+                    var branchAndPhone = FinalizeContext.GetDescriptionAndOffice(employee.City, employee.Company);
+                    if (branchAndPhone != null)
+                    {
+                        employee.Office = branchAndPhone.Office;
+                        employee.Description = branchAndPhone.BranchShortName;
+                    }
                 }
             }
 

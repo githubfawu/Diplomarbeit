@@ -20,11 +20,14 @@ namespace VZEintrittsApp.Domain
         public string? City { get; set; }
         public string? State { get; set; }
         public string? PostalCode { get; set; }
+        public string? Office { get; set; }
+        public string? Description { get; set; }
         public string? PostOfficeBox { get; set; }
         public string? Country { get; set; }
         public bool? TitleInMailFooter { get; set; }
         public string? VzAcademicTitle { get; set; }
         public string? VzPensum { get; set; }
+        public string? VzBirthday { get; set; }
         public string? VzStartDate { get; set; }
         public string? VzGrade { get; set; }//Rang
         public string? VzBusinessUnitSupervisor { get; set; }

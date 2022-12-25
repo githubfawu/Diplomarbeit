@@ -1,29 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Documents;
 using Docnet.Core;
 using Docnet.Core.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using VZEintrittsApp.DataAccess;
 using VZEintrittsApp.Domain;
-using VZEintrittsApp.Model;
 
 namespace VZEintrittsApp.Import.PDFReader
 {
-    internal class ReadPdfDocument : IReadDocument
+    public class ReadPdfDocument : IReadDocument
     {
-        private RecordContext ContextHelper { get; set; }
+        private FinalizeEmployee FinalizeEmployee;
 
-        private FinalizeEmployee Finalize { get; set; }
-
-    public ReadPdfDocument (RecordContext contextHelper)
+        public ReadPdfDocument (FinalizeEmployee finalizeEmployee)
         {
-            this.ContextHelper = contextHelper;
+            FinalizeEmployee = finalizeEmployee;
         }
         public List<Employee> ReadUsers(string file)
         {
@@ -133,6 +125,10 @@ namespace VZEintrittsApp.Import.PDFReader
                                 {
                                     employee.VzManagementLevel = CheckForNullAndNewLines(entity, 12, splitString);
                                 }
+                                if (entity.Contains("Geburtstag:"))
+                                {
+                                    employee.VzBirthday = CheckForNullAndNewLines(entity, 12, splitString);
+                                }
 
                                 if (entity.Contains("Standort:"))
                                 {
@@ -151,8 +147,7 @@ namespace VZEintrittsApp.Import.PDFReader
                 }
             }
 
-            Finalize = new FinalizeEmployee(ContextHelper, employeeList);
-            Finalize.FinalizeEmployees();
+            FinalizeEmployee.FinalizeEmployees(employeeList);
             return employeeList;
         }
 

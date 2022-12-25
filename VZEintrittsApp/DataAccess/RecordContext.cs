@@ -43,18 +43,5 @@ namespace VZEintrittsApp.DataAccess
             SavedFile file = DbContext.SavedFiles.SingleOrDefault(x => x.FileName == filename);
             return file?.File;
         }
-
-        public StateAndCountry? GetStateAndCountry (string cityName)
-        {
-            if (DbContext.StatesAndCountries.SingleOrDefault(x => x.CityName == cityName) != null)
-            {
-                return DbContext.StatesAndCountries.SingleOrDefault(x => x.CityName == cityName);
-            }
-            else
-            {
-                MessageBox.Show("Fehler beim Laden des Kantons und des Landes!");
-                return null;
-            }
-        }
     }
 }

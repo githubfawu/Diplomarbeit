@@ -2,6 +2,7 @@
 using System.Windows;
 using VZEintrittsApp.API.AD;
 using VZEintrittsApp.DataAccess;
+using VZEintrittsApp.Import.PDFReader;
 using VZEintrittsApp.Model;
 using VZEintrittsApp.View;
 
@@ -31,8 +32,11 @@ namespace VZEintrittsApp
             services.AddSingleton<DbContext>();
             services.AddSingleton<RecordContext>();
             services.AddSingleton<LoggerContext>();
+            services.AddSingleton<FinalizeContext>();
             services.AddSingleton<Repository>();
             services.AddSingleton<DirectoryServices>();
+            services.AddSingleton<FinalizeEmployee>();
+            services.AddSingleton<ReadPdfDocument>();
         }
         private void OnStartup(object sender, StartupEventArgs e)
         {

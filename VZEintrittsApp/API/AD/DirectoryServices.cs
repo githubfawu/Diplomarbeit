@@ -51,7 +51,8 @@ namespace VZEintrittsApp.API.AD
                         FirstName = user.GivenName,
                         LastName = user.Surname,
                         DisplayName = user.DisplayName,
-                        MailAdress = user.EmailAddress
+                        MailAdress = user.EmailAddress,
+                        Description = user.Description
                     };
                     DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
                     employee.Company = userEntry.Properties["Company"].Value?.ToString();
@@ -59,6 +60,7 @@ namespace VZEintrittsApp.API.AD
                     employee.Position = userEntry.Properties["title"].Value?.ToString();
                     employee.City = userEntry.Properties["l"].Value?.ToString();
                     employee.PostalCode = userEntry.Properties["postalCode"].Value?.ToString();
+                    employee.Office = userEntry.Properties["physicalDeliveryOfficeName"].Value?.ToString();
                     employee.Street = userEntry.Properties["streetAddress"].Value?.ToString();
                     employee.State = userEntry.Properties["st"].Value?.ToString();
                     employee.Country = userEntry.Properties["c"].Value?.ToString();
@@ -67,6 +69,7 @@ namespace VZEintrittsApp.API.AD
                     employee.VzStartDate = userEntry.Properties["vzEmployeeStartDate"].Value?.ToString();
                     employee.VzBusinessUnitSupervisor = userEntry.Properties["vzBusinessUnitSupervisor"].Value?.ToString();
                     employee.VzRegionalSupervisor = userEntry.Properties["vzRegionalSupervisor"].Value?.ToString();
+                    employee.VzBirthday = userEntry.Properties["vzBirthday"].Value?.ToString();
                     return employee;
                 }
             }
@@ -89,6 +92,7 @@ namespace VZEintrittsApp.API.AD
                            GivenName = employee.FirstName,
                            EmailAddress = employee.MailAdress,
                            DisplayName = $"{employee.FirstName} {employee.LastName}",
+                           Description = employee.Description,
                            Enabled = false
                        })
                 {
@@ -104,11 +108,13 @@ namespace VZEintrittsApp.API.AD
                     userEntry.Properties["streetAddress"].Value = employee.Street;
                     userEntry.Properties["st"].Value = employee.State;
                     userEntry.Properties["c"].Value = employee.Country;
+                    userEntry.Properties["physicalDeliveryOfficeName"].Value = employee.Office;
                     userEntry.Properties["vzAcademicTitle"].Value = employee.VzAcademicTitle;
                     userEntry.Properties["vzEmployeePensum"].Value = employee.VzPensum;
                     userEntry.Properties["vzEmployeeStartDate"].Value = employee.VzStartDate;
                     userEntry.Properties["vzBusinessUnitSupervisor"].Value = employee.VzBusinessUnitSupervisor;
                     userEntry.Properties["vzRegionalSupervisor"].Value = employee.VzRegionalSupervisor;
+                    userEntry.Properties["vzBirthday"].Value = employee.VzBirthday;
                     userEntry.CommitChanges();
 
                     Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, employee.Abbreviation, "Ein neues Benutzerkonto wurde erstellt.");

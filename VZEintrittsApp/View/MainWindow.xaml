@@ -124,7 +124,7 @@
                     </ListView.View>
                 </ListView>
             </Grid>
-
+        <!--Tab1-->
         <Grid Column="0" Row="2" Grid.ColumnSpan="3" Grid.RowSpan="2">
             <DockPanel>
                 <TabControl Style="{StaticResource TabControl}" Name="Prototyp">
@@ -169,7 +169,7 @@
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="4" Content="Kaderstufe:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="4" Text="{Binding CurrentEmployee}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="5" Content="Geburtsdatum:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="5" Text="{Binding CurrentEmployee}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="5" Text="{Binding CurrentEmployee.VzBirthday}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="6" Content="Abteilungsname:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="6" Text="{Binding CurrentEmployee.Department}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="1" Content="Vorgesetzter:"/>
@@ -180,12 +180,12 @@
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="3" Text="{Binding CurrentEmployee.VzBusinessUnitSupervisor}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="4" Content="E-Mail Adresse:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="4" Text="{Binding CurrentEmployee.MailAdress}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="5" Content="Telefonnummer:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="5" Text="{Binding CurrentEmployee}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="5" Content="Beschreibung"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="5" Text="{Binding CurrentEmployee.Description}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="6" Content="Erster Arbeitstag:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="6" Text="{Binding CurrentEmployee.VzStartDate}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="6" Content="Postfach(Scan):"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="6" Text="{Binding CurrentEmployee.PostOfficeBox}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="6" Content="Büro:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="6" Text="{Binding CurrentEmployee.Office}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="1" Content="Strasse:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="1" Text="{Binding CurrentEmployee.Street}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="2" Content="Ort:"/>
@@ -201,7 +201,45 @@
                             </Grid>
                         </TabPanel>
                     </TabItem>
-                    <TabItem Style="{StaticResource Tab}" Header="Zusätzliche Funktionen" />
+                    <!--Tab2-->
+                    <TabItem Style="{StaticResource Tab}" Header="Zusätzliche Funktionen">
+                        <TabPanel>
+                            <Grid Margin="15,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.75*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Content="Telefonie:" Foreground="White"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="1" Content="Rufnummer:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="1" Text="{Binding CurrentEmployee}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="2" Content="Rufnummer - Andere:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="2" Text="{Binding CurrentEmployee}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="3" Content="Privat:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="3" Text="{Binding CurrentEmployee}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="4" Content="Pager:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="4" Text="{Binding CurrentEmployee}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="5" Content="Mobil:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="5" Text="{Binding CurrentEmployee}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="6" Content="Fax:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="6" Text="{Binding CurrentEmployee}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="7" Content="IP-Telefon:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="7" Text="{Binding CurrentEmployee}"/>
+                                <Button Grid.Column="3" Grid.Row="7" Margin="15,10,15,15"  Name="ButtonSavetest" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
+                            </Grid>
+                        </TabPanel>
+                    </TabItem>
                     <TabItem Style="{StaticResource Tab}" Header="Berechtigungen" />
                     <TabItem Style="{StaticResource Tab}" Header="Datensatz" />
                 </TabControl>
