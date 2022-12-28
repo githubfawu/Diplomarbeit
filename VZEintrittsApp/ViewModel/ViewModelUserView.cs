@@ -104,7 +104,7 @@ namespace VZEintrittsApp.ViewModel
 
         private bool CanExecute()
         {
-            return true; /*!String.IsNullOrEmpty(SelectedItem.Abbreviation);*/
+            return true; /*!string.IsNullOrEmpty(SelectedItem.Abbreviation);*/
         }
 
         private void Execute()
@@ -124,8 +124,15 @@ namespace VZEintrittsApp.ViewModel
         }
         public void ShowGetNumberWindow()
         {
-            GetNumberWindow window = new GetNumberWindow(CurrentEmployee);
-            window.Show();
+            if (CurrentEmployee != null)
+            {
+                GetNumberWindow window = new GetNumberWindow(CurrentEmployee);
+                window.Show();
+            }
+            else
+            {
+                MessageBox.Show("Es muss zuerst ein Datensatz ausgewählt werden!");
+            }
         }
     }
 }

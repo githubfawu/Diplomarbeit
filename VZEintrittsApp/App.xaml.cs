@@ -36,6 +36,7 @@ namespace VZEintrittsApp
             services.AddSingleton<Repository>();
             services.AddSingleton<DirectoryServices>();
             services.AddSingleton<FinalizeEmployee>();
+            services.AddSingleton<AddIndividualProperties>();
             services.AddSingleton<ReadPdfDocument>();
         }
         private void OnStartup(object sender, StartupEventArgs e)

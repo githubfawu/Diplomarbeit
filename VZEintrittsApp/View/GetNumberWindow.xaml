@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VZEintrittsApp.View"
         mc:Ignorable="d"
-        Title="Neue Nummer suchen..." Height="400" Width="500"
+        Title="Neue Nummer suchen..." Height="450" Width="500"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.Background>
         <ImageBrush ImageSource="/View/Ressources/darkWood.png"/>
@@ -24,8 +24,9 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="1*" />
             <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <Grid Column="0" Grid.ColumnSpan="2" Row="0">
+        <Grid Column="0" Grid.ColumnSpan="3" Row="0">
             <Label FontSize="20" Margin="6,0,0,0" Content="Neue Telefonnummer vergeben..." Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
         </Grid>
         <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="1" Content="Benutzer:"/>
@@ -36,5 +37,11 @@
         <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2" IsEnabled="False" Text="{Binding CurrentEmployee.City}"/>
         <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="2" Content="Telefonnummer:"/>
         <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Text="{Binding CurrentEmployee.TelephoneNumber}"/>
+        <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Margin="11,10,65,20" Name="ButtonSavetest" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Freie Nummer vorschlagen</Button>
+        <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" FontSize="20" Margin="10,20,0,0" Content="Firma und Standort manuell wählen:" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
+        <ComboBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" FontSize="20" Margin="10,10,30,27" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
+        <ComboBox Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="5" FontSize="20" Margin="10,10,30,27" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
+        <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" FontSize="20" Margin="6,20,0,0" Content="" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
+        <Button Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="6" Margin="15,15,30,15" Name="ButtonSave" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
     </Grid>
 </Window>

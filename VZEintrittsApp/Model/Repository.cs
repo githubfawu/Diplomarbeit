@@ -19,15 +19,24 @@ namespace VZEintrittsApp.Model
         private LoggerContext Log;
         private DirectoryServices activeDirectory;
         private ReadPdfDocument ReadPdfDocument;
+        private FinalizeEmployee FinalizeEmployee;
+        private AddIndividualProperties AddIndividualProperties;
         private IReadDocument documentReader;
         public ObservableCollection<Record> RecordsList = new ObservableCollection<Record>();
 
-        public Repository(RecordContext recordContext, LoggerContext log, FinalizeContext finalizeContext, DirectoryServices directoryServices, ReadPdfDocument readPdfDocument)
+        public Repository(
+            RecordContext recordContext,
+            LoggerContext log, FinalizeContext finalizeContext,
+            DirectoryServices directoryServices, ReadPdfDocument readPdfDocument,
+            FinalizeEmployee finalizeEmployee,
+            AddIndividualProperties addIndividualProperties)
         {
             activeDirectory = directoryServices;
             FinalizeContext = finalizeContext;
             RecordContext = recordContext;
             ReadPdfDocument = readPdfDocument;
+            FinalizeEmployee = finalizeEmployee;
+            AddIndividualProperties = addIndividualProperties;
             ReadAllRecords();
             Log = log;
         }
@@ -40,11 +49,6 @@ namespace VZEintrittsApp.Model
         public Employee ReadAllAdAttributes(string abbreviation)
         {
             return activeDirectory.GetAttributes(abbreviation);
-        }
-
-        public StateAndCountry? GetStateAndCountry(string cityName)
-        {
-            return FinalizeContext.GetStateAndCountry(cityName);
         }
 
         public void ImportDocument(string file)
@@ -60,6 +64,7 @@ namespace VZEintrittsApp.Model
             }
 
             var fileName = ($"{DateTime.Now.Ticks}{Path.GetFileName(file)}");
+
             foreach (var recordFromDocument in documentReader.ReadRecords(file))
             {
                 recordFromDocument.Status = RecordStatus.Offen;
@@ -86,17 +91,23 @@ namespace VZEintrittsApp.Model
             };
             
             RecordContext.SaveNewFile(fileToSave);
+            ReadEmployees(file);
+        }
 
+        private void ReadEmployees(string file)
+        {
             var users = documentReader.ReadUsers(file);
             foreach (var user in users)
             {
                 if (activeDirectory.CheckIfUserExists(user.Abbreviation) == false)
                 {
+                    FinalizeEmployee.FinalizeEmployees(user);
+                    AddIndividualProperties.AddProperties(user, FinalizeContext.GetAppropriateSubsidiaryCompany(user.City, user.Company));
                     activeDirectory.CreateNewAdAccount(user);
                 }
                 else
                 {
-                    MessageBox.Show($"Der Benutzer {user.Abbreviation} existiert bereits im AD!");
+                    MessageBox.Show($"Der Benutzer {user.Abbreviation} existiert bereits im Active Directory!");
                 }
             }
         }

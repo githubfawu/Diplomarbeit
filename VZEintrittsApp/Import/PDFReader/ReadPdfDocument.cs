@@ -11,12 +11,6 @@ namespace VZEintrittsApp.Import.PDFReader
 {
     public class ReadPdfDocument : IReadDocument
     {
-        private FinalizeEmployee FinalizeEmployee;
-
-        public ReadPdfDocument (FinalizeEmployee finalizeEmployee)
-        {
-            FinalizeEmployee = finalizeEmployee;
-        }
         public List<Employee> ReadUsers(string file)
         {
             List<Employee> employeeList = new List<Employee>();
@@ -91,15 +85,15 @@ namespace VZEintrittsApp.Import.PDFReader
                                 if (entity.Contains("Unternehmen:"))
                                 {
                                     employee.Company = CheckForNullAndNewLines(entity, 13, splitString);
+                                    if (string.IsNullOrWhiteSpace(employee.Company)) employee.Company = employee.BusinessArea;
                                 }
                                 if (entity.Contains("Abteilungsname:"))
                                 {
                                     employee.Department = CheckForNullAndNewLines(entity, 16, splitString);
                                 }
                                 if (entity.Contains("Titel in Mailfuss:"))
-                                {
-                                    var value = CheckForNullAndNewLines(entity, 19, splitString);
-                                    employee.TitleInMailFooter = CheckForTitleInMailfooter(value);
+                                {  
+                                    employee.TitleInMailFooter = CheckForTitleInMailfooter(CheckForNullAndNewLines(entity, 19, splitString));
                                 }
                                 if (entity.Contains("Titel 1:"))
                                 {
@@ -146,8 +140,6 @@ namespace VZEintrittsApp.Import.PDFReader
                     }
                 }
             }
-
-            FinalizeEmployee.FinalizeEmployees(employeeList);
             return employeeList;
         }
 
@@ -163,7 +155,7 @@ namespace VZEintrittsApp.Import.PDFReader
             }
             return sb.ToString();
         }
-        
+
         public string? CheckForNullAndNewLines(string entity, int length, List<string> list)
         {
             if (entity.Length > length)
