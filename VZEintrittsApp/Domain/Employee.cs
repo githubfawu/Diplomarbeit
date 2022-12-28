@@ -24,6 +24,10 @@ namespace VZEintrittsApp.Domain
         public string? Description { get; set; }
         public string? PostOfficeBox { get; set; }
         public string? Country { get; set; }
+        public string? Pager { get; set; }
+        public string? OtherTelephone { get; set; }
+        public string? TelephoneNumber { get; set; }
+        public string? FaxNumber { get; set; }
         public bool? TitleInMailFooter { get; set; }
         public string? VzAcademicTitle { get; set; }
         public string? VzPensum { get; set; }

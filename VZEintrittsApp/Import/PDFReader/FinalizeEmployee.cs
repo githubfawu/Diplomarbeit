@@ -83,6 +83,9 @@ namespace VZEintrittsApp.Import.PDFReader
                     {
                         employee.Office = branchAndPhone.Office;
                         employee.Description = branchAndPhone.BranchShortName;
+                        employee.Pager = branchAndPhone.PhoneNumber;
+                        employee.OtherTelephone = branchAndPhone.PhoneNumber;
+                        employee.FaxNumber  = branchAndPhone.FaxNumber;
                     }
                 }
             }

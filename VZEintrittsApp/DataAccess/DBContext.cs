@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using VZEintrittsApp.DataAccess.Seeders;
 using VZEintrittsApp.Domain;
 using VZEintrittsApp.Logger;
 
@@ -14,7 +15,7 @@ namespace VZEintrittsApp.DataAccess
         public DbSet<Record> Records { get; set; }
         public DbSet<SavedFile> SavedFiles { get; set; }
         public DbSet<StateAndCountry> StatesAndCountries { get; set; }
-        public DbSet<BranchAndPhone> BranchAndPhones { get; set; }
+        public DbSet<BranchesAndPhoneNumbers> BranchAndPhones { get; set; }
         public DbSet<Log> Logs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -34,11 +35,11 @@ namespace VZEintrittsApp.DataAccess
             modelBuilder.Entity<StateAndCountry>()
                 .HasKey(p => p.CityId);
 
-            modelBuilder.Entity<BranchAndPhone>()
+            modelBuilder.Entity<BranchesAndPhoneNumbers>()
                 .HasKey(p => p.BranchId);
 
             modelBuilder.Entity<StateAndCountry>().HasData(StateCountrySeeder.GetSeeds());
-            modelBuilder.Entity<BranchAndPhone>().HasData(BranchAndPhoneSeeder.GetSeeds());
+            modelBuilder.Entity<BranchesAndPhoneNumbers>().HasData(BranchesAndPhoneNumbersSeeder.GetSeeds());
         }
     }
 }

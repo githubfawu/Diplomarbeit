@@ -8,7 +8,7 @@
         Title="VZ Eintritte"
         Width="1000"
         Height="850"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter"></BooleanToVisibilityConverter>
     </Window.Resources>
@@ -196,8 +196,8 @@
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="4" Text="{Binding CurrentEmployee.PostalCode}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="5" Content="Land"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="5" Text="{Binding CurrentEmployee.Country}"/>
-
-                                <Button Grid.Column="3" Grid.Row="7" Margin="15,10,15,15"  Name="ButtonSave" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
+                                <Button Grid.Column="0" Grid.Row="7" Margin="10,10,33,15"  Name="ButtonConfig" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Einstellungen</Button>
+                                <Button Grid.Column="3" Grid.Row="7" Margin="10,10,33,15"  Name="ButtonSave" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
                             </Grid>
                         </TabPanel>
                     </TabItem>
@@ -223,19 +223,18 @@
                                 </Grid.RowDefinitions>
                                 <Label Grid.Column="0" Grid.Row="0" Content="Telefonie:" Foreground="White"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="1" Content="Rufnummer:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="1" Text="{Binding CurrentEmployee}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="1" Text="{Binding CurrentEmployee.TelephoneNumber}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="2" Content="Rufnummer - Andere:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="2" Text="{Binding CurrentEmployee}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="3" Content="Privat:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="3" Text="{Binding CurrentEmployee}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="4" Content="Pager:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="2" Text="{Binding CurrentEmployee.OtherTelephone}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="3" Content="Pager (Ausgehende Rufnr.):"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="3" Text="{Binding CurrentEmployee.Pager}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="4" Content="Mobil:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="4" Text="{Binding CurrentEmployee}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="5" Content="Mobil:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="5" Text="{Binding CurrentEmployee}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="6" Content="Fax:"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="5" Content="Fax:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="5" Text="{Binding CurrentEmployee.FaxNumber}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="6" Content="IP-Telefon:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="6" Text="{Binding CurrentEmployee}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="7" Content="IP-Telefon:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="7" Text="{Binding CurrentEmployee}"/>
+                                <Button Grid.Column="1" Grid.Row="1" Margin="25,25,25, 5" Name="ButtonGetNumber" Command="{Binding GetNumberCommand}" FontSize="18" Background="#09aded" Content="Nummer suchen"/>
                                 <Button Grid.Column="3" Grid.Row="7" Margin="15,10,15,15"  Name="ButtonSavetest" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
                             </Grid>
                         </TabPanel>

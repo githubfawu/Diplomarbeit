@@ -1,0 +1,40 @@
+﻿<Window x:Class="VZEintrittsApp.View.GetNumberWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VZEintrittsApp.View"
+        mc:Ignorable="d"
+        Title="Neue Nummer suchen..." Height="400" Width="500"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Window.Background>
+        <ImageBrush ImageSource="/View/Ressources/darkWood.png"/>
+    </Window.Background>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.50*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid Column="0" Grid.ColumnSpan="2" Row="0">
+            <Label FontSize="20" Margin="6,0,0,0" Content="Neue Telefonnummer vergeben..." Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
+        </Grid>
+        <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="1" Content="Benutzer:"/>
+        <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" IsEnabled="False" Text="{Binding CurrentEmployee.DisplayName}"/>
+        <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="1" Content="Firma:"/>
+        <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" IsEnabled="False" Text="{Binding CurrentEmployee.Company}"/>
+        <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="2" Content="Standort:"/>
+        <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2" IsEnabled="False" Text="{Binding CurrentEmployee.City}"/>
+        <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="2" Content="Telefonnummer:"/>
+        <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Text="{Binding CurrentEmployee.TelephoneNumber}"/>
+    </Grid>
+</Window>

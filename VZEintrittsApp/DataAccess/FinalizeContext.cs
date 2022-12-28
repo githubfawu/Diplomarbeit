@@ -27,7 +27,7 @@ namespace VZEintrittsApp.DataAccess
             }
         }
 
-        public BranchAndPhone? GetDescriptionAndOffice(string cityName, string companyName)
+        public BranchesAndPhoneNumbers? GetDescriptionAndOffice(string cityName, string companyName)
         {
             try
             {

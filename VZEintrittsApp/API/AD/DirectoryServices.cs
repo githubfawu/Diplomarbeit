@@ -64,6 +64,9 @@ namespace VZEintrittsApp.API.AD
                     employee.Street = userEntry.Properties["streetAddress"].Value?.ToString();
                     employee.State = userEntry.Properties["st"].Value?.ToString();
                     employee.Country = userEntry.Properties["c"].Value?.ToString();
+                    employee.Pager = userEntry.Properties["pager"].Value?.ToString();
+                    employee.OtherTelephone = userEntry.Properties["otherTelephone"].Value?.ToString();
+                    employee.FaxNumber = userEntry.Properties["facsimileTelephoneNumber"].Value?.ToString();
                     employee.VzAcademicTitle = userEntry.Properties["vzAcademicTitle"].Value?.ToString();
                     employee.VzPensum = userEntry.Properties["vzEmployeePensum"].Value?.ToString();
                     employee.VzStartDate = userEntry.Properties["vzEmployeeStartDate"].Value?.ToString();
@@ -109,6 +112,9 @@ namespace VZEintrittsApp.API.AD
                     userEntry.Properties["st"].Value = employee.State;
                     userEntry.Properties["c"].Value = employee.Country;
                     userEntry.Properties["physicalDeliveryOfficeName"].Value = employee.Office;
+                    userEntry.Properties["pager"].Value = employee.Pager;
+                    userEntry.Properties["otherTelephone"].Value = employee.OtherTelephone;
+                    userEntry.Properties["facsimileTelephoneNumber"].Value = employee.FaxNumber;
                     userEntry.Properties["vzAcademicTitle"].Value = employee.VzAcademicTitle;
                     userEntry.Properties["vzEmployeePensum"].Value = employee.VzPensum;
                     userEntry.Properties["vzEmployeeStartDate"].Value = employee.VzStartDate;

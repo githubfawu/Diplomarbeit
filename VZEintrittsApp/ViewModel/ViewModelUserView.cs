@@ -6,6 +6,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using VZEintrittsApp.Domain;
 using VZEintrittsApp.Model;
+using VZEintrittsApp.View;
 
 namespace VZEintrittsApp.ViewModel
 {
@@ -38,6 +39,7 @@ namespace VZEintrittsApp.ViewModel
             set => SetProperty(ref progressText, value);
         }
         public DelegateCommand UpdateCommand { get; set; }
+        public DelegateCommand GetNumberCommand { get; set; }
         public DelegateCommand OpenDocumentCommand { get; set; }
 
         private Repository Repository { get; set; }
@@ -94,6 +96,7 @@ namespace VZEintrittsApp.ViewModel
         public ViewModelUserView(Repository repository)
         {
             UpdateCommand = new DelegateCommand(Execute, CanExecute).ObservesProperty(() => SelectedItem);
+            GetNumberCommand = new DelegateCommand(ShowGetNumberWindow);
             OpenDocumentCommand = new DelegateCommand(OpenDocumentWithDefaultProgram);
             Repository = repository;
             RecordsList = Repository.RecordsList;
@@ -118,7 +121,11 @@ namespace VZEintrittsApp.ViewModel
                 File.WriteAllBytes(temp, document);
                 Process.Start(new ProcessStartInfo { FileName = temp, UseShellExecute = true });
             }
-            
+        }
+        public void ShowGetNumberWindow()
+        {
+            GetNumberWindow window = new GetNumberWindow(CurrentEmployee);
+            window.Show();
         }
     }
 }
