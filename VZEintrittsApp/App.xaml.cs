@@ -29,6 +29,7 @@ namespace VZEintrittsApp
         private void ConfigureServices(ServiceCollection services)
         {
             services.AddSingleton<MainWindow>();
+            services.AddSingleton<GetNumberWindow>();
             services.AddSingleton<DbContext>();
             services.AddSingleton<RecordContext>();
             services.AddSingleton<LoggerContext>();

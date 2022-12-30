@@ -25,5 +25,18 @@ namespace VZEintrittsApp.DataAccess
                 return null;
             }
         }
+
+        public SubsidiaryCompany? GetSubsidiaryCompanyFromDescription(string description)
+        {
+            try
+            {
+                return DbContext.SubsidiaryCompanies.SingleOrDefault(x => x.BranchNameForDescription == description);
+            }
+            catch
+            {
+                MessageBox.Show("Fehler beim Finden der passenden Niederlassung/Firma!");
+                return null;
+            }
+        }
     }
 }

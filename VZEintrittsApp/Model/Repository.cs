@@ -9,6 +9,7 @@ using VZEintrittsApp.Import;
 using VZEintrittsApp.Import.PDFReader;
 using System.Collections.ObjectModel;
 using System.Security.Principal;
+using System.Text.RegularExpressions;
 
 namespace VZEintrittsApp.Model
 {
@@ -26,8 +27,10 @@ namespace VZEintrittsApp.Model
 
         public Repository(
             RecordContext recordContext,
-            LoggerContext log, FinalizeContext finalizeContext,
-            DirectoryServices directoryServices, ReadPdfDocument readPdfDocument,
+            LoggerContext log,
+            FinalizeContext finalizeContext,
+            DirectoryServices directoryServices,
+            ReadPdfDocument readPdfDocument,
             FinalizeEmployee finalizeEmployee,
             AddIndividualProperties addIndividualProperties)
         {
@@ -37,8 +40,8 @@ namespace VZEintrittsApp.Model
             ReadPdfDocument = readPdfDocument;
             FinalizeEmployee = finalizeEmployee;
             AddIndividualProperties = addIndividualProperties;
-            ReadAllRecords();
             Log = log;
+            ReadAllRecords();
         }
 
         public void ReadAllRecords()
@@ -91,10 +94,10 @@ namespace VZEintrittsApp.Model
             };
             
             RecordContext.SaveNewFile(fileToSave);
-            ReadEmployees(file);
+            ReadAndCreateEmployees(file);
         }
 
-        private void ReadEmployees(string file)
+        private void ReadAndCreateEmployees(string file)
         {
             var users = documentReader.ReadUsers(file);
             foreach (var user in users)
@@ -110,6 +113,22 @@ namespace VZEintrittsApp.Model
                     MessageBox.Show($"Der Benutzer {user.Abbreviation} existiert bereits im Active Directory!");
                 }
             }
+        }
+
+        public string GetFreeNumberFromAd(string description)
+        {
+            var subsidiaryCompany = FinalizeContext.GetSubsidiaryCompanyFromDescription(description);
+            var lowRange = subsidiaryCompany.PhoneNumberRangeLow;
+            var highRange = subsidiaryCompany.PhoneNumberRangeHigh;
+
+            string definitiveNumber = "";
+            for (long i = lowRange; i < 41445636302; i++)
+            {
+                var numberWithoutSpaces = Regex.Replace(i.ToString(), @"\s+", "");
+                string numberToCheck = $"+{i}";
+                definitiveNumber = i.ToString();
+            }
+            return definitiveNumber;
         }
 
         public byte[] GetOriginalDocument(string filename)

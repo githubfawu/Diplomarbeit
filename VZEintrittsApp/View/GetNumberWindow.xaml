@@ -37,11 +37,12 @@
         <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2" IsEnabled="False" Text="{Binding CurrentEmployee.City}"/>
         <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="2" Content="Telefonnummer:"/>
         <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Text="{Binding CurrentEmployee.TelephoneNumber}"/>
-        <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Margin="11,10,65,20" Name="ButtonSavetest" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Freie Nummer vorschlagen</Button>
-        <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" FontSize="20" Margin="10,20,0,0" Content="Firma und Standort manuell wählen:" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
+        <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="3" Content="IP-Telefon:"/>
+        <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Text="{Binding CurrentEmployee.IpPhoneNumber}"/>
+        <Button Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="3" Margin="11,25,30,5" Command="{Binding GetFreeNumberCommand}" FontSize="20" Background="#09aded">Freie Nr. suchen</Button>
+        <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" FontSize="20" Margin="10,35,0,0" Content="Firma und Standort manuell wählen:" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
         <ComboBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" FontSize="20" Margin="10,10,30,27" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
         <ComboBox Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="5" FontSize="20" Margin="10,10,30,27" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
-        <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" FontSize="20" Margin="6,20,0,0" Content="" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
         <Button Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="6" Margin="15,15,30,15" Name="ButtonSave" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
     </Grid>
 </Window>

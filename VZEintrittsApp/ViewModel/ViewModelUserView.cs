@@ -126,7 +126,7 @@ namespace VZEintrittsApp.ViewModel
         {
             if (CurrentEmployee != null)
             {
-                GetNumberWindow window = new GetNumberWindow(CurrentEmployee);
+                GetNumberWindow window = new GetNumberWindow(CurrentEmployee, Repository);
                 window.Show();
             }
             else

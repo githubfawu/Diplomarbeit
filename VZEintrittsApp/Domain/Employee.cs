@@ -1,7 +1,9 @@
 ﻿
+using Prism.Mvvm;
+
 namespace VZEintrittsApp.Domain
 {
-    public class Employee
+    public class Employee : BindableBase
     {
         public int? EmployeeNr { get; set; }
         public string? Abbreviation { get; set; }
@@ -27,6 +29,19 @@ namespace VZEintrittsApp.Domain
         public string? Pager { get; set; }
         public string? OtherTelephone { get; set; }
         public string? TelephoneNumber { get; set; }
+
+        private string? ipPhoneNumber;
+        public string? IpPhoneNumber
+        {
+            get => ipPhoneNumber;
+            set
+            {
+                if (value != ipPhoneNumber)
+                {
+                    SetProperty(ref ipPhoneNumber, value);
+                }
+            }
+        }
         public string? FaxNumber { get; set; }
         public bool? TitleInMailFooter { get; set; }
         public string? VzAcademicTitle { get; set; }

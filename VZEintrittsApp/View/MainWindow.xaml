@@ -234,7 +234,7 @@
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="6" Content="Fax:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="6" Text="{Binding CurrentEmployee.FaxNumber}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="7" Content="IP-Telefon:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="7" Text="{Binding CurrentEmployee}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="7" Text="{Binding CurrentEmployee.IpPhoneNumber}"/>
                                 
                                 <Button Grid.Column="3" Grid.Row="7" Margin="15,10,15,15"  Name="ButtonSavetest" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
                             </Grid>
