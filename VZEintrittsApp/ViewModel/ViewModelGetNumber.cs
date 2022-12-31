@@ -19,15 +19,25 @@ namespace VZEintrittsApp.ViewModel
             GetFreeNumberCommand = new DelegateCommand(GetFreeNumber);
         }
 
+        private bool showLabelDescription = false;
+        public bool ShowLabelDescription
+        {
+            get => showLabelDescription;
+            set => SetProperty(ref showLabelDescription, value);
+        }
+
         private void GetFreeNumber()
         {
             if (!string.IsNullOrWhiteSpace(CurrentEmployee.Description))
             {
-                var phoneNumber = Repository.GetFreeNumberFromAd(CurrentEmployee.Description);
-                CurrentEmployee.TelephoneNumber = phoneNumber;//Korrektes Format +41 56 621 etc...
-                CurrentEmployee.IpPhoneNumber = phoneNumber;
+                var numbers = Repository.GetFreeNumberFromAd(CurrentEmployee.Description);
+                CurrentEmployee.IpPhoneNumber = numbers[0];
+                CurrentEmployee.TelephoneNumber = numbers[1];
             }
-
+            else
+            {
+                ShowLabelDescription = true;
+            }
         }
     }
 }

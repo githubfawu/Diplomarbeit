@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using VZEintrittsApp.DataAccess;
@@ -9,7 +10,9 @@ using VZEintrittsApp.Import;
 using VZEintrittsApp.Import.PDFReader;
 using System.Collections.ObjectModel;
 using System.Security.Principal;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows.Documents;
 using Prism.Services.Dialogs;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -117,35 +120,34 @@ namespace VZEintrittsApp.Model
             }
         }
 
-        public string GetFreeNumberFromAd(string description)
+        public string[] GetFreeNumberFromAd(string description)
         {
             
             var subsidiaryCompany = FinalizeContext.GetSubsidiaryCompanyFromDescription(description);
             var lowRange = subsidiaryCompany.PhoneNumberRangeLow;
             var highRange = subsidiaryCompany.PhoneNumberRangeHigh;
 
-            string definitiveNumber = "";
+            string[] numbers = new string[2];
             for (long i = lowRange; i < highRange; i++)
             {
                 if (activeDirectory.IsNummerFree(i))
                 {
                     //Schönere Messagebox bauen!!!
-                    MessageBoxResult result = MessageBox.Show($"Ist die Nummer +{i} verfügbar?", "Bitte Nummer prüfen...", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    MessageBoxResult result = MessageBox.Show($"Ist die Nummer +{i} verfügbar?", "Bitte Testanruf durchführen...", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                     if (result == MessageBoxResult.Yes)
                     {
-                        var numberWithoutSpaces = Regex.Replace(i.ToString(), @"\s+", "");
-                        definitiveNumber = $"+{i}";
+                        numbers[0] = $"+{i}";
+                        numbers[1] = GetCorrectNumberFormat(numbers[0], description);
                         break;
                     }
                     if (result == MessageBoxResult.Cancel)
                     {
                         return null;
-                        break;
                     }
                 }
             }
 
-            if (definitiveNumber == "")
+            if (numbers[0] == "")
             {
                 MessageBox.Show(
                     "Es konnte keine freie Nummer in dieser Range gefunden werden. Bitte wähle eine andere Range aus.");
@@ -153,8 +155,29 @@ namespace VZEintrittsApp.Model
             }
             else
             {
-                return definitiveNumber;
+                return numbers;
             }
+        }
+
+        public string GetCorrectNumberFormat(string number, string description)
+        {
+            StringBuilder currentNumber = new StringBuilder();
+            currentNumber.Append(number);
+
+            List<Tuple<int, string>> positionList = new List<Tuple<int, string>>();
+            positionList.Add(new Tuple<int, string>(2, " "));
+            positionList.Add(new Tuple<int, string>(5, " "));
+            positionList.Add(new Tuple<int, string>(9, " "));
+            positionList.Add(new Tuple<int, string>(12, " "));
+
+            //zu tun: Description zu City umwandeln, neue Tabelle mit City und Format erstellen, reader im Context erstellen
+
+            foreach (var position in positionList)
+            {
+                currentNumber.Insert(position.Item1 + 1, position.Item2);
+            }
+            
+            return currentNumber.ToString();
         }
         public byte[] GetOriginalDocument(string filename)
         {
