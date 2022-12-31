@@ -34,7 +34,7 @@ namespace VZEintrittsApp
             services.AddSingleton<RecordContext>();
             services.AddSingleton<LoggerContext>();
             services.AddSingleton<FinalizeContext>();
-            services.AddSingleton<Repository>();
+            services.AddScoped<Repository>();
             services.AddSingleton<DirectoryServices>();
             services.AddSingleton<FinalizeEmployee>();
             services.AddSingleton<AddIndividualProperties>();

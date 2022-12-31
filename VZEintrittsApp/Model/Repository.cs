@@ -10,6 +10,8 @@ using VZEintrittsApp.Import.PDFReader;
 using System.Collections.ObjectModel;
 using System.Security.Principal;
 using System.Text.RegularExpressions;
+using Prism.Services.Dialogs;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace VZEintrittsApp.Model
 {
@@ -117,24 +119,48 @@ namespace VZEintrittsApp.Model
 
         public string GetFreeNumberFromAd(string description)
         {
+            
             var subsidiaryCompany = FinalizeContext.GetSubsidiaryCompanyFromDescription(description);
             var lowRange = subsidiaryCompany.PhoneNumberRangeLow;
             var highRange = subsidiaryCompany.PhoneNumberRangeHigh;
 
             string definitiveNumber = "";
-            for (long i = lowRange; i < 41445636302; i++)
+            for (long i = lowRange; i < highRange; i++)
             {
-                var numberWithoutSpaces = Regex.Replace(i.ToString(), @"\s+", "");
-                string numberToCheck = $"+{i}";
-                definitiveNumber = i.ToString();
+                if (activeDirectory.IsNummerFree(i))
+                {
+                    //Schönere Messagebox bauen!!!
+                    MessageBoxResult result = MessageBox.Show($"Ist die Nummer +{i} verfügbar?", "Bitte Nummer prüfen...", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        var numberWithoutSpaces = Regex.Replace(i.ToString(), @"\s+", "");
+                        definitiveNumber = $"+{i}";
+                        break;
+                    }
+                    if (result == MessageBoxResult.Cancel)
+                    {
+                        return null;
+                        break;
+                    }
+                }
             }
-            return definitiveNumber;
-        }
 
+            if (definitiveNumber == "")
+            {
+                MessageBox.Show(
+                    "Es konnte keine freie Nummer in dieser Range gefunden werden. Bitte wähle eine andere Range aus.");
+                return null;
+            }
+            else
+            {
+                return definitiveNumber;
+            }
+        }
         public byte[] GetOriginalDocument(string filename)
         {
             var document = RecordContext.GetEntryDocument(filename);
             return document;
         }
+
     }
 }

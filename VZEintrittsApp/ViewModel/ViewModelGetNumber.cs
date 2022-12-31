@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using Prism.Commands;
+﻿using Prism.Commands;
 using VZEintrittsApp.Domain;
 using VZEintrittsApp.Model;
 using Prism.Mvvm;
@@ -11,6 +10,7 @@ namespace VZEintrittsApp.ViewModel
         private Repository Repository;
         public Employee CurrentEmployee { get; set; }
         public DelegateCommand GetFreeNumberCommand { get; set; }
+        public DelegateCommand SaveCommand { get; set; }
 
         public ViewModelGetNumber(Employee employee, Repository repository)
         {
@@ -21,9 +21,13 @@ namespace VZEintrittsApp.ViewModel
 
         private void GetFreeNumber()
         {
-            var phoneNumber = Repository.GetFreeNumberFromAd(CurrentEmployee.Description);
-            CurrentEmployee.TelephoneNumber = phoneNumber;//Korrektes Format +41 56 621 etc...
-            CurrentEmployee.IpPhoneNumber = $"+{phoneNumber}";
+            if (!string.IsNullOrWhiteSpace(CurrentEmployee.Description))
+            {
+                var phoneNumber = Repository.GetFreeNumberFromAd(CurrentEmployee.Description);
+                CurrentEmployee.TelephoneNumber = phoneNumber;//Korrektes Format +41 56 621 etc...
+                CurrentEmployee.IpPhoneNumber = phoneNumber;
+            }
+
         }
     }
 }

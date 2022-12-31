@@ -86,7 +86,7 @@ namespace VZEintrittsApp.ViewModel
                 ProgressValue = 100;
                 ProgressText = "AD-Attribute geladen...";
                 IsProgressBarVisible = false;
-                ProgressText = "";
+                ProgressText = ""; //Oder besser einfach drehendes Symbol (als Mauszeiger oder so...)?
                 return selectedItem;
 
             }

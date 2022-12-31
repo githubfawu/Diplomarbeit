@@ -15,6 +15,5 @@ namespace VZEintrittsApp.Domain
         public long PhoneNumberRangeLow { get; set; }
         public long PhoneNumberRangeHigh { get; set; }
 
-
     }
 }

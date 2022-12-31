@@ -1,6 +1,7 @@
 ﻿using System;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
+using System.DirectoryServices.Protocols;
 using System.Security.Principal;
 using System.Windows;
 using VZEintrittsApp.DataAccess;
@@ -34,6 +35,17 @@ namespace VZEintrittsApp.API.AD
             {
                 Console.WriteLine(e);
                 throw;
+            }
+        }
+
+        public bool IsNummerFree(long iPPhoneNumber)
+        {
+            var entry = new DirectoryEntry("LDAP://OU=Standarduser,OU=VZ_Users,DC=vz,DC=ch");
+            using (DirectorySearcher dsSearcher = new DirectorySearcher(entry))
+            {
+                dsSearcher.Filter = $"(&(objectClass=user)(objectCategory=person)(ipPhone=+{iPPhoneNumber}))";
+                SearchResult result = dsSearcher.FindOne();
+                return result == null;
             }
         }
 

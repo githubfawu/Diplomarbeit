@@ -196,7 +196,6 @@
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="4" Text="{Binding CurrentEmployee.PostalCode}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="5" Content="Land"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="5" Text="{Binding CurrentEmployee.Country}"/>
-                                <Button Grid.Column="0" Grid.Row="7" Margin="10,10,33,15"  Name="ButtonConfig" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Einstellungen</Button>
                                 <Button Grid.Column="3" Grid.Row="7" Margin="10,10,33,15"  Name="ButtonSave" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
                             </Grid>
                         </TabPanel>
