@@ -15,7 +15,9 @@ namespace VZEintrittsApp.View
             InitializeComponent();
             CurrentEmployee = employee;
             Repository = repository;
-            DataContext = new ViewModelGetNumber(CurrentEmployee, Repository);
+            var vm = new ViewModelGetNumber(CurrentEmployee, Repository);
+            DataContext = vm;
+            vm.ClosingRequest += (sender, e) => this.Close();
         }
     }
 }

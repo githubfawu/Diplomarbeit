@@ -122,12 +122,13 @@ namespace VZEintrittsApp.ViewModel
                 Process.Start(new ProcessStartInfo { FileName = temp, UseShellExecute = true });
             }
         }
-        public void ShowGetNumberWindow()
+        private void ShowGetNumberWindow()
         {
             if (CurrentEmployee != null)
             {
                 GetNumberWindow window = new GetNumberWindow(CurrentEmployee, Repository);
-                window.Show();
+                window.ShowDialog();
+                CurrentEmployee = Repository.ReadAllAdAttributes(selectedItem.Abbreviation);
             }
             else
             {

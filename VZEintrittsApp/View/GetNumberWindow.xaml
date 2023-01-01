@@ -48,6 +48,6 @@
                Foreground="DarkOrange" FontFamily="Calibri" Visibility="{Binding ShowLabelDescription, Converter={StaticResource boolToVisibilityConverter}}"/>
         <ComboBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" FontSize="20" Margin="10,10,30,27" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
         <ComboBox Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="5" FontSize="20" Margin="10,10,30,27" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
-        <Button Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="6" Margin="15,15,30,15" Name="ButtonSave" Command="{Binding SaveCommand}" FontSize="20" Background="#09aded">Speichern</Button>
+        <Button Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="6" Margin="15,15,30,15" Name="ButtonSave" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=GetNumberWindow}" FontSize="20" Background="#09aded">Speichern</Button>
     </Grid>
 </Window>

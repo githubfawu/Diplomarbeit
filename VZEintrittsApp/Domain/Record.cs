@@ -8,6 +8,16 @@ namespace VZEintrittsApp.Domain
     public class Record : BindableBase
     {
         [Key]
+        public int recordId;
+        public int RecordId
+        {
+            get => recordId;
+            set
+            {
+                if (value != recordId) SetProperty(ref recordId, value);
+            }
+        }
+
         public int employeeNr;
         public int EmployeeNr
         {

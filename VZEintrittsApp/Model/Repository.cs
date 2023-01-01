@@ -11,10 +11,6 @@ using VZEintrittsApp.Import.PDFReader;
 using System.Collections.ObjectModel;
 using System.Security.Principal;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Windows.Documents;
-using Prism.Services.Dialogs;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace VZEintrittsApp.Model
 {
@@ -88,7 +84,7 @@ namespace VZEintrittsApp.Model
                 }
                 else
                 {
-                    MessageBox.Show($"Für den Benutzer {recordFromDocument.Abbreviation} existiert bereits ein Eintrag in der Datenbank!");
+                    MessageBox.Show($"Für den Benutzer {recordFromDocument.Abbreviation} existiert bereits ein offener Datensatz!");
                 }
             }
 
@@ -120,6 +116,12 @@ namespace VZEintrittsApp.Model
             }
         }
 
+        public bool WriteSpecificAdAttribute(string employeeAttributeName, string abbreviation, string value)
+        {
+            if (activeDirectory.WriteIndividualAttribute(employeeAttributeName, abbreviation, value)) return true;
+            return false;
+        }
+
         public string[] GetFreeNumberFromAd(string description)
         {
             
@@ -130,9 +132,8 @@ namespace VZEintrittsApp.Model
             string[] numbers = new string[2];
             for (long i = lowRange; i < highRange; i++)
             {
-                if (activeDirectory.IsNummerFree(i))
+                if (activeDirectory.IsNumberFreeChecker(i))
                 {
-                    //Schönere Messagebox bauen!!!
                     MessageBoxResult result = MessageBox.Show($"Ist die Nummer +{i} verfügbar?", "Bitte Testanruf durchführen...", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                     if (result == MessageBoxResult.Yes)
                     {

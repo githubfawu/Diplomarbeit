@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
-using System.DirectoryServices.Protocols;
+using System.Linq;
 using System.Security.Principal;
 using System.Windows;
 using VZEintrittsApp.DataAccess;
@@ -12,10 +13,14 @@ namespace VZEintrittsApp.API.AD
     public class DirectoryServices
     {
         private LoggerContext Log;
+        private AttributeNotationContext AttributeNotationContext;
+        private List<AttributeNotations> AttributeList;
 
-        public DirectoryServices(LoggerContext loggerContext)
+        public DirectoryServices(LoggerContext loggerContext, AttributeNotationContext attributeNotationContext)
         {
             Log = loggerContext;
+            AttributeNotationContext = attributeNotationContext;
+            AttributeList = AttributeNotationContext.GetAllEntries();
         }
 
         public bool CheckIfUserExists (string abbreviation)
@@ -38,7 +43,28 @@ namespace VZEintrittsApp.API.AD
             }
         }
 
-        public bool IsNummerFree(long iPPhoneNumber)
+        public bool WriteIndividualAttribute(string employeeAttributeName, string abbreviation, string value)
+        {
+            try
+            {
+                using var context = new PrincipalContext(ContextType.Domain, "vz.ch", "OU=Standarduser,OU=VZ_Users,DC=vz,DC=ch");
+                {
+                    UserPrincipal user = UserPrincipal.FindByIdentity(context, abbreviation);
+                    DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
+                    var attribute = AttributeList.FirstOrDefault(e => e.EmployeeAttributeName == employeeAttributeName);
+                    userEntry.Properties[attribute.ActiveDirectoryName].Value = value;
+                    userEntry.CommitChanges();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+                return false;
+            }
+        }
+
+        public bool IsNumberFreeChecker(long iPPhoneNumber)
         {
             var entry = new DirectoryEntry("LDAP://OU=Standarduser,OU=VZ_Users,DC=vz,DC=ch");
             using (DirectorySearcher dsSearcher = new DirectorySearcher(entry))
@@ -76,6 +102,7 @@ namespace VZEintrittsApp.API.AD
                     employee.Street = userEntry.Properties["streetAddress"].Value?.ToString();
                     employee.State = userEntry.Properties["st"].Value?.ToString();
                     employee.Country = userEntry.Properties["c"].Value?.ToString();
+                    employee.TelephoneNumber = userEntry.Properties["telephoneNumber"].Value?.ToString();
                     employee.Pager = userEntry.Properties["pager"].Value?.ToString();
                     employee.OtherTelephone = userEntry.Properties["otherTelephone"].Value?.ToString();
                     employee.FaxNumber = userEntry.Properties["facsimileTelephoneNumber"].Value?.ToString();
@@ -143,9 +170,8 @@ namespace VZEintrittsApp.API.AD
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                MessageBox.Show(e.ToString());
                 return false;
-                throw;
             }
         }
     }

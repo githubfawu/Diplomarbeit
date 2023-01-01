@@ -1,7 +1,9 @@
-﻿using Prism.Commands;
+﻿using System.Windows;
+using Prism.Commands;
 using VZEintrittsApp.Domain;
 using VZEintrittsApp.Model;
 using Prism.Mvvm;
+using System;
 
 namespace VZEintrittsApp.ViewModel
 {
@@ -11,12 +13,14 @@ namespace VZEintrittsApp.ViewModel
         public Employee CurrentEmployee { get; set; }
         public DelegateCommand GetFreeNumberCommand { get; set; }
         public DelegateCommand SaveCommand { get; set; }
+        public event EventHandler ClosingRequest;
 
         public ViewModelGetNumber(Employee employee, Repository repository)
         {
             CurrentEmployee = employee;
             Repository = repository;
             GetFreeNumberCommand = new DelegateCommand(GetFreeNumber);
+            SaveCommand = new DelegateCommand(Save);
         }
 
         private bool showLabelDescription = false;
@@ -38,6 +42,17 @@ namespace VZEintrittsApp.ViewModel
             {
                 ShowLabelDescription = true;
             }
+        }
+
+        private void Save()
+        {
+            Repository.WriteSpecificAdAttribute(nameof(CurrentEmployee.IpPhoneNumber), CurrentEmployee.Abbreviation, CurrentEmployee.IpPhoneNumber);
+            Repository.WriteSpecificAdAttribute(nameof(CurrentEmployee.TelephoneNumber), CurrentEmployee.Abbreviation, CurrentEmployee.TelephoneNumber);
+            OnClosingRequest();
+        }
+        protected void OnClosingRequest()
+        {
+            this.ClosingRequest(this, EventArgs.Empty);
         }
     }
 }

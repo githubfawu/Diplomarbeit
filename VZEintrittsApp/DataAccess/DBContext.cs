@@ -15,6 +15,7 @@ namespace VZEintrittsApp.DataAccess
         public DbSet<Record> Records { get; set; }
         public DbSet<SavedFile> SavedFiles { get; set; }
         public DbSet<SubsidiaryCompany> SubsidiaryCompanies { get; set; }
+        public DbSet<AttributeNotations> AttributeNotations { get; set; }
 
         public DbSet<Log> Logs { get; set; }
 
@@ -24,7 +25,7 @@ namespace VZEintrittsApp.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Record>()
-                .HasKey(p => p.EmployeeNr);
+                .HasKey(p => p.RecordId);
 
             modelBuilder.Entity<SavedFile>()
                 .HasKey(p => p.FileName);
@@ -34,8 +35,12 @@ namespace VZEintrittsApp.DataAccess
 
             modelBuilder.Entity<SubsidiaryCompany>()
                 .HasKey(p => p.SubsidiaryCompanyId);
-
             modelBuilder.Entity<SubsidiaryCompany>().HasData(SubsidiaryCompanySeeder.GetSeeds());
+
+            modelBuilder.Entity<AttributeNotations>()
+                .HasKey(p => p.NotationId);
+            modelBuilder.Entity<AttributeNotations>().HasData(AttributeNotationsSeeder.GetSeeds());
+
         }
     }
 }
