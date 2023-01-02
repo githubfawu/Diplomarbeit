@@ -30,5 +30,10 @@ namespace VZEintrittsApp.View
             }
             Mouse.OverrideCursor = Cursors.Arrow;
         }
+
+        private void ButtonExit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

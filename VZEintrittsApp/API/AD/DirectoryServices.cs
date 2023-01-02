@@ -110,6 +110,7 @@ namespace VZEintrittsApp.API.AD
                     employee.Street = userEntry.Properties["streetAddress"].Value?.ToString();
                     employee.State = userEntry.Properties["st"].Value?.ToString();
                     employee.Country = userEntry.Properties["c"].Value?.ToString();
+                    employee.HomePage = userEntry.Properties["wWWHomePage"].Value?.ToString();
                     employee.TelephoneNumber = userEntry.Properties["telephoneNumber"].Value?.ToString();
                     employee.Pager = userEntry.Properties["pager"].Value?.ToString();
                     employee.OtherTelephone = userEntry.Properties["otherTelephone"].Value?.ToString();
@@ -164,6 +165,7 @@ namespace VZEintrittsApp.API.AD
                     userEntry.Properties["otherTelephone"].Value = employee.OtherTelephone;
                     userEntry.Properties["facsimileTelephoneNumber"].Value = employee.FaxNumber;
                     userEntry.Properties["ipPhone"].Value = employee.IpPhoneNumber;
+                    userEntry.Properties["wWWHomePage"].Value = employee.HomePage;
                     userEntry.Properties["vzAcademicTitle"].Value = employee.VzAcademicTitle;
                     userEntry.Properties["vzEmployeePensum"].Value = employee.VzPensum;
                     userEntry.Properties["vzEmployeeStartDate"].Value = employee.VzStartDate;

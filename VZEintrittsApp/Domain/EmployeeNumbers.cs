@@ -3,7 +3,7 @@ namespace VZEintrittsApp.Domain
 {
     public partial class Employee
     {
-        public string? pager;
+        private string? pager;
         public string? Pager
         {
             get => pager;
@@ -13,7 +13,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? otherTelephone;
+        private string? otherTelephone;
         public string? OtherTelephone
         {
             get => otherTelephone;
@@ -23,7 +23,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? telephoneNumber;
+        private string? telephoneNumber;
         public string? TelephoneNumber
         {
             get => telephoneNumber;

@@ -18,7 +18,7 @@ namespace VZEintrittsApp.ViewModel
 
         private Repository Repository { get; set; }
 
-        private ObservableCollection<Record> recordsList = new ObservableCollection<Record>();
+        private ObservableCollection<Record> recordsList;
         public ObservableCollection<Record> RecordsList
         {
             get => recordsList;

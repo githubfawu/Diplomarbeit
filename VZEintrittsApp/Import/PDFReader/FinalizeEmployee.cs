@@ -11,7 +11,7 @@ namespace VZEintrittsApp.Import.PDFReader
             CheckForCallSigns(Employee);
             CheckForEmptyCompany(Employee);
             CheckForMailfooter(Employee);
-
+            AddHomePage(Employee);
             return Employee;
         }
 
@@ -45,6 +45,11 @@ namespace VZEintrittsApp.Import.PDFReader
             {
                 employee.VzAcademicTitle = null;
             }
+            return employee;
+        }
+        private Employee AddHomePage(Employee employee)
+        {
+            employee.HomePage = $"http://mysite.vz.ch/Person.aspx?accountname=ZH01%5C{employee.Abbreviation}";
             return employee;
         }
     }

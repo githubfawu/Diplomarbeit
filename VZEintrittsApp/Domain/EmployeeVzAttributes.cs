@@ -3,7 +3,7 @@ namespace VZEintrittsApp.Domain
 {
     public partial class Employee
     {
-        public bool? titleInMailFooter;
+        private bool? titleInMailFooter;
         public bool? TitleInMailFooter
         {
             get => titleInMailFooter;
@@ -13,7 +13,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string vzAcademicTitle;
+        private string vzAcademicTitle;
         public string? VzAcademicTitle
         {
             get => vzAcademicTitle;
@@ -23,7 +23,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string vzPensum;
+        private string vzPensum;
         public string? VzPensum
         {
             get => vzPensum;
@@ -33,7 +33,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string vzBirthday;
+        private string vzBirthday;
         public string? VzBirthday
         {
             get => vzBirthday;
@@ -43,7 +43,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string vzStartDate;
+        private string vzStartDate;
         public string? VzStartDate
         {
             get => vzStartDate;
@@ -53,7 +53,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string vzGrade; //Rang
+        private string vzGrade; //Rang
         public string? VzGrade
         {
             get => vzGrade;
@@ -63,7 +63,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string vzBusinessUnitSupervisor;
+        private string vzBusinessUnitSupervisor;
         public string? VzBusinessUnitSupervisor
         {
             get => vzBusinessUnitSupervisor;
@@ -73,7 +73,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string vzRegionalSupervisor;
+        private string vzRegionalSupervisor;
         public string? VzRegionalSupervisor
         {
             get => vzRegionalSupervisor;
@@ -83,13 +83,23 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string vzManagementLevel; //Kaderstufe
+        private string vzManagementLevel; //Kaderstufe
         public string? VzManagementLevel
         {
             get => vzManagementLevel;
             set
             {
                 if (value != vzManagementLevel) SetProperty(ref vzManagementLevel, value);
+            }
+        }
+
+        private string homePage;
+        public string? HomePage
+        {
+            get => homePage;
+            set
+            {
+                if (value != homePage) SetProperty(ref homePage, value);
             }
         }
     }

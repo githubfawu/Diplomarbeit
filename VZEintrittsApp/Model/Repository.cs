@@ -78,7 +78,7 @@ namespace VZEintrittsApp.Model
                 recordFromDocument.Status = RecordStatus.Offen;
                 recordFromDocument.AssociatedFile = fileName;
                 recordFromDocument.Recorder = WindowsIdentity.GetCurrent().Name;
-                recordFromDocument.RecordRead = DateTime.Now;
+                recordFromDocument.RecordReadDate = DateTime.Now;
 
                 if (RecordContext.GetRecord(recordFromDocument) == false)
                 {

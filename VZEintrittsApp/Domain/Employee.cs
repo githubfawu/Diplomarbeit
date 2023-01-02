@@ -4,7 +4,7 @@ namespace VZEintrittsApp.Domain
 {
     public partial class Employee : BindableBase
     {
-        public int? employeeNr;
+        private int? employeeNr;
         public int? EmployeeNr
         {
             get => employeeNr;
@@ -14,7 +14,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? abbreviation;
+        private string? abbreviation;
         public string? Abbreviation
         {
             get => abbreviation;
@@ -24,7 +24,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? nameOfAdObject;
+        private string? nameOfAdObject;
         public string? NameOfAdObject
         {
             get => nameOfAdObject;
@@ -34,7 +34,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? displayName;
+        private string? displayName;
         public string? DisplayName
         {
             get => displayName;
@@ -44,7 +44,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? firstName;
+        private string? firstName;
         public string? FirstName
         {
             get => firstName;
@@ -54,7 +54,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? lastName;
+        private string? lastName;
         public string? LastName
         {
             get => lastName;
@@ -64,7 +64,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? callSignName;
+        private string? callSignName;
         public string? CallSignName
         {
             get => callSignName;
@@ -74,7 +74,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? callSignLastName;
+        private string? callSignLastName;
         public string? CallSignLastName
         {
             get => callSignLastName;
@@ -84,7 +84,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? mailAdress;
+        private string? mailAdress;
         public string? MailAdress
         {
             get => mailAdress;
@@ -94,7 +94,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? department;
+        private string? department;
         public string? Department
         {
             get => department;
@@ -104,7 +104,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? position;
+        private string? position;
         public string? Position
         {
             get => position;
@@ -114,7 +114,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? businessArea;
+        private string? businessArea;
         public string? BusinessArea
         {
             get => businessArea;
@@ -124,7 +124,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? company;
+        private string? company;
         public string? Company
         {
             get => company;
@@ -134,7 +134,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? street;
+        private string? street;
         public string? Street
         {
             get => street;
@@ -144,7 +144,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? city;
+        private string? city;
         public string? City
         {
             get => city;
@@ -154,7 +154,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? state;
+        private string? state;
         public string? State
         {
             get => state;
@@ -164,7 +164,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? postalCode;
+        private string? postalCode;
         public string? PostalCode
         {
             get => postalCode;
@@ -174,7 +174,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? office;
+        private string? office;
         public string? Office
         {
             get => office;
@@ -184,7 +184,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? description;
+        private string? description;
         public string? Description
         {
             get => description;
@@ -194,7 +194,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? postOfficeBox;
+        private string? postOfficeBox;
         public string? PostOfficeBox
         {
             get => postOfficeBox;
@@ -204,7 +204,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? country;
+        private string? country;
         public string? Country
         {
             get => country;

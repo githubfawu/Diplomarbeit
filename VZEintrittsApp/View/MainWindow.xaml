@@ -45,6 +45,8 @@
             <Label FontSize="28" Margin="6,0,0,0" Content="VZ Eintritts-App" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
         </Grid>
         <Grid Column="2" Row="0">
+            <Button Margin="20,10,200,0" Command="{Binding ConfigCommand}" FontSize="16" FontWeight="SemiBold" Background="#09aded">Einstellungen</Button>
+            <Button Margin="150,10,70,0"  Name="ButtonExit" FontSize="16" FontWeight="SemiBold" Background="#09aded" Click="ButtonExit_Click">Beenden</Button>
             <Rectangle Margin="280, 5,0,0">
                 <Rectangle.Fill>
                     <ImageBrush Stretch="Uniform" ImageSource="/View/Ressources/vzlogo.png"/>
@@ -52,7 +54,7 @@
             </Rectangle>
         </Grid>
         <Grid Column="2" Row="1">
-            <Rectangle Style="{StaticResource Rectangle}" Margin="40, 15,40,40" Drop="Document_Drop">
+            <Rectangle Style="{StaticResource Rectangle}" Margin="40, 35,40,20" Drop="Document_Drop">
                 <Rectangle.Fill>
                     <ImageBrush ImageSource="/View/Ressources/drag-and-drop2.tif"/>
                 </Rectangle.Fill>
@@ -84,7 +86,7 @@
                                 <Trigger Property="IsMouseOver" Value="true">
                                     <Setter Property="Foreground" Value="Black" />
                                     <Setter Property="ToolTip" Value="Doppelklick für das Original-Dokument" />
-                            </Trigger>
+                                </Trigger>
                             </Style.Triggers>
                         </Style>
                 </ListView.ItemContainerStyle>
@@ -121,7 +123,7 @@
                                 <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Erster Arbeitstag</GridViewColumnHeader>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding FirstWorkingDay}" Style="{StaticResource TextBlockListView}"/>
+                                    <TextBlock Text="{Binding FirstWorkingDay, StringFormat=dd.MM.yyyy}" Style="{StaticResource TextBlockListView}"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -165,10 +167,10 @@
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="5" Text="{Binding CurrentEmployee.LastName}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="6" Content="Firma:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="6" Text="{Binding CurrentEmployee.Company}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="1" Content="Position:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="1" Text="{Binding CurrentEmployee.Position}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="2" Content="Pensum:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="2" Text="{Binding CurrentEmployee.VzPensum}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="1" Content="Beschreibung:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="1" Text="{Binding CurrentEmployee.Description}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="2" Content="Position:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="2" Text="{Binding CurrentEmployee.Position}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="3" Content="Rang:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="3" Text="{Binding CurrentEmployee.VzGrade}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="4" Content="Kaderstufe:"/>
@@ -185,8 +187,8 @@
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="3" Text="{Binding CurrentEmployee.VzBusinessUnitSupervisor}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="4" Content="E-Mail Adresse:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="4" Text="{Binding CurrentEmployee.MailAdress}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="5" Content="Beschreibung"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="5" Text="{Binding CurrentEmployee.Description}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="5" Content="Pensum:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="5" Text="{Binding CurrentEmployee.VzPensum}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="6" Content="Erster Arbeitstag:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="6" Text="{Binding CurrentEmployee.VzStartDate}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="6" Content="Büro:"/>
@@ -239,14 +241,64 @@
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="7" Content="IP-Telefon:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="7" Text="{Binding CurrentEmployee.IpPhoneNumber}"/>
 
-                                <Label Grid.Column="1" Grid.Row="0" Content="VZ-Speifische Attribute:" Foreground="White"/>
-                                <Label Grid.Column="2" Grid.Row="0" Content="Laufwerke und Postfach" Foreground="White"/>
+                                <Label Grid.Column="1" Grid.Row="0" Content="Weitere Attribute:" Foreground="White"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="6" Content="Webseite:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="6" Grid.RowSpan="2" Width="240" Height="40" TextWrapping="Wrap" Text="{Binding CurrentEmployee.HomePage}"/>
 
-                                <Button Grid.Column="2" Grid.Row="7" Margin="35,25,35,5"  Name="ButtonSavetest" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
+                                <Label Grid.Column="2" Grid.Row="0" Content="Laufwerke und Postfach" Foreground="White"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="1" Content="Postfach (Scan-Ordner):"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="1" Text="{Binding CurrentEmployee.PostOfficeBox}"/>
+                                <Button Command="{Binding PlatzhalterCommand}" Grid.Column="2" Grid.Row="2" Margin="10,10,123,20" FontSize="18" Background="#09aded" Content="Ordner erstellen"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="3" Content="Basisordner (P:-Laufwerk):"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="3" Text="{Binding CurrentEmployee.PDrive}"/>
+                                <Button Command="{Binding PlatzhalterCommand}" Grid.Column="2" Grid.Row="4" Margin="10,10,123,20" FontSize="18" Background="#09aded" Content="Ordner erstellen"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="5" Content="Mailbox:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="5" Text="{Binding CurrentEmployee.Mailbox}"/>
+                                <Button Command="{Binding PlatzhalterCommand}" Grid.Column="2" Grid.Row="6" Margin="10,10,123,20"  FontSize="18" Background="#09aded" Content="Mailbox erstellen"/>
+
+
+                                <Button Grid.Column="2" Grid.Row="7" Margin="11,20,122,5"  Name="ButtonSavetest" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
                             </Grid>
                         </TabPanel>
                     </TabItem>
-                    <TabItem Style="{StaticResource Tab}" Header="Berechtigungen" />
+                    <!-- Tab2 -->
+                    <TabItem Style="{StaticResource Tab}" Header="Berechtigungen">
+                    <TabPanel>
+                        <Grid Margin="10,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="333"/>
+                                <ColumnDefinition Width="333" />
+                                <ColumnDefinition Width="333" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="60" />
+                                <RowDefinition Height="60" />
+                                <RowDefinition Height="60" />
+                                <RowDefinition Height="60" />
+                                <RowDefinition Height="60" />
+                                <RowDefinition Height="60" />
+                                <RowDefinition Height="60" />
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="0" Grid.Row="0" Content="Berechtigungen:" Foreground="White"/>
+                            <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="1" Content="Rechte kopieren:"/>
+                            <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="1" Content="Zugewiesene Gruppen:"/>
+                            <ListView Grid.Column="1" Grid.Row="2" Grid.RowSpan="4"
+                                      ItemsSource="{Binding GroupList}"
+                                      SelectedItem="{Binding SelectedGroup}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                                <Label Style="{StaticResource LabelStandard}" Content="{Binding GroupName}" FontWeight="Bold"/>
+                                                <Label Style="{StaticResource LabelStandard}" Content="{Binding GroupDescription}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                                <Button Grid.Column="2" Grid.Row="7" Margin="11,20,122,5" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
+                        </Grid>
+                    </TabPanel>
+                    </TabItem>
                     <TabItem Style="{StaticResource Tab}" Header="Datensatz" />
                 </TabControl>
             </DockPanel>

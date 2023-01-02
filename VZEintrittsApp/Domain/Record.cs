@@ -98,13 +98,13 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public DateTime? recordRead;
-        public DateTime? RecordRead
+        public DateTime? recordReadDate;
+        public DateTime? RecordReadDate
         {
-            get => recordRead;
+            get => recordReadDate;
             set
             {
-                if (value != recordRead) SetProperty(ref recordRead, value);
+                if (value != recordReadDate) SetProperty(ref recordReadDate, value);
             }
         }
     }
