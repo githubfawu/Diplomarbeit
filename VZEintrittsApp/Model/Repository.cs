@@ -19,6 +19,7 @@ namespace VZEintrittsApp.Model
         private RecordContext RecordContext;
         private FinalizeContext FinalizeContext;
         private LoggerContext Log;
+        private PhoneFormatContext PhoneFormat;
         private DirectoryServices activeDirectory;
         private ReadPdfDocument ReadPdfDocument;
         private FinalizeEmployee FinalizeEmployee;
@@ -28,6 +29,7 @@ namespace VZEintrittsApp.Model
 
         public Repository(
             RecordContext recordContext,
+            PhoneFormatContext phoneFormatContext,
             LoggerContext log,
             FinalizeContext finalizeContext,
             DirectoryServices directoryServices,
@@ -38,6 +40,7 @@ namespace VZEintrittsApp.Model
             activeDirectory = directoryServices;
             FinalizeContext = finalizeContext;
             RecordContext = recordContext;
+            PhoneFormat = phoneFormatContext;
             ReadPdfDocument = readPdfDocument;
             FinalizeEmployee = finalizeEmployee;
             AddIndividualProperties = addIndividualProperties;
@@ -138,7 +141,7 @@ namespace VZEintrittsApp.Model
                     if (result == MessageBoxResult.Yes)
                     {
                         numbers[0] = $"+{i}";
-                        numbers[1] = GetCorrectNumberFormat(numbers[0], description);
+                        numbers[1] = GetCorrectNumberFormat(numbers[0], subsidiaryCompany.CityName);
                         break;
                     }
                     if (result == MessageBoxResult.Cancel)
@@ -160,26 +163,19 @@ namespace VZEintrittsApp.Model
             }
         }
 
-        public string GetCorrectNumberFormat(string number, string description)
+        public string GetCorrectNumberFormat(string number, string cityName)
         {
             StringBuilder currentNumber = new StringBuilder();
             currentNumber.Append(number);
 
-            List<Tuple<int, string>> positionList = new List<Tuple<int, string>>();
-            positionList.Add(new Tuple<int, string>(2, " "));
-            positionList.Add(new Tuple<int, string>(5, " "));
-            positionList.Add(new Tuple<int, string>(9, " "));
-            positionList.Add(new Tuple<int, string>(12, " "));
-
-            //zu tun: Description zu City umwandeln, neue Tabelle mit City und Format erstellen, reader im Context erstellen
-
-            foreach (var position in positionList)
+            var numberFormat = PhoneFormat.GetPhoneNumberFormat(cityName);
+            foreach (var format in numberFormat.Formats)
             {
-                currentNumber.Insert(position.Item1 + 1, position.Item2);
+                currentNumber.Insert(format.Key + 1, format.Value);
             }
-            
             return currentNumber.ToString();
         }
+
         public byte[] GetOriginalDocument(string filename)
         {
             var document = RecordContext.GetEntryDocument(filename);

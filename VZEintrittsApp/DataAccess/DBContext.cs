@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using VZEintrittsApp.DataAccess.Seeders;
 using VZEintrittsApp.Domain;
 using VZEintrittsApp.Logger;
@@ -16,7 +19,7 @@ namespace VZEintrittsApp.DataAccess
         public DbSet<SavedFile> SavedFiles { get; set; }
         public DbSet<SubsidiaryCompany> SubsidiaryCompanies { get; set; }
         public DbSet<AttributeNotations> AttributeNotations { get; set; }
-
+        public DbSet<NumberFormat> NumberFormats { get; set; }
         public DbSet<Log> Logs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -40,6 +43,13 @@ namespace VZEintrittsApp.DataAccess
             modelBuilder.Entity<AttributeNotations>()
                 .HasKey(p => p.NotationId);
             modelBuilder.Entity<AttributeNotations>().HasData(AttributeNotationsSeeder.GetSeeds());
+            
+            modelBuilder.Entity<NumberFormat>()
+                .Property(b => b.Formats)
+                .HasConversion(
+                    v => JsonConvert.SerializeObject(v),
+                    v => JsonConvert.DeserializeObject<Dictionary<int, string>>(v));
+            modelBuilder.Entity<NumberFormat>().HasData(NumberFormatSeeder.GetSeeds());
 
         }
     }

@@ -43,7 +43,7 @@
         <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="3" Content="IP-Telefon:"/>
         <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Text="{Binding CurrentEmployee.IpPhoneNumber}"/>
         <Button Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="3" Margin="11,25,30,5" Command="{Binding GetFreeNumberCommand}" FontSize="20" Background="#09aded">Freie Nr. suchen</Button>
-        <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" FontSize="20" Margin="10,35,0,0" Content="Firma und Standort manuell wählen:" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
+        <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" FontSize="20" Margin="10,30,0,0" Content="Firma und Standort manuell wählen:" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
         <Label Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="4" FontSize="15" Margin="10,0,0,0" Content="Firmen- und Standort-Kombination nicht gefunden. Bitte manuell wählen..."
                Foreground="DarkOrange" FontFamily="Calibri" Visibility="{Binding ShowLabelDescription, Converter={StaticResource boolToVisibilityConverter}}"/>
         <ComboBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" FontSize="20" Margin="10,10,30,27" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
