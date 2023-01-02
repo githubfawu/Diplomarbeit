@@ -12,32 +12,6 @@ namespace VZEintrittsApp.ViewModel
 {
     class ViewModelUserView : BindableBase
     {
-        private bool isProgressBarVisible = false;
-        public bool IsProgressBarVisible
-        {
-            get => isProgressBarVisible;
-            set => SetProperty(ref isProgressBarVisible, value);
-        }
-
-        private double progressValue;
-        public double ProgressValue
-        {
-            get
-            {
-                return progressValue;
-            }
-            set => SetProperty(ref progressValue, value);
-        }
-
-        private string progressText;
-        public string ProgressText
-        {
-            get
-            {
-                return progressText;
-            }
-            set => SetProperty(ref progressText, value);
-        }
         public DelegateCommand UpdateCommand { get; set; }
         public DelegateCommand GetNumberCommand { get; set; }
         public DelegateCommand OpenDocumentCommand { get; set; }
@@ -79,18 +53,22 @@ namespace VZEintrittsApp.ViewModel
                 {
                     return null;
                 }
-                IsProgressBarVisible = true;
-                ProgressValue = 25;
-                ProgressText = "Lade AD-Attribute...";
+                IsBusy = true;
                 CurrentEmployee = Repository.ReadAllAdAttributes(selectedItem.Abbreviation);
-                ProgressValue = 100;
-                ProgressText = "AD-Attribute geladen...";
-                IsProgressBarVisible = false;
-                ProgressText = ""; //Oder besser einfach drehendes Symbol (als Mauszeiger oder so...)?
+                IsBusy = false;
                 return selectedItem;
-
             }
             set => SetProperty(ref selectedItem, value);
+        }
+
+        private bool isBusy;
+        public bool IsBusy
+        {
+            get { return isBusy; }
+            set
+            {
+                SetProperty(ref isBusy, value);
+            }
         }
 
         public ViewModelUserView(Repository repository)

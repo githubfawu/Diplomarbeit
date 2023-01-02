@@ -147,7 +147,7 @@ namespace VZEintrittsApp.API.AD
                            Enabled = false
                        })
                 {
-                    user.SetPassword("Sonne100");
+                    user.SetPassword("Salamander2000"); //PW ebenfalls für Optionen auslagern
                     user.Save();
 
                     DirectoryEntry userEntry = (DirectoryEntry) user.GetUnderlyingObject();

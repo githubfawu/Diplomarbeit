@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using VZEintrittsApp.Model;
 using VZEintrittsApp.ViewModel;
 
@@ -17,6 +18,7 @@ namespace VZEintrittsApp.View
 
         private void Document_Drop(object sender, DragEventArgs e)
         {
+            Mouse.OverrideCursor = Cursors.Wait;
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -26,6 +28,7 @@ namespace VZEintrittsApp.View
                     Repository.ImportDocument(file);
                 }
             }
+            Mouse.OverrideCursor = Cursors.Arrow;
         }
     }
 }
