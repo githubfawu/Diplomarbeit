@@ -127,7 +127,6 @@ namespace VZEintrittsApp.Model
 
         public string[] GetFreeNumberFromAd(string description)
         {
-            
             var subsidiaryCompany = FinalizeContext.GetSubsidiaryCompanyFromDescription(description);
             var lowRange = subsidiaryCompany.PhoneNumberRangeLow;
             var highRange = subsidiaryCompany.PhoneNumberRangeHigh;
@@ -141,6 +140,13 @@ namespace VZEintrittsApp.Model
                     if (result == MessageBoxResult.Yes)
                     {
                         numbers[0] = $"+{i}";
+                        if (GetCorrectNumberFormat(numbers[0], subsidiaryCompany.CityName) == null)
+                        {
+                            MessageBox.Show(
+                                "Es konnte keine Nummern-Formatierung für diesen Standort gefunden werden. Bitte formatiere die Nummer manuell.");
+                            numbers[1] = $"+{i}";
+                            break;
+                        }
                         numbers[1] = GetCorrectNumberFormat(numbers[0], subsidiaryCompany.CityName);
                         break;
                     }
