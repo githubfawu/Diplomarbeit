@@ -4,6 +4,7 @@ using VZEintrittsApp.Domain;
 using VZEintrittsApp.Model;
 using Prism.Mvvm;
 using System;
+using System.Collections.ObjectModel;
 
 namespace VZEintrittsApp.ViewModel
 {
@@ -19,6 +20,7 @@ namespace VZEintrittsApp.ViewModel
         {
             CurrentEmployee = employee;
             Repository = repository;
+            SubsidiaryCompanies = Repository.GetAllSubsidiaries();
             GetFreeNumberCommand = new DelegateCommand(GetFreeNumber);
             SaveCommand = new DelegateCommand(Save);
         }
@@ -30,13 +32,33 @@ namespace VZEintrittsApp.ViewModel
             set => SetProperty(ref showLabelDescription, value);
         }
 
+        private ObservableCollection<SubsidiaryCompany> subsidiaryCompanies;
+        public ObservableCollection<SubsidiaryCompany> SubsidiaryCompanies
+        {
+            get { return subsidiaryCompanies; }
+            set { subsidiaryCompanies = value; }
+        }
+
+        private SubsidiaryCompany selectedCompany;
+        public SubsidiaryCompany SelectedCompany
+        {
+            get { return selectedCompany; }
+            set { selectedCompany = value;
+                CurrentEmployee.Description = selectedCompany.BranchNameForDescription;
+                ShowLabelDescription = false;
+            }
+        }
+
         private void GetFreeNumber()
         {
             if (!string.IsNullOrWhiteSpace(CurrentEmployee.Description))
             {
                 var numbers = Repository.GetFreeNumberFromAd(CurrentEmployee.Description);
-                CurrentEmployee.IpPhoneNumber = numbers[0];
-                CurrentEmployee.TelephoneNumber = numbers[1];
+                if (numbers != null)
+                {
+                    CurrentEmployee.IpPhoneNumber = numbers[0];
+                    CurrentEmployee.TelephoneNumber = numbers[1];
+                }
             }
             else
             {

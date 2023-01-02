@@ -9,6 +9,7 @@ using VZEintrittsApp.Enums;
 using VZEintrittsApp.Import;
 using VZEintrittsApp.Import.PDFReader;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Security.Principal;
 using System.Text;
 
@@ -142,8 +143,7 @@ namespace VZEintrittsApp.Model
                         numbers[0] = $"+{i}";
                         if (GetCorrectNumberFormat(numbers[0], subsidiaryCompany.CityName) == null)
                         {
-                            MessageBox.Show(
-                                "Es konnte keine Nummern-Formatierung für diesen Standort gefunden werden. Bitte formatiere die Nummer manuell.");
+                            MessageBox.Show("Es konnte keine Nummern-Formatierung für diesen Standort gefunden werden. Bitte formatiere die Nummer manuell.");
                             numbers[1] = $"+{i}";
                             break;
                         }
@@ -157,16 +157,13 @@ namespace VZEintrittsApp.Model
                 }
             }
 
-            if (numbers[0] == "")
+            if (numbers[0] == null)
             {
                 MessageBox.Show(
                     "Es konnte keine freie Nummer in dieser Range gefunden werden. Bitte wähle eine andere Range aus.");
                 return null;
             }
-            else
-            {
-                return numbers;
-            }
+            return numbers;
         }
 
         public string GetCorrectNumberFormat(string number, string cityName)
@@ -186,6 +183,18 @@ namespace VZEintrittsApp.Model
         {
             var document = RecordContext.GetEntryDocument(filename);
             return document;
+        }
+
+        public ObservableCollection<SubsidiaryCompany> GetAllSubsidiaries()
+        {
+            ObservableCollection<SubsidiaryCompany> observableList = new ObservableCollection<SubsidiaryCompany>();
+            var list = FinalizeContext.GetAllSubsidiaryCompanies().ToList();
+            var listSorted =  list.OrderBy(s => s.CityName);
+            foreach (var company in listSorted)
+            {
+                observableList.Add(company);
+            }
+            return observableList;
         }
 
     }

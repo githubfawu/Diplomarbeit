@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using VZEintrittsApp.Domain;
@@ -35,6 +36,20 @@ namespace VZEintrittsApp.DataAccess
             catch
             {
                 MessageBox.Show("Fehler beim Finden der passenden Niederlassung/Firma!");
+                return null;
+            }
+        }
+
+        public List<SubsidiaryCompany?> GetAllSubsidiaryCompanies()
+        {
+            try
+            {
+                var allSubsidiaries = (from a in DbContext.SubsidiaryCompanies select a).ToList();
+                return allSubsidiaries;
+            }
+            catch
+            {
+                MessageBox.Show("Fehler beim Laden der Tochterfirmen/Standorte");
                 return null;
             }
         }

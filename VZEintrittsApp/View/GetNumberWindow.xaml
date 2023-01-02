@@ -43,11 +43,32 @@
         <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="3" Content="IP-Telefon:"/>
         <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Text="{Binding CurrentEmployee.IpPhoneNumber}"/>
         <Button Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="3" Margin="11,25,30,5" Command="{Binding GetFreeNumberCommand}" FontSize="20" Background="#09aded">Freie Nr. suchen</Button>
-        <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" FontSize="20" Margin="10,30,0,0" Content="Firma und Standort manuell wählen:" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
+        <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" FontSize="20" Margin="10,30,0,0" Content="Standort und Firma manuell wählen:" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
         <Label Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="4" FontSize="15" Margin="10,0,0,0" Content="Firmen- und Standort-Kombination nicht gefunden. Bitte manuell wählen..."
                Foreground="DarkOrange" FontFamily="Calibri" Visibility="{Binding ShowLabelDescription, Converter={StaticResource boolToVisibilityConverter}}"/>
-        <ComboBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" FontSize="20" Margin="10,10,30,27" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
-        <ComboBox Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="5" FontSize="20" Margin="10,10,30,27" Foreground="WhiteSmoke" FontFamily="Calibri" FontWeight="Bold"/>
+        <ComboBox 
+            x:Name="ComboBoxSubs"
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
+            Grid.Row="5"
+            Margin="15,15,0,10" 
+            HorizontalAlignment="Left"
+            Width="370" 
+            ItemsSource="{Binding SubsidiaryCompanies}"
+            SelectedItem="{Binding SelectedCompany}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Label Style="{StaticResource LabelComboBox}" FontSize="15" Grid.Column="0" Content="{Binding CityName}" Width="130" />
+                        <Label Style="{StaticResource LabelComboBox}" FontSize="15" Grid.Column="1" Content="{Binding CompanyName}" Width="240" />
+                    </Grid>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <Button Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="6" Margin="15,15,30,15" Name="ButtonSave" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=GetNumberWindow}" FontSize="20" Background="#09aded">Speichern</Button>
     </Grid>
 </Window>

@@ -54,12 +54,20 @@ namespace VZEintrittsApp.API.AD
                     var attribute = AttributeList.FirstOrDefault(e => e.EmployeeAttributeName == employeeAttributeName);
                     userEntry.Properties[attribute.ActiveDirectoryName].Value = value;
                     userEntry.CommitChanges();
+                    Log.Write(DateTime.Now,
+                        WindowsIdentity.GetCurrent().Name,
+                        abbreviation, 
+                        ($"Das AD-Attribut {attribute.ActiveDirectoryName} wurde mit dem Wert {value} geschrieben"));
                     return true;
                 }
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.ToString());
+                Log.Write(DateTime.Now,
+                    WindowsIdentity.GetCurrent().Name,
+                    abbreviation,
+                    ($"Fehler beim schreiben des AD-Attributes {employeeAttributeName} mit dem Wert {value}"));
                 return false;
             }
         }
@@ -164,7 +172,7 @@ namespace VZEintrittsApp.API.AD
                     userEntry.Properties["vzBirthday"].Value = employee.VzBirthday;
                     userEntry.CommitChanges();
 
-                    Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, employee.Abbreviation, "Ein neues Benutzerkonto wurde erstellt.");
+                    Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, employee.Abbreviation, "Ein neues AD-Benutzerkonto wurde erstellt");
                     return true;
                 }
             }
