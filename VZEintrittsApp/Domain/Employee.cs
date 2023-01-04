@@ -213,5 +213,15 @@ namespace VZEintrittsApp.Domain
                 if (value != country) SetProperty(ref country, value);
             }
         }
+
+        private string? manager;
+        public string? Manager
+        {
+            get => manager;
+            set
+            {
+                if (value != manager) SetProperty(ref manager, value);
+            }
+        }
     }
 }

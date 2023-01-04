@@ -69,15 +69,15 @@
         
         <Grid Column="0" Row="1" Grid.ColumnSpan="2">
             <ListView 
-                      Name="ListViewOpenEntries"
-                      ItemsSource="{Binding RecordsList}"
-                      SelectedItem="{Binding SelectedItem}"
+                Name ="ListViewOpenEntries"
+                ItemsSource="{Binding RecordsList}"
+                      SelectedItem="{Binding SelectedRecord}"
                       Margin="5">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="MouseDoubleClick">
                         <b:InvokeCommandAction 
                             Command="{Binding OpenDocumentCommand}"
-                            CommandParameter="{Binding ElementName=ListViewOpenEntries, Path=SelectedItem}"/>
+                            CommandParameter="{Binding ElementName=ListViewOpenEntries, Path=SelectedRecord}"/>
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
                 <ListView.ItemContainerStyle>
@@ -180,7 +180,7 @@
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="6" Content="Abteilungsname:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="6" Text="{Binding CurrentEmployee.Department}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="1" Content="Vorgesetzter:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="1" Text="{Binding CurrentEmployee}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="1" Text="{Binding CurrentEmployee.Manager}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="2" Content="Regionenleiter:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="2" Text="{Binding CurrentEmployee.VzRegionalSupervisor}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="3" Content="Bereichsleiter:"/>
@@ -261,15 +261,16 @@
                             </Grid>
                         </TabPanel>
                     </TabItem>
-                    <!-- Tab2 -->
+                    <!-- Tab3 -->
                     <TabItem Style="{StaticResource Tab}" Header="Berechtigungen">
                     <TabPanel>
                         <Grid Margin="10,0,0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="333"/>
-                                <ColumnDefinition Width="333" />
-                                <ColumnDefinition Width="333" />
-                            </Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220"/>
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="220" />
+                                </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="40" />
                                 <RowDefinition Height="60" />
@@ -283,19 +284,34 @@
                             <Label Grid.Column="0" Grid.Row="0" Content="Berechtigungen:" Foreground="White"/>
                             <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="1" Content="Rechte kopieren:"/>
                             <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="1" Content="Zugewiesene Gruppen:"/>
-                            <ListView Grid.Column="1" Grid.Row="2" Grid.RowSpan="4"
-                                      ItemsSource="{Binding GroupList}"
-                                      SelectedItem="{Binding SelectedGroup}">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                                <Label Style="{StaticResource LabelStandard}" Content="{Binding GroupName}" FontWeight="Bold"/>
-                                                <Label Style="{StaticResource LabelStandard}" Content="{Binding GroupDescription}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                                <Button Grid.Column="2" Grid.Row="7" Margin="11,20,122,5" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
+                            <ListView 
+                                Name ="ListViewAdGroups"
+                                Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="4"
+                                ItemsSource="{Binding AdGroupList}"
+                                SelectedItem="{Binding SelectedAdGroup}"
+                                Margin="10,-20,10,0">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Width="205">
+                                                <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Gruppe</GridViewColumnHeader>
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding AdGroupName}" Style="{StaticResource TextBlockListView}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Width="205">
+                                                <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Beschreibung</GridViewColumnHeader>
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding AdGroupDescription}" Style="{StaticResource TextBlockListView}" FontWeight="Normal"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <Button Grid.Column="3" Grid.Row="7" Margin="11,20,20,5" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
                         </Grid>
                     </TabPanel>
                     </TabItem>

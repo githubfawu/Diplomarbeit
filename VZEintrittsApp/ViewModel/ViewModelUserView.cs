@@ -31,6 +31,32 @@ namespace VZEintrittsApp.ViewModel
             }
         }
 
+        private ObservableCollection<ActiveDirectoryGroup> adGroupList;
+        public ObservableCollection<ActiveDirectoryGroup> AdGroupList
+        {
+            get => adGroupList;
+            set
+            {
+                if (value != adGroupList)
+                {
+                    SetProperty(ref adGroupList, value);
+                }
+            }
+        }
+
+        private Employee selectedAdGroup;
+        public Employee SelectedAdGroup
+        {
+            get => selectedAdGroup;
+            set
+            {
+                if (value != selectedAdGroup)
+                {
+                    SetProperty(ref selectedAdGroup, value);
+                }
+            }
+        }
+
         private Employee currentEmployee;
         public Employee CurrentEmployee
         {
@@ -44,21 +70,22 @@ namespace VZEintrittsApp.ViewModel
             }
         }
 
-        private Record selectedItem;
-        public Record SelectedItem
+        private Record selectedRecord;
+        public Record SelectedRecord
         {
             get
             {
-                if (selectedItem == null)
+                if (selectedRecord == null)
                 {
                     return null;
                 }
                 IsBusy = true;
-                CurrentEmployee = Repository.ReadAllAdAttributes(selectedItem.Abbreviation);
+                CurrentEmployee = Repository.ReadAllAdAttributes(selectedRecord.Abbreviation);
+                AdGroupList = Repository.GetAllAdGroups(selectedRecord.Abbreviation);
                 IsBusy = false;
-                return selectedItem;
+                return selectedRecord;
             }
-            set => SetProperty(ref selectedItem, value);
+            set => SetProperty(ref selectedRecord, value);
         }
 
         private bool isBusy;
@@ -73,7 +100,7 @@ namespace VZEintrittsApp.ViewModel
 
         public ViewModelUserView(Repository repository)
         {
-            UpdateCommand = new DelegateCommand(Execute, CanExecute).ObservesProperty(() => SelectedItem);
+            UpdateCommand = new DelegateCommand(Execute, CanExecute).ObservesProperty(() => SelectedRecord);
             GetNumberCommand = new DelegateCommand(ShowGetNumberWindow);
             OpenDocumentCommand = new DelegateCommand(OpenDocumentWithDefaultProgram);
             Repository = repository;
@@ -92,7 +119,7 @@ namespace VZEintrittsApp.ViewModel
 
         public void OpenDocumentWithDefaultProgram()
         {
-            var document = Repository.GetOriginalDocument(selectedItem.AssociatedFile);
+            var document = Repository.GetOriginalDocument(selectedRecord.AssociatedFile);
             if (document.Length > 0)
             {
                 var temp = Path.GetTempPath() + "Eintritte.pdf";
@@ -106,7 +133,7 @@ namespace VZEintrittsApp.ViewModel
             {
                 GetNumberWindow window = new GetNumberWindow(CurrentEmployee, Repository);
                 window.ShowDialog();
-                CurrentEmployee = Repository.ReadAllAdAttributes(selectedItem.Abbreviation);
+                CurrentEmployee = Repository.ReadAllAdAttributes(selectedRecord.Abbreviation);
             }
             else
             {

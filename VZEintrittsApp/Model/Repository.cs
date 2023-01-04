@@ -120,6 +120,16 @@ namespace VZEintrittsApp.Model
             }
         }
 
+        public ObservableCollection<ActiveDirectoryGroup> GetAllAdGroups(string abbreviation)
+        {
+            var observableGroup = new ObservableCollection<ActiveDirectoryGroup>();
+            foreach (var group in activeDirectory.GetAdGroupsFromUser(abbreviation))
+            {
+                observableGroup.Add(group);
+            }
+            return observableGroup;
+        }
+
         public bool WriteSpecificAdAttribute(string employeeAttributeName, string abbreviation, string value)
         {
             if (activeDirectory.WriteIndividualAttribute(employeeAttributeName, abbreviation, value)) return true;

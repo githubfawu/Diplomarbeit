@@ -123,6 +123,10 @@ namespace VZEintrittsApp.Import.PDFReader
                                 {
                                     employee.VzBirthday = CheckForNullAndNewLines(entity, 12, splitString);
                                 }
+                                if (entity.Contains("Vorgesetzter:") && !entity.Contains("dir. Vorgesetzter:"))
+                                {
+                                    employee.Manager = CheckForNullAndNewLines(entity, 14, splitString);
+                                }
 
                                 if (entity.Contains("Standort:"))
                                 {

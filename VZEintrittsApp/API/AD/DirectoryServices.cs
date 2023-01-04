@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
+using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Security.Principal;
 using System.Windows;
+using System.Windows.Input;
 using VZEintrittsApp.DataAccess;
 using VZEintrittsApp.Domain;
 
@@ -72,6 +74,22 @@ namespace VZEintrittsApp.API.AD
             }
         }
 
+        public List<ActiveDirectoryGroup> GetAdGroupsFromUser(string abbreviation)
+        {
+            var result = new List<ActiveDirectoryGroup>();
+            using (UserPrincipal user = UserPrincipal.FindByIdentity(new PrincipalContext(ContextType.Domain), IdentityType.SamAccountName, abbreviation))
+            foreach (GroupPrincipal group in user.GetGroups())
+            {
+                result.Add(new ActiveDirectoryGroup()
+                {
+                    AdGroupName = group.Name,
+                    AdGroupDescription = group.Description
+                });
+            }
+                
+            return result;
+        }
+
         public bool IsNumberFreeChecker(long iPPhoneNumber)
         {
             var entry = new DirectoryEntry("LDAP://OU=Standarduser,OU=VZ_Users,DC=vz,DC=ch");
@@ -112,6 +130,7 @@ namespace VZEintrittsApp.API.AD
                     employee.Country = userEntry.Properties["c"].Value?.ToString();
                     employee.HomePage = userEntry.Properties["wWWHomePage"].Value?.ToString();
                     employee.TelephoneNumber = userEntry.Properties["telephoneNumber"].Value?.ToString();
+                    employee.Manager = SearchManager(userEntry.Properties["manager"].Value?.ToString());
                     employee.Pager = userEntry.Properties["pager"].Value?.ToString();
                     employee.OtherTelephone = userEntry.Properties["otherTelephone"].Value?.ToString();
                     employee.FaxNumber = userEntry.Properties["facsimileTelephoneNumber"].Value?.ToString();
@@ -127,6 +146,34 @@ namespace VZEintrittsApp.API.AD
             }
             MessageBox.Show("Es existiert im AD kein Benutzer mit diesem Kürzel.");
             return null;
+        }
+
+        public string SearchManager(string managerCn)
+        {
+            if (managerCn != null)
+            {
+                using (var context = new PrincipalContext(ContextType.Domain))
+                {
+                    UserPrincipal user = UserPrincipal.FindByIdentity(context, managerCn);
+                    MessageBox.Show(user.DistinguishedName);
+                    return user.SamAccountName;
+                }
+            }
+            return null;
+        }
+
+        public bool SetManager(string employeeAbbreviation, string managersAbbreviation)
+        {
+            using (var context = new PrincipalContext(ContextType.Domain))
+            {
+                UserPrincipal manager = UserPrincipal.FindByIdentity(context, managersAbbreviation);
+                var managersCName = manager.DistinguishedName;
+
+                UserPrincipal employee = UserPrincipal.FindByIdentity(context, employeeAbbreviation);
+                DirectoryEntry employeeEntry = (DirectoryEntry)employee.GetUnderlyingObject();
+                employeeEntry.Properties["manager"].Value = managersCName;
+                return true;
+            }
         }
 
         public bool CreateNewAdAccount(Employee employee)
@@ -172,6 +219,7 @@ namespace VZEintrittsApp.API.AD
                     userEntry.Properties["vzBusinessUnitSupervisor"].Value = employee.VzBusinessUnitSupervisor;
                     userEntry.Properties["vzRegionalSupervisor"].Value = employee.VzRegionalSupervisor;
                     userEntry.Properties["vzBirthday"].Value = employee.VzBirthday;
+                    SetManager(employee.Abbreviation, employee.Manager);
                     userEntry.CommitChanges();
 
                     Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, employee.Abbreviation, "Ein neues AD-Benutzerkonto wurde erstellt");
