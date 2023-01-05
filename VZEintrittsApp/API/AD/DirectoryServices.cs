@@ -154,9 +154,11 @@ namespace VZEintrittsApp.API.AD
             {
                 using (var context = new PrincipalContext(ContextType.Domain))
                 {
-                    UserPrincipal user = UserPrincipal.FindByIdentity(context, managerCn);
-                    MessageBox.Show(user.DistinguishedName);
-                    return user.SamAccountName;
+                    if (UserPrincipal.FindByIdentity(context, managerCn) != null)
+                    {
+                        UserPrincipal user = UserPrincipal.FindByIdentity(context, managerCn);
+                        return user.SamAccountName;
+                    }
                 }
             }
             return null;
@@ -166,13 +168,23 @@ namespace VZEintrittsApp.API.AD
         {
             using (var context = new PrincipalContext(ContextType.Domain))
             {
-                UserPrincipal manager = UserPrincipal.FindByIdentity(context, managersAbbreviation);
-                var managersCName = manager.DistinguishedName;
+                if (UserPrincipal.FindByIdentity(context, managersAbbreviation) != null)
+                {
+                    UserPrincipal manager = UserPrincipal.FindByIdentity(context, managersAbbreviation);
+                    var managersCName = manager.DistinguishedName;
 
-                UserPrincipal employee = UserPrincipal.FindByIdentity(context, employeeAbbreviation);
-                DirectoryEntry employeeEntry = (DirectoryEntry)employee.GetUnderlyingObject();
-                employeeEntry.Properties["manager"].Value = managersCName;
-                return true;
+                    UserPrincipal employee = UserPrincipal.FindByIdentity(context, employeeAbbreviation);
+                    DirectoryEntry employeeEntry = (DirectoryEntry)employee.GetUnderlyingObject();
+                    employeeEntry.Properties["manager"].Value = managersCName;
+                    employeeEntry.CommitChanges();
+                    Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, employeeAbbreviation, $"{managersAbbreviation} wurde als Vorgesetzter gesetzt");
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show($"Der Vorgesetzte {managersAbbreviation} für den Benutzer {employeeAbbreviation} konnte im AD nicht gefunden werden!");
+                    return false;
+                }
             }
         }
 

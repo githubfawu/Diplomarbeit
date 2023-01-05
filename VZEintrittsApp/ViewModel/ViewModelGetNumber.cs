@@ -58,6 +58,8 @@ namespace VZEintrittsApp.ViewModel
                 {
                     CurrentEmployee.IpPhoneNumber = numbers[0];
                     CurrentEmployee.TelephoneNumber = numbers[1];
+                    CurrentEmployee.Pager = numbers[2];
+                    
                 }
             }
             else
@@ -70,6 +72,7 @@ namespace VZEintrittsApp.ViewModel
         {
             Repository.WriteSpecificAdAttribute(nameof(CurrentEmployee.IpPhoneNumber), CurrentEmployee.Abbreviation, CurrentEmployee.IpPhoneNumber);
             Repository.WriteSpecificAdAttribute(nameof(CurrentEmployee.TelephoneNumber), CurrentEmployee.Abbreviation, CurrentEmployee.TelephoneNumber);
+            Repository.WriteSpecificAdAttribute(nameof(CurrentEmployee.Pager), CurrentEmployee.Abbreviation, CurrentEmployee.Pager);
             OnClosingRequest();
         }
         protected void OnClosingRequest()

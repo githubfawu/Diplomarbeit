@@ -126,6 +126,8 @@ namespace VZEintrittsApp.Import.PDFReader
                                 if (entity.Contains("Vorgesetzter:") && !entity.Contains("dir. Vorgesetzter:"))
                                 {
                                     employee.Manager = CheckForNullAndNewLines(entity, 14, splitString);
+                                    if (employee.Manager != null)
+                                        employee.Manager = CleanManagerString(employee.Manager);
                                 }
 
                                 if (entity.Contains("Standort:"))
@@ -147,7 +149,16 @@ namespace VZEintrittsApp.Import.PDFReader
             return employeeList;
         }
 
-        public static string RemoveSpecialCharacters(string str)
+        private string CleanManagerString(string employeesManager)
+        {
+            if (employeesManager.Contains("Zeitachsen-Datum"))
+            {
+                return Regex.Replace(employeesManager, @" Zeitachsen-Datum", "");
+            }
+            return employeesManager;
+        }
+
+        private static string RemoveSpecialCharacters(string str)
         {
             StringBuilder sb = new StringBuilder();
             foreach (char c in str)
@@ -160,7 +171,7 @@ namespace VZEintrittsApp.Import.PDFReader
             return sb.ToString();
         }
 
-        public string? CheckForNullAndNewLines(string entity, int length, List<string> list)
+        private string? CheckForNullAndNewLines(string entity, int length, List<string> list)
         {
             if (entity.Length > length)
             {
@@ -178,7 +189,7 @@ namespace VZEintrittsApp.Import.PDFReader
             return null;
         }
 
-        public string [] ExtractAdressFromEntity(string completeAdress)
+        private string [] ExtractAdressFromEntity(string completeAdress)
         {
             return completeAdress.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
         }
@@ -192,7 +203,7 @@ namespace VZEintrittsApp.Import.PDFReader
             return false;
         }
 
-        public string CorrectUpperLower(string abbreviation)
+        private string CorrectUpperLower(string abbreviation)
         {
             return abbreviation.Length switch
             {

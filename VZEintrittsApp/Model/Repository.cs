@@ -142,7 +142,7 @@ namespace VZEintrittsApp.Model
             var lowRange = subsidiaryCompany.PhoneNumberRangeLow;
             var highRange = subsidiaryCompany.PhoneNumberRangeHigh;
 
-            string[] numbers = new string[2];
+            string[] numbers = new string[3];
             for (long i = lowRange; i < highRange; i++)
             {
                 if (activeDirectory.IsNumberFreeChecker(i))
@@ -153,11 +153,21 @@ namespace VZEintrittsApp.Model
                         numbers[0] = $"+{i}";
                         if (GetCorrectNumberFormat(numbers[0], subsidiaryCompany.CityName) == null)
                         {
-                            MessageBox.Show("Es konnte keine Nummern-Formatierung für diesen Standort gefunden werden. Bitte formatiere die Nummer manuell.");
+                            MessageBox.Show("Es konnte keine Nummer-Formatierung für diesen Standort gefunden werden. Bitte formatiere die Nummer manuell.");
                             numbers[1] = $"+{i}";
                             break;
                         }
                         numbers[1] = GetCorrectNumberFormat(numbers[0], subsidiaryCompany.CityName);
+
+                        if (subsidiaryCompany.IsOutgoingNumberAnonymous == true)
+                        {
+                            numbers[2] = "ANONYMOUS";
+                        }
+                        else
+                        {
+                            numbers[2] = subsidiaryCompany.OfficialPhoneNumber;
+                        }
+                        
                         break;
                     }
                     if (result == MessageBoxResult.Cancel)

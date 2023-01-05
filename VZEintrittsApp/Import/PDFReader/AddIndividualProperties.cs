@@ -1,5 +1,4 @@
-﻿
-using VZEintrittsApp.Domain;
+﻿using VZEintrittsApp.Domain;
 
 namespace VZEintrittsApp.Import.PDFReader
 {
@@ -13,7 +12,7 @@ namespace VZEintrittsApp.Import.PDFReader
                 employee.Country = subsidiaryCompany.CountryCode;
                 employee.Office = subsidiaryCompany.Office;
                 employee.Description = subsidiaryCompany.BranchNameForDescription;
-                employee.Pager = subsidiaryCompany.OfficialPhoneNumber;
+                employee.Pager = subsidiaryCompany.IsOutgoingNumberAnonymous ? "ANONYMOUS" : subsidiaryCompany.OfficialPhoneNumber;
                 employee.OtherTelephone = subsidiaryCompany.OfficialPhoneNumber;
                 employee.FaxNumber = subsidiaryCompany.FaxNumber;
             }
