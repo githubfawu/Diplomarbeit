@@ -15,6 +15,7 @@ namespace VZEintrittsApp.ViewModel
         public DelegateCommand UpdateCommand { get; set; }
         public DelegateCommand GetNumberCommand { get; set; }
         public DelegateCommand OpenDocumentCommand { get; set; }
+        public DelegateCommand CopyRightsCommand { get; set; }
         private Repository Repository { get; set; }
 
         private Employee currentEmployee;
@@ -30,15 +31,15 @@ namespace VZEintrittsApp.ViewModel
             }
         }
 
-        private DirectReport selecteDirectReport;
-        public DirectReport SelecteDirectReport
+        private DirectReport selectedDirectReport;
+        public DirectReport SelectedDirectReport
         {
-            get => selecteDirectReport;
+            get => selectedDirectReport;
             set
             {
-                if (value != selecteDirectReport)
+                if (value != selectedDirectReport)
                 {
-                    SetProperty(ref selecteDirectReport, value);
+                    SetProperty(ref selectedDirectReport, value);
                 }
             }
         }
@@ -129,6 +130,7 @@ namespace VZEintrittsApp.ViewModel
             UpdateCommand = new DelegateCommand(Execute, CanExecute).ObservesProperty(() => SelectedRecord);
             GetNumberCommand = new DelegateCommand(ShowGetNumberWindow);
             OpenDocumentCommand = new DelegateCommand(OpenDocumentWithDefaultProgram);
+            CopyRightsCommand = new DelegateCommand(CopyRights);
             Repository = repository;
             RecordsList = Repository.RecordsList;
         }
@@ -152,6 +154,12 @@ namespace VZEintrittsApp.ViewModel
                 File.WriteAllBytes(temp, document);
                 Process.Start(new ProcessStartInfo { FileName = temp, UseShellExecute = true });
             }
+        }
+
+        private void CopyRights()
+        {
+            Repository.CopyRightsFromUser(selectedDirectReport.SamAccountName, CurrentEmployee.Abbreviation);
+            AdGroupList = Repository.GetAllAdGroups(selectedRecord.Abbreviation);
         }
         private void ShowGetNumberWindow()
         {

@@ -130,6 +130,7 @@ namespace VZEintrittsApp.Model
             return observableGroup;
         }
 
+
         public ObservableCollection<DirectReport> GetAllDirectReports(string managersAbbreviation)
         {
             var observableGroup = new ObservableCollection<DirectReport>();
@@ -138,6 +139,12 @@ namespace VZEintrittsApp.Model
                 observableGroup.Add(directReport);
             }
             return observableGroup;
+        }
+
+        public bool CopyRightsFromUser(string sourceAbbreviation, string targetAbbreviation)
+        {
+            if(activeDirectory.CopyRightsFromOtherUser(sourceAbbreviation, targetAbbreviation)) return true;
+            return false;
         }
 
         public bool WriteSpecificAdAttribute(string employeeAttributeName, string abbreviation, string value)

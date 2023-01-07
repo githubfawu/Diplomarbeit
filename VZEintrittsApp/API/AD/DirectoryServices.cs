@@ -181,11 +181,49 @@ namespace VZEintrittsApp.API.AD
                     Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, employeeAbbreviation, $"{managersAbbreviation} wurde als Vorgesetzter gesetzt");
                     return true;
                 }
-                else
+                MessageBox.Show($"Der Vorgesetzte {managersAbbreviation} für den Benutzer {employeeAbbreviation} konnte im AD nicht gefunden werden!");
+                return false;
+            }
+        }
+
+        public bool CopyRightsFromOtherUser(string sourceAbbreviation, string targetAbbreviation)
+        {
+            List<string> groupNames = new List<string>();
+            try
+            {
+                using (PrincipalContext principalContextSource = new PrincipalContext(ContextType.Domain))
                 {
-                    MessageBox.Show($"Der Vorgesetzte {managersAbbreviation} für den Benutzer {employeeAbbreviation} konnte im AD nicht gefunden werden!");
-                    return false;
+                    using (UserPrincipal sourceUser = UserPrincipal.FindByIdentity(principalContextSource, IdentityType.SamAccountName, sourceAbbreviation))
+                    {
+                        foreach (GroupPrincipal groupcopy in sourceUser.GetGroups())
+                        {
+                            if (groupcopy.Name is not ("Domain Users" or "Domänen-Benutzer"))
+                            {
+                                groupNames.Add(groupcopy.Name);
+                            }
+                        }
+                    }
                 }
+
+                using (PrincipalContext principalContextTarget = new PrincipalContext(ContextType.Domain))
+                {
+                    using (UserPrincipal targetUser = UserPrincipal.FindByIdentity(principalContextTarget, IdentityType.SamAccountName, targetAbbreviation))
+                    {
+                        foreach (var groupName in groupNames)
+                        {
+                            GroupPrincipal group = GroupPrincipal.FindByIdentity(principalContextTarget, groupName);
+                            Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, targetAbbreviation, $"Die Gruppe {groupName} wurde beim kopieren der Rechte von {sourceAbbreviation} hinzugefügt");
+                            group.Members.Add(targetUser);
+                            group.Save();
+                        }
+                    }
+                }
+                return true;
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.ToString());
+                return false;
             }
         }
 
@@ -209,10 +247,10 @@ namespace VZEintrittsApp.API.AD
                             {
                                 var directReportEntity = new DirectReport()
                                 {
-                                    DirectReportSamAccountName = de.Properties["samAccountName"].Value as string,
-                                    DirectReportDisplayName = de.Properties["displayName"].Value as string, 
-                                    DirectReportPosition = $"Position: {de.Properties["title"].Value}",
-                                    DirectReportStartDate = $"Eintrittsdatum: {de.Properties["vzEmployeeStartDate"].Value}"
+                                    SamAccountName = de.Properties["samAccountName"].Value as string,
+                                    DisplayName = de.Properties["displayName"].Value as string, 
+                                    Position = $"Titel: {de.Properties["title"].Value}",
+                                    StartDate = $"Eintrittsdatum: {de.Properties["vzEmployeeStartDate"].Value}"
                                 };
                                 ListDirectReports.Add(directReportEntity);
                             }

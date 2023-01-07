@@ -4,43 +4,43 @@ namespace VZEintrittsApp.Domain
 {
     public class DirectReport : BindableBase
     {
-        private string? directReportSamAccountName;
-        public string? DirectReportSamAccountName
+        private string? samAccountName;
+        public string? SamAccountName
         {
-            get => directReportSamAccountName;
+            get => samAccountName;
             set
             {
-                if (value != directReportSamAccountName) SetProperty(ref directReportSamAccountName, value);
+                if (value != samAccountName) SetProperty(ref samAccountName, value);
             }
         }
 
-        private string? directReportDisplayName;
-        public string? DirectReportDisplayName
+        private string? displayName;
+        public string? DisplayName
         {
-            get => directReportDisplayName;
+            get => displayName;
             set
             {
-                if (value != directReportDisplayName) SetProperty(ref directReportDisplayName, value);
+                if (value != displayName) SetProperty(ref displayName, value);
             }
         }
 
-        private string? directReportPosition;
-        public string? DirectReportPosition
+        private string? position;
+        public string? Position
         {
-            get => directReportPosition;
+            get => position;
             set
             {
-                if (value != directReportPosition) SetProperty(ref directReportPosition, value);
+                if (value != position) SetProperty(ref position, value);
             }
         }
 
-        private string? directReportStartDate;
-        public string? DirectReportStartDate
+        private string? startDate;
+        public string? StartDate
         {
-            get => directReportStartDate;
+            get => startDate;
             set
             {
-                if (value != directReportStartDate) SetProperty(ref directReportStartDate, value);
+                if (value != startDate) SetProperty(ref startDate, value);
             }
         }
     }
