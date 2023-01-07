@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
@@ -78,7 +79,7 @@ namespace VZEintrittsApp.API.AD
         {
             var result = new List<ActiveDirectoryGroup>();
             using (UserPrincipal user = UserPrincipal.FindByIdentity(new PrincipalContext(ContextType.Domain), IdentityType.SamAccountName, abbreviation))
-            foreach (GroupPrincipal group in user.GetGroups())
+                foreach (GroupPrincipal group in user.GetGroups())
             {
                 result.Add(new ActiveDirectoryGroup()
                 {
@@ -186,6 +187,40 @@ namespace VZEintrittsApp.API.AD
                     return false;
                 }
             }
+        }
+
+        public List<DirectReport> GetDirectReports(string managersAbbreviation)
+        {
+            List<DirectReport> ListDirectReports = new List<DirectReport>();
+
+            using (var context = new PrincipalContext(ContextType.Domain))
+            {
+                using (UserPrincipal manager = UserPrincipal.FindByIdentity(context, managersAbbreviation))
+                {
+                    DirectoryEntry managerEntry = (DirectoryEntry) manager.GetUnderlyingObject();
+                    foreach (var directReport in managerEntry.Properties["directReports"])
+                    {
+                        PrincipalContext ctx = new PrincipalContext(ContextType.Domain);
+                        UserPrincipal user = UserPrincipal.FindByIdentity(ctx, IdentityType.DistinguishedName, directReport.ToString());
+
+                        if (user != null)
+                        {
+                            using (DirectoryEntry de = user.GetUnderlyingObject() as DirectoryEntry)
+                            {
+                                var directReportEntity = new DirectReport()
+                                {
+                                    DirectReportSamAccountName = de.Properties["samAccountName"].Value as string,
+                                    DirectReportDisplayName = de.Properties["displayName"].Value as string, 
+                                    DirectReportPosition = $"Position: {de.Properties["title"].Value}",
+                                    DirectReportStartDate = $"Eintrittsdatum: {de.Properties["vzEmployeeStartDate"].Value}"
+                                };
+                                ListDirectReports.Add(directReportEntity);
+                            }
+                        }
+                    }
+                }
+            }
+            return ListDirectReports;
         }
 
         public bool CreateNewAdAccount(Employee employee)

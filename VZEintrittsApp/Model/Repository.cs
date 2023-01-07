@@ -130,6 +130,16 @@ namespace VZEintrittsApp.Model
             return observableGroup;
         }
 
+        public ObservableCollection<DirectReport> GetAllDirectReports(string managersAbbreviation)
+        {
+            var observableGroup = new ObservableCollection<DirectReport>();
+            foreach (var directReport in activeDirectory.GetDirectReports(managersAbbreviation))
+            {
+                observableGroup.Add(directReport);
+            }
+            return observableGroup;
+        }
+
         public bool WriteSpecificAdAttribute(string employeeAttributeName, string abbreviation, string value)
         {
             if (activeDirectory.WriteIndividualAttribute(employeeAttributeName, abbreviation, value)) return true;

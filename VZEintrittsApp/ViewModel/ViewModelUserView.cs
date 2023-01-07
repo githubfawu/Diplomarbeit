@@ -15,8 +15,46 @@ namespace VZEintrittsApp.ViewModel
         public DelegateCommand UpdateCommand { get; set; }
         public DelegateCommand GetNumberCommand { get; set; }
         public DelegateCommand OpenDocumentCommand { get; set; }
-
         private Repository Repository { get; set; }
+
+        private Employee currentEmployee;
+        public Employee CurrentEmployee
+        {
+            get => currentEmployee;
+            set
+            {
+                if (value != currentEmployee)
+                {
+                    SetProperty(ref currentEmployee, value);
+                }
+            }
+        }
+
+        private DirectReport selecteDirectReport;
+        public DirectReport SelecteDirectReport
+        {
+            get => selecteDirectReport;
+            set
+            {
+                if (value != selecteDirectReport)
+                {
+                    SetProperty(ref selecteDirectReport, value);
+                }
+            }
+        }
+
+        private Employee selectedAdGroup;
+        public Employee SelectedAdGroup
+        {
+            get => selectedAdGroup;
+            set
+            {
+                if (value != selectedAdGroup)
+                {
+                    SetProperty(ref selectedAdGroup, value);
+                }
+            }
+        }
 
         private ObservableCollection<Record> recordsList;
         public ObservableCollection<Record> RecordsList
@@ -44,28 +82,15 @@ namespace VZEintrittsApp.ViewModel
             }
         }
 
-        private Employee selectedAdGroup;
-        public Employee SelectedAdGroup
+        private ObservableCollection<DirectReport> directReportList;
+        public ObservableCollection<DirectReport> DirectReportList
         {
-            get => selectedAdGroup;
+            get => directReportList;
             set
             {
-                if (value != selectedAdGroup)
+                if (value != directReportList)
                 {
-                    SetProperty(ref selectedAdGroup, value);
-                }
-            }
-        }
-
-        private Employee currentEmployee;
-        public Employee CurrentEmployee
-        {
-            get => currentEmployee;
-            set
-            {
-                if (value != currentEmployee)
-                {
-                    SetProperty(ref currentEmployee, value);
+                    SetProperty(ref directReportList, value);
                 }
             }
         }
@@ -82,6 +107,7 @@ namespace VZEintrittsApp.ViewModel
                 IsBusy = true;
                 CurrentEmployee = Repository.ReadAllAdAttributes(selectedRecord.Abbreviation);
                 AdGroupList = Repository.GetAllAdGroups(selectedRecord.Abbreviation);
+                DirectReportList = Repository.GetAllDirectReports(CurrentEmployee.Manager);
                 IsBusy = false;
                 return selectedRecord;
             }
