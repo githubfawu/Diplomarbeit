@@ -31,13 +31,14 @@ namespace VZEintrittsApp.DataAccess.Seeders
                 new AttributeNotations(){NotationId = 19, EmployeeAttributeName = "TelephoneNumber", ActiveDirectoryName = "telephoneNumber"},
                 new AttributeNotations(){NotationId = 20, EmployeeAttributeName = "IpPhoneNumber", ActiveDirectoryName = "ipPhone"},
                 new AttributeNotations(){NotationId = 21, EmployeeAttributeName = "FaxNumber", ActiveDirectoryName = "facsimileTelephoneNumber"},
-                new AttributeNotations(){NotationId = 22, EmployeeAttributeName = "VzAcademicTitle", ActiveDirectoryName = "vzAcademicTitle"},
-                new AttributeNotations(){NotationId = 23, EmployeeAttributeName = "VzPensum", ActiveDirectoryName = "vzEmployeePensum"},
-                new AttributeNotations(){NotationId = 24, EmployeeAttributeName = "VzBirthday", ActiveDirectoryName = "vzBirthday"},
-                new AttributeNotations(){NotationId = 25, EmployeeAttributeName = "VzStartDate", ActiveDirectoryName = "vzEmployeeStartDate"},
-                new AttributeNotations(){NotationId = 26, EmployeeAttributeName = "VzBusinessUnitSupervisor", ActiveDirectoryName = "vzBusinessUnitSupervisor"},
-                new AttributeNotations(){NotationId = 27, EmployeeAttributeName = "VzRegionalSupervisor", ActiveDirectoryName = "vzRegionalSupervisor"},
-                new AttributeNotations(){NotationId = 28, EmployeeAttributeName = "HomePage", ActiveDirectoryName = "wWWHomePage"}
+                new AttributeNotations(){NotationId = 22, EmployeeAttributeName = "MobileNumber", ActiveDirectoryName = "mobile"},
+                new AttributeNotations(){NotationId = 23, EmployeeAttributeName = "VzAcademicTitle", ActiveDirectoryName = "vzAcademicTitle"},
+                new AttributeNotations(){NotationId = 24, EmployeeAttributeName = "VzPensum", ActiveDirectoryName = "vzEmployeePensum"},
+                new AttributeNotations(){NotationId = 25, EmployeeAttributeName = "VzBirthday", ActiveDirectoryName = "vzBirthday"},
+                new AttributeNotations(){NotationId = 26, EmployeeAttributeName = "VzStartDate", ActiveDirectoryName = "vzEmployeeStartDate"},
+                new AttributeNotations(){NotationId = 27, EmployeeAttributeName = "VzBusinessUnitSupervisor", ActiveDirectoryName = "vzBusinessUnitSupervisor"},
+                new AttributeNotations(){NotationId = 28, EmployeeAttributeName = "VzRegionalSupervisor", ActiveDirectoryName = "vzRegionalSupervisor"},
+                new AttributeNotations(){NotationId = 29, EmployeeAttributeName = "HomePage", ActiveDirectoryName = "wWWHomePage"}
             };
             return list;
         }

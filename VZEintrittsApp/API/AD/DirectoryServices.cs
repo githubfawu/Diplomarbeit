@@ -1,13 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
-using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Security.Principal;
 using System.Windows;
-using System.Windows.Input;
 using VZEintrittsApp.DataAccess;
 using VZEintrittsApp.Domain;
 
@@ -55,13 +52,17 @@ namespace VZEintrittsApp.API.AD
                     UserPrincipal user = UserPrincipal.FindByIdentity(context, abbreviation);
                     DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
                     var attribute = AttributeList.FirstOrDefault(e => e.EmployeeAttributeName == employeeAttributeName);
-                    userEntry.Properties[attribute.ActiveDirectoryName].Value = value;
-                    userEntry.CommitChanges();
-                    Log.Write(DateTime.Now,
-                        WindowsIdentity.GetCurrent().Name,
-                        abbreviation, 
-                        ($"Das AD-Attribut {attribute.ActiveDirectoryName} wurde mit dem Wert {value} geschrieben"));
-                    return true;
+                    if (attribute != null)
+                    {
+                        userEntry.Properties[attribute.ActiveDirectoryName].Value = value;
+                        userEntry.CommitChanges();
+                        Log.Write(DateTime.Now,
+                            WindowsIdentity.GetCurrent().Name,
+                            abbreviation,
+                            ($"Das AD-Attribut {attribute.ActiveDirectoryName} wurde mit dem Wert {value} geschrieben"));
+                        return true;
+                    }
+                    return false;
                 }
             }
             catch (Exception e)
@@ -136,6 +137,7 @@ namespace VZEintrittsApp.API.AD
                     employee.OtherTelephone = userEntry.Properties["otherTelephone"].Value?.ToString();
                     employee.FaxNumber = userEntry.Properties["facsimileTelephoneNumber"].Value?.ToString();
                     employee.IpPhoneNumber = userEntry.Properties["ipPhone"].Value?.ToString();
+                    employee.MobileNumber = userEntry.Properties["mobile"].Value?.ToString();
                     employee.VzAcademicTitle = userEntry.Properties["vzAcademicTitle"].Value?.ToString();
                     employee.VzPensum = userEntry.Properties["vzEmployeePensum"].Value?.ToString();
                     employee.VzStartDate = userEntry.Properties["vzEmployeeStartDate"].Value?.ToString();

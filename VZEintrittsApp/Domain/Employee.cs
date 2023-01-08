@@ -1,9 +1,15 @@
-﻿using Prism.Mvvm;
+﻿using System;
+using Prism.Mvvm;
 
 namespace VZEintrittsApp.Domain
 {
-    public partial class Employee : BindableBase
+    public partial class Employee : BindableBase, ICloneable
     {
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+
         private int? employeeNr;
         public int? EmployeeNr
         {

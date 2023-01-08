@@ -137,28 +137,28 @@
                 <TabControl Style="{StaticResource TabControl}" Name="Prototyp">
                     <TabItem Style="{StaticResource Tab}" Header="Details zur Person">
                         <TabPanel>
-                            <Grid Margin="15,0,-145,-55">
+                            <Grid Margin="15,0,-15,-55">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="241"/>
+                                    <ColumnDefinition Width="241" />
+                                    <ColumnDefinition Width="241" />
+                                    <ColumnDefinition Width="241" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="0.75*" />
-                                    <RowDefinition Height="1*" />
-                                    <RowDefinition Height="1*" />
-                                    <RowDefinition Height="1*" />
-                                    <RowDefinition Height="1*" />
-                                    <RowDefinition Height="1*" />
-                                    <RowDefinition Height="1*" />
-                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="42" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
                                 </Grid.RowDefinitions>
                                 <Label Grid.Column="0" Grid.Row="0" Content="Details zur Person:" Foreground="White"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="1" Content="Kürzel:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="1" Text="{Binding CurrentEmployee.Abbreviation}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="1" Text="{Binding CurrentEmployee.Abbreviation}" IsReadOnly="True" ToolTip="Das Kürzel muss direkt im AD geändert werden"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="2" Content="Name des AD-Objektes"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="2" Text="{Binding CurrentEmployee.NameOfAdObject}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="2" Text="{Binding CurrentEmployee.NameOfAdObject}" IsReadOnly="True" ToolTip="Der Name des AD-Objektes muss direkt im AD gändert werden"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="3" Content="Anzeigename:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="3" Text="{Binding CurrentEmployee.DisplayName}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="4" Content="Vorname:"/>
@@ -203,7 +203,9 @@
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="4" Text="{Binding CurrentEmployee.PostalCode}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="5" Content="Land"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="5" Text="{Binding CurrentEmployee.Country}"/>
-                                <Button Grid.Column="3" Grid.Row="7" Width="150" Height="35"   Name="ButtonSave" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
+
+                                <Label Grid.Column="2" Grid.Row="7" Margin="40,12,0,0" FontSize="16" Foreground="LawnGreen" Content="Änderungen gespeichert..." Visibility="{Binding ShowLabelSaved, Converter={StaticResource boolToVisibilityConverter}}"/>
+                                <Button Grid.Column="3" Grid.Row="7" Width="150" Height="35"   Name="ButtonSave" Command="{Binding SaveCommand}" FontSize="20" Background="#09aded">Speichern</Button>
                             </Grid>
                         </TabPanel>
                     </TabItem>
@@ -235,15 +237,15 @@
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="4" Content="Pager (Ausgehende Rufnr.):"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="4" Text="{Binding CurrentEmployee.Pager}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="5" Content="Mobil:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="5" Text="{Binding CurrentEmployee}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="5" Text="{Binding CurrentEmployee.MobileNumber}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="6" Content="Fax:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="6" Text="{Binding CurrentEmployee.FaxNumber}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="7" Content="IP-Telefon:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="7" Text="{Binding CurrentEmployee.IpPhoneNumber}"/>
 
                                 <Label Grid.Column="1" Grid.Row="0" Content="Weitere Attribute:" Foreground="White"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="6" Content="Webseite:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="6" Grid.RowSpan="2" Width="240" Height="40" TextWrapping="Wrap" Text="{Binding CurrentEmployee.HomePage}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="5" Content="Webseite:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="5" Grid.RowSpan="2" Width="240" Height="40" TextWrapping="Wrap" Text="{Binding CurrentEmployee.HomePage}"/>
 
                                 <Label Grid.Column="2" Grid.Row="0" Content="Laufwerke und Postfach" Foreground="White"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="1" Content="Postfach (Scan-Ordner):"/>
@@ -256,8 +258,8 @@
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="5" Text="{Binding CurrentEmployee.Mailbox}"/>
                                 <Button Command="{Binding PlatzhalterCommand}" Grid.Column="2" Grid.Row="6" Margin="10,10,123,20"  FontSize="18" Background="#09aded" Content="Mailbox erstellen"/>
 
-
-                                <Button Grid.Column="2" Grid.Row="7" Margin="30,5,0,10"  Width="150" Height="35"   Name="ButtonSavetest" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
+                                <Label Grid.Column="1" Grid.Row="7" Margin="-100,12,0,0" FontSize="16" Foreground="LawnGreen" Content="Änderungen gespeichert..." Visibility="{Binding ShowLabelSaved, Converter={StaticResource boolToVisibilityConverter}}"/>
+                                <Button Grid.Column="1" Grid.Row="7" Margin="20,5,0,10"  Width="150" Height="35"   Name="ButtonSavetest" Command="{Binding SaveCommand}" FontSize="20" Background="#09aded">Speichern</Button>
                             </Grid>
                         </TabPanel>
                     </TabItem>
@@ -329,7 +331,7 @@
                                     </ListView.View>
                                 </ListView>
                             <Button Grid.Column="1" Grid.Row="6" Width="150" Height="30" Command="{Binding RemoveGroupCommand}" FontSize="18" Background="#09aded" Content="Gruppe entfernen" />
-                            <Button Grid.Column="3" Grid.Row="7" Width="150" Height="35" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
+                            <Button Grid.Column="3" Grid.Row="7" Width="150" Height="35" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Obsolet</Button>
                         </Grid>
                     </TabPanel>
                     </TabItem>

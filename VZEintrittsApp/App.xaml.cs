@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
+using KellermanSoftware.CompareNetObjects;
 using VZEintrittsApp.API.AD;
 using VZEintrittsApp.DataAccess;
 using VZEintrittsApp.Import.PDFReader;
@@ -41,6 +42,7 @@ namespace VZEintrittsApp
             services.AddSingleton<FinalizeEmployee>();
             services.AddSingleton<AddIndividualProperties>();
             services.AddSingleton<ReadPdfDocument>();
+            services.AddSingleton<CompareLogic>();
         }
         private void OnStartup(object sender, StartupEventArgs e)
         {

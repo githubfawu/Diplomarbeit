@@ -52,5 +52,14 @@ namespace VZEintrittsApp.Domain
                 if (value != faxNumber) SetProperty(ref faxNumber, value);
             }
         }
+        private string? mobileNumber;
+        public string? MobileNumber
+        {
+            get => mobileNumber;
+            set
+            {
+                if (value != mobileNumber) SetProperty(ref mobileNumber, value);
+            }
+        }
     }
 }

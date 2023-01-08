@@ -1,7 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using KellermanSoftware.CompareNetObjects;
 using Prism.Commands;
 using Prism.Mvvm;
 using VZEintrittsApp.Domain;
@@ -12,12 +14,27 @@ namespace VZEintrittsApp.ViewModel
 {
     class ViewModelUserView : BindableBase
     {
-        public DelegateCommand UpdateCommand { get; set; }
+        public DelegateCommand SaveCommand { get; set; }
         public DelegateCommand GetNumberCommand { get; set; }
         public DelegateCommand OpenDocumentCommand { get; set; }
         public DelegateCommand CopyRightsCommand { get; set; }
         public DelegateCommand RemoveGroupCommand { get; set; }
         private Repository Repository { get; set; }
+        private CompareLogic Compare { get; set; }
+
+        private System.Timers.Timer timer;
+        private bool showLabelSaved;
+        public bool ShowLabelSaved
+        {
+            get => showLabelSaved;
+            set
+            {
+                if (value != showLabelSaved)
+                {
+                    SetProperty(ref showLabelSaved, value);
+                }
+            }
+        }
 
         private Employee currentEmployee;
         public Employee CurrentEmployee
@@ -28,6 +45,19 @@ namespace VZEintrittsApp.ViewModel
                 if (value != currentEmployee)
                 {
                     SetProperty(ref currentEmployee, value);
+                }
+            }
+        }
+
+        private Employee currentEmployeeBeforeChanges;
+        public Employee CurrentEmployeeBeforeChanges
+        {
+            get => currentEmployeeBeforeChanges;
+            set
+            {
+                if (value != currentEmployeeBeforeChanges)
+                {
+                    SetProperty(ref currentEmployeeBeforeChanges, value);
                 }
             }
         }
@@ -106,8 +136,11 @@ namespace VZEintrittsApp.ViewModel
                 {
                     return null;
                 }
+
+                CompareEmployeeObjects(CurrentEmployee, CurrentEmployeeBeforeChanges);
                 IsBusy = true;
                 CurrentEmployee = Repository.ReadAllAdAttributes(selectedRecord.Abbreviation);
+                CurrentEmployeeBeforeChanges = CurrentEmployee.Clone() as Employee;
                 AdGroupList = Repository.GetAllAdGroups(selectedRecord.Abbreviation);
                 DirectReportList = Repository.GetAllDirectReports(CurrentEmployee.Manager);
                 IsBusy = false;
@@ -128,23 +161,51 @@ namespace VZEintrittsApp.ViewModel
 
         public ViewModelUserView(Repository repository)
         {
-            UpdateCommand = new DelegateCommand(Execute, CanExecute).ObservesProperty(() => SelectedRecord);
+            SaveCommand = new DelegateCommand(SaveChangesOnEmployee);
             GetNumberCommand = new DelegateCommand(ShowGetNumberWindow);
             OpenDocumentCommand = new DelegateCommand(OpenDocumentWithDefaultProgram);
             CopyRightsCommand = new DelegateCommand(CopyRights);
             RemoveGroupCommand = new DelegateCommand(RemoveGroup);
+            Compare = new CompareLogic();
+            Compare.Config.MaxDifferences = 500;
             Repository = repository;
             RecordsList = Repository.RecordsList;
+
+            timer = new System.Timers.Timer(2000);
+            timer.AutoReset = false;
+            timer.Elapsed += TimerTicked;
+            ShowLabelSaved = false;
         }
 
-        private bool CanExecute()
+        private void ChangeStatusSavedLabel()
         {
-            return true; /*!string.IsNullOrEmpty(SelectedItem.Abbreviation);*/
+            timer.Enabled = true;
+            ShowLabelSaved = true;
         }
 
-        private void Execute()
+        private void TimerTicked(object sender, EventArgs e)
         {
-            MessageBox.Show("Speichert...");
+            ShowLabelSaved = false;
+        }
+
+        private bool CompareEmployeeObjects(object currentUser, object currentUserBeforeChange)
+        {
+            ComparisonResult result = Compare.Compare(currentUser, currentUserBeforeChange);
+            return result.AreEqual;
+        }
+
+        private void SaveChangesOnEmployee()
+        {
+            isBusy = true;
+            ComparisonResult result = Compare.Compare(CurrentEmployee, CurrentEmployeeBeforeChanges);
+            if (result.AreEqual) return;
+            foreach (var difference in result.Differences)
+            {
+                Repository.WriteSpecificAdAttribute(difference.PropertyName, CurrentEmployee.Abbreviation, difference.Object1Value);
+            }
+            ChangeStatusSavedLabel();
+            CurrentEmployeeBeforeChanges = CurrentEmployee.Clone() as Employee;
+            isBusy = false;
         }
 
         public void OpenDocumentWithDefaultProgram()
@@ -159,14 +220,18 @@ namespace VZEintrittsApp.ViewModel
         }
         private void RemoveGroup()
         {
+            isBusy = true;
             Repository.RemoveGroupFromUser(CurrentEmployee.Abbreviation, selectedAdGroup.AdGroupName);
             AdGroupList = Repository.GetAllAdGroups(selectedRecord.Abbreviation);
+            isBusy = false;
         }
 
         private void CopyRights()
         {
+            isBusy = true;
             Repository.CopyRightsFromUser(selectedDirectReport.SamAccountName, CurrentEmployee.Abbreviation);
             AdGroupList = Repository.GetAllAdGroups(selectedRecord.Abbreviation);
+            isBusy = false;
         }
         private void ShowGetNumberWindow()
         {
