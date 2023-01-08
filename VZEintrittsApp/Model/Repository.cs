@@ -143,7 +143,21 @@ namespace VZEintrittsApp.Model
 
         public bool CopyRightsFromUser(string sourceAbbreviation, string targetAbbreviation)
         {
-            if(activeDirectory.CopyRightsFromOtherUser(sourceAbbreviation, targetAbbreviation)) return true;
+            if (!string.IsNullOrWhiteSpace(sourceAbbreviation) && !string.IsNullOrWhiteSpace(targetAbbreviation))
+            {
+                if (activeDirectory.CopyRightsFromOtherUser(sourceAbbreviation, targetAbbreviation)) return true;
+            }
+            MessageBox.Show("Nicht alle benötigten Daten (Kürzel von User oder dem ausgewählten unterstellten) sind vorhanden");
+            return false;
+        }
+
+        public bool RemoveGroupFromUser(string abbreviation, string groupName)
+        {
+            if (!string.IsNullOrWhiteSpace(abbreviation) && !string.IsNullOrWhiteSpace(groupName))
+            {
+                if (activeDirectory.RemoveGroupFromUser(abbreviation, groupName)) return true;
+            }
+            MessageBox.Show($"Die AD-Gruppe {groupName} konnte nicht entfernt werden.");
             return false;
         }
 

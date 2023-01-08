@@ -204,7 +204,6 @@ namespace VZEintrittsApp.API.AD
                         }
                     }
                 }
-
                 using (PrincipalContext principalContextTarget = new PrincipalContext(ContextType.Domain))
                 {
                     using (UserPrincipal targetUser = UserPrincipal.FindByIdentity(principalContextTarget, IdentityType.SamAccountName, targetAbbreviation))
@@ -221,6 +220,27 @@ namespace VZEintrittsApp.API.AD
                 return true;
             }
             catch(Exception e)
+            {
+                MessageBox.Show(e.ToString());
+                return false;
+            }
+        }
+
+        public bool RemoveGroupFromUser(string abbreviation, string groupName)
+        {
+            try
+            {
+                using PrincipalContext principalContext = new PrincipalContext(ContextType.Domain);
+                using (GroupPrincipal group = GroupPrincipal.FindByIdentity(principalContext, groupName))
+                {
+                    UserPrincipal user = UserPrincipal.FindByIdentity(principalContext, IdentityType.SamAccountName, abbreviation);
+                    Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, abbreviation, $"Die Gruppe {groupName} wurde entfernt");
+                    group.Members.Remove(user);
+                    group.Save();
+                }
+                return true;
+            }
+            catch (Exception e)
             {
                 MessageBox.Show(e.ToString());
                 return false;

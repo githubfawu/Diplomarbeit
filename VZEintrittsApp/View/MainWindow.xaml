@@ -328,7 +328,8 @@
                                         </GridView>
                                     </ListView.View>
                                 </ListView>
-                                <Button Grid.Column="3" Grid.Row="7" Width="150" Height="35" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
+                            <Button Grid.Column="1" Grid.Row="6" Width="150" Height="30" Command="{Binding RemoveGroupCommand}" FontSize="18" Background="#09aded" Content="Gruppe entfernen" />
+                            <Button Grid.Column="3" Grid.Row="7" Width="150" Height="35" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Speichern</Button>
                         </Grid>
                     </TabPanel>
                     </TabItem>

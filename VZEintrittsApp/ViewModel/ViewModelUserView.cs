@@ -16,6 +16,7 @@ namespace VZEintrittsApp.ViewModel
         public DelegateCommand GetNumberCommand { get; set; }
         public DelegateCommand OpenDocumentCommand { get; set; }
         public DelegateCommand CopyRightsCommand { get; set; }
+        public DelegateCommand RemoveGroupCommand { get; set; }
         private Repository Repository { get; set; }
 
         private Employee currentEmployee;
@@ -44,8 +45,8 @@ namespace VZEintrittsApp.ViewModel
             }
         }
 
-        private Employee selectedAdGroup;
-        public Employee SelectedAdGroup
+        private ActiveDirectoryGroup selectedAdGroup;
+        public ActiveDirectoryGroup SelectedAdGroup
         {
             get => selectedAdGroup;
             set
@@ -131,6 +132,7 @@ namespace VZEintrittsApp.ViewModel
             GetNumberCommand = new DelegateCommand(ShowGetNumberWindow);
             OpenDocumentCommand = new DelegateCommand(OpenDocumentWithDefaultProgram);
             CopyRightsCommand = new DelegateCommand(CopyRights);
+            RemoveGroupCommand = new DelegateCommand(RemoveGroup);
             Repository = repository;
             RecordsList = Repository.RecordsList;
         }
@@ -154,6 +156,11 @@ namespace VZEintrittsApp.ViewModel
                 File.WriteAllBytes(temp, document);
                 Process.Start(new ProcessStartInfo { FileName = temp, UseShellExecute = true });
             }
+        }
+        private void RemoveGroup()
+        {
+            Repository.RemoveGroupFromUser(CurrentEmployee.Abbreviation, selectedAdGroup.AdGroupName);
+            AdGroupList = Repository.GetAllAdGroups(selectedRecord.Abbreviation);
         }
 
         private void CopyRights()
