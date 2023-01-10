@@ -114,6 +114,19 @@ namespace VZEintrittsApp.ViewModel
             }
         }
 
+        private ObservableCollection<ManagementLevel> mgmtLevels;
+        public ObservableCollection<ManagementLevel> MgmtLevels
+        {
+            get => mgmtLevels;
+            set
+            {
+                if (value != mgmtLevels)
+                {
+                    SetProperty(ref mgmtLevels, value);
+                }
+            }
+        }
+
         private ObservableCollection<DirectReport> directReportList;
         public ObservableCollection<DirectReport> DirectReportList
         {
@@ -143,6 +156,7 @@ namespace VZEintrittsApp.ViewModel
                 CurrentEmployeeBeforeChanges = CurrentEmployee.Clone() as Employee;
                 AdGroupList = Repository.GetAllAdGroups(selectedRecord.Abbreviation);
                 DirectReportList = Repository.GetAllDirectReports(CurrentEmployee.Manager);
+                MgmtLevels = Repository.GetAllManagementLevels();
                 IsBusy = false;
                 return selectedRecord;
             }

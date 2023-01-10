@@ -20,6 +20,7 @@ namespace VZEintrittsApp.DataAccess
         public DbSet<SubsidiaryCompany> SubsidiaryCompanies { get; set; }
         public DbSet<AttributeNotations> AttributeNotations { get; set; }
         public DbSet<NumberFormat> NumberFormats { get; set; }
+        public DbSet<ManagementLevel> ManagementLevels { get; set; }
         public DbSet<Log> Logs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -43,7 +44,11 @@ namespace VZEintrittsApp.DataAccess
             modelBuilder.Entity<AttributeNotations>()
                 .HasKey(p => p.NotationId);
             modelBuilder.Entity<AttributeNotations>().HasData(AttributeNotationsSeeder.GetSeeds());
-            
+
+            modelBuilder.Entity<ManagementLevel>()
+                .HasKey(p => p.MgmtLevelId);
+            modelBuilder.Entity<ManagementLevel>().HasData(ManagementLevelSeeder.GetSeeds());
+
             modelBuilder.Entity<NumberFormat>()
                 .Property(b => b.Formats)
                 .HasConversion(

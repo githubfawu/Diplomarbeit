@@ -66,7 +66,7 @@
                 </Rectangle.OpacityMask>
             </Rectangle>
         </Grid>
-        
+
         <Grid Column="0" Row="1" Grid.ColumnSpan="2">
             <ListView 
                 Name ="ListViewOpenEntries"
@@ -81,56 +81,56 @@
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
                 <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}">
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="true">
-                                    <Setter Property="Foreground" Value="Black" />
-                                    <Setter Property="ToolTip" Value="Doppelklick für das Original-Dokument" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Foreground" Value="Black" />
+                                <Setter Property="ToolTip" Value="Doppelklick für das Original-Dokument" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
                 </ListView.ItemContainerStyle>
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Width="140">
-                                <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Status</GridViewColumnHeader>
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Status}" Style="{StaticResource TextBlockListView}"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="140">
+                            <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Status</GridViewColumnHeader>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Status}" Style="{StaticResource TextBlockListView}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
 
-                            <GridViewColumn Width="100">
-                                <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Kürzel</GridViewColumnHeader>
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Abbreviation}" Style="{StaticResource TextBlockListView}"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
+                        <GridViewColumn Width="100">
+                            <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Kürzel</GridViewColumnHeader>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Abbreviation}" Style="{StaticResource TextBlockListView}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
 
-                            <GridViewColumn Width="100">
-                                <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">MA-Nr.</GridViewColumnHeader>
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding EmployeeNr}" Style="{StaticResource TextBlockListView}"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
+                        <GridViewColumn Width="100">
+                            <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">MA-Nr.</GridViewColumnHeader>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding EmployeeNr}" Style="{StaticResource TextBlockListView}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
 
-                            <GridViewColumn Width="180">
-                                <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Erster Arbeitstag</GridViewColumnHeader>
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
+                        <GridViewColumn Width="180">
+                            <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Erster Arbeitstag</GridViewColumnHeader>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
                                     <TextBlock Text="{Binding FirstWorkingDay, StringFormat=dd.MM.yyyy}" Style="{StaticResource TextBlockListView}"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
         <!--Tab1-->
         <Grid Column="0" Row="2" Grid.ColumnSpan="3" Grid.RowSpan="2">
             <DockPanel>
@@ -156,9 +156,9 @@
                                 </Grid.RowDefinitions>
                                 <Label Grid.Column="0" Grid.Row="0" Content="Details zur Person:" Foreground="White"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="1" Content="Kürzel:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="1" Text="{Binding CurrentEmployee.Abbreviation}" IsReadOnly="True" ToolTip="Das Kürzel muss direkt im AD geändert werden"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="1" Text="{Binding CurrentEmployee.Abbreviation}" IsEnabled="False" ToolTip="Das Kürzel kann nicht in dieser App geändert werden"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="2" Content="Name des AD-Objektes"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="2" Text="{Binding CurrentEmployee.NameOfAdObject}" IsReadOnly="True" ToolTip="Der Name des AD-Objektes muss direkt im AD gändert werden"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="2" Text="{Binding CurrentEmployee.NameOfAdObject}" IsEnabled="False" ToolTip="Der Name des AD-Objektes kann nicht in dieser App geändert werden"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="3" Content="Anzeigename:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="3" Text="{Binding CurrentEmployee.DisplayName}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="4" Content="Vorname:"/>
@@ -174,7 +174,14 @@
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="3" Content="Rang:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="3" Text="{Binding CurrentEmployee.VzGrade}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="4" Content="Kaderstufe:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="4" Text="{Binding CurrentEmployee}"/>
+                                <ComboBox Margin="9,30,30,5" Grid.Column="1" Grid.Row="4" Width="200" Height="25"
+                                          FontSize="16"
+                                          FontWeight="Bold"
+                                          FontFamily="Calibri"
+                                          ItemsSource="{Binding MgmtLevels}"
+                                          DisplayMemberPath="MgmtLevel"
+                                          SelectedItem="{Binding CurrentEmployee.VzManagementLevel}">
+                                </ComboBox>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="5" Content="Geburtsdatum:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="5" Text="{Binding CurrentEmployee.VzBirthday}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="6" Content="Abteilungsname:"/>
@@ -265,45 +272,45 @@
                     </TabItem>
                     <!-- Tab3 -->
                     <TabItem Style="{StaticResource Tab}" Header="Berechtigungen">
-                    <TabPanel>
-                        <Grid Margin="10,0,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="265"/>
-                                <ColumnDefinition Width="225" />
-                                <ColumnDefinition Width="225" />
-                                <ColumnDefinition Width="265" />
+                        <TabPanel>
+                            <Grid Margin="10,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="265"/>
+                                    <ColumnDefinition Width="225" />
+                                    <ColumnDefinition Width="225" />
+                                    <ColumnDefinition Width="265" />
                                 </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="40" />
-                                <RowDefinition Height="60" />
-                                <RowDefinition Height="60" />
-                                <RowDefinition Height="60" />
-                                <RowDefinition Height="60" />
-                                <RowDefinition Height="60" />
-                                <RowDefinition Height="60" />
-                                <RowDefinition Height="60" />
-                            </Grid.RowDefinitions>
-                            <Label Grid.Column="0" Grid.Row="0" Content="Berechtigungen:" Foreground="White"/>
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="1" Content="Rechte kopieren:"/>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Content="Berechtigungen:" Foreground="White"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="1" Content="Rechte kopieren:"/>
 
-                            <ListView Grid.Column="0" Grid.Row="2" Grid.RowSpan="4"
+                                <ListView Grid.Column="0" Grid.Row="2" Grid.RowSpan="4"
                                       Name="ListViewDirectReports"
                                       Margin="10,-20,10,0"
                                       ItemsSource="{Binding DirectReportList}"
                                       SelectedItem="{Binding SelectedDirectReport}">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
                                                 <Label Content="{Binding DisplayName}" FontSize="12" FontWeight="Bold" Margin="0,-5,0,-5"/>
                                                 <Label Content="{Binding Position}" FontSize="12" Margin="0,-5,0,-5"/>
                                                 <Label Content="{Binding StartDate}" FontSize="12" Margin="0,-5,0,0"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                            <Button Grid.Column="0" Grid.Row="6" Width="150" Height="30" Command="{Binding CopyRightsCommand}" FontSize="18" Background="#09aded" Content="Rechte kopieren" />
-                            <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="1" Content="Zugewiesene Gruppen:"/>
-                            <ListView 
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                                <Button Grid.Column="0" Grid.Row="6" Width="150" Height="30" Command="{Binding CopyRightsCommand}" FontSize="18" Background="#09aded" Content="Rechte kopieren" />
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="1" Content="Zugewiesene Gruppen:"/>
+                                <ListView 
                                 Name ="ListViewAdGroups"
                                 Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="4"
                                 ItemsSource="{Binding AdGroupList}"
@@ -330,10 +337,10 @@
                                         </GridView>
                                     </ListView.View>
                                 </ListView>
-                            <Button Grid.Column="1" Grid.Row="6" Width="150" Height="30" Command="{Binding RemoveGroupCommand}" FontSize="18" Background="#09aded" Content="Gruppe entfernen" />
-                            <Button Grid.Column="3" Grid.Row="7" Width="150" Height="35" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Obsolet</Button>
-                        </Grid>
-                    </TabPanel>
+                                <Button Grid.Column="1" Grid.Row="6" Width="150" Height="30" Command="{Binding RemoveGroupCommand}" FontSize="18" Background="#09aded" Content="Gruppe entfernen" />
+                                <Button Grid.Column="3" Grid.Row="7" Width="150" Height="35" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Obsolet</Button>
+                            </Grid>
+                        </TabPanel>
                     </TabItem>
                     <TabItem Style="{StaticResource Tab}" Header="Datensatz" />
                 </TabControl>

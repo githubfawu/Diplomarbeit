@@ -117,7 +117,7 @@ namespace VZEintrittsApp.Import.PDFReader
                                 }
                                 if (entity.Contains("Kaderstufe:"))
                                 {
-                                    employee.VzManagementLevel = CheckForNullAndNewLines(entity, 12, splitString);
+                                    employee.VzManagementLevel = new ManagementLevel(){MgmtLevel = CheckForNullAndNewLines(entity, 12, splitString)};
                                 }
                                 if (entity.Contains("Geburtstag:"))
                                 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using VZEintrittsApp.DataAccess;
@@ -20,10 +21,12 @@ namespace VZEintrittsApp.Model
         private FinalizeContext FinalizeContext;
         private LoggerContext Log;
         private PhoneFormatContext PhoneFormat;
+        private ManagementLevelContext ManagementLevelContext;
         private DirectoryServices activeDirectory;
         private ReadPdfDocument ReadPdfDocument;
         private FinalizeEmployee FinalizeEmployee;
         private AddIndividualProperties AddIndividualProperties;
+        private List<ManagementLevel> ManagementLevelList;
         private IReadDocument documentReader;
         public ObservableCollection<Record> RecordsList = new ObservableCollection<Record>();
 
@@ -32,6 +35,7 @@ namespace VZEintrittsApp.Model
             PhoneFormatContext phoneFormatContext,
             LoggerContext log,
             FinalizeContext finalizeContext,
+            ManagementLevelContext managementLevelContext,
             DirectoryServices directoryServices,
             ReadPdfDocument readPdfDocument,
             FinalizeEmployee finalizeEmployee,
@@ -40,10 +44,12 @@ namespace VZEintrittsApp.Model
             activeDirectory = directoryServices;
             FinalizeContext = finalizeContext;
             RecordContext = recordContext;
+            ManagementLevelContext = managementLevelContext;
             PhoneFormat = phoneFormatContext;
             ReadPdfDocument = readPdfDocument;
             FinalizeEmployee = finalizeEmployee;
             AddIndividualProperties = addIndividualProperties;
+            ManagementLevelList = ManagementLevelContext.GetAllManagementLevels().ToList();
             Log = log;
             ReadAllRecords();
         }
@@ -55,7 +61,7 @@ namespace VZEintrittsApp.Model
 
         public Employee ReadAllAdAttributes(string abbreviation)
         {
-            return activeDirectory.GetAttributes(abbreviation);
+            return activeDirectory.GetAttributes(abbreviation, ManagementLevelContext.GetAllManagementLevels());
         }
 
         public void ImportDocument(string file)
@@ -111,12 +117,22 @@ namespace VZEintrittsApp.Model
                     FinalizeEmployee.FinalizeEmployees(user);
                     AddIndividualProperties.AddProperties(user, FinalizeContext.GetAppropriateSubsidiaryCompany(user.City, user.Company));
                     activeDirectory.CreateNewAdAccount(user);
+                    activeDirectory.AddManagementGroupToUser(user.Abbreviation, GetCorrespondingManagementLevel(user.VzManagementLevel.MgmtLevel));
                 }
                 else
                 {
                     MessageBox.Show($"Der Benutzer {user.Abbreviation} existiert bereits im Active Directory!");
                 }
             }
+        }
+
+        private ManagementLevel GetCorrespondingManagementLevel(string managmentLevel)
+        {
+            if (string.IsNullOrWhiteSpace(managmentLevel))
+            {
+                return ManagementLevelContext.GetSingleManagementLevel("Keine");
+            }
+            return ManagementLevelContext.GetSingleManagementLevel(managmentLevel);
         }
 
         public ObservableCollection<ActiveDirectoryGroup> GetAllAdGroups(string abbreviation)
@@ -136,6 +152,16 @@ namespace VZEintrittsApp.Model
             foreach (var directReport in activeDirectory.GetDirectReports(managersAbbreviation))
             {
                 observableGroup.Add(directReport);
+            }
+            return observableGroup;
+        }
+
+        public ObservableCollection<ManagementLevel> GetAllManagementLevels()
+        {
+            var observableGroup = new ObservableCollection<ManagementLevel>();
+            foreach (var managementLevel in ManagementLevelList)
+            {
+                observableGroup.Add(managementLevel);
             }
             return observableGroup;
         }
@@ -162,7 +188,7 @@ namespace VZEintrittsApp.Model
 
         public bool WriteSpecificAdAttribute(string employeeAttributeName, string abbreviation, string value)
         {
-            if (activeDirectory.WriteIndividualAttribute(employeeAttributeName, abbreviation, value)) return true;
+            if (activeDirectory.WriteIndividualAttribute(employeeAttributeName, abbreviation, value, ManagementLevelList)) return true;
             return false;
         }
 

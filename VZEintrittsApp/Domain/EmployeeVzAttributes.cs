@@ -83,8 +83,8 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        private string vzManagementLevel; //Kaderstufe
-        public string? VzManagementLevel
+        private ManagementLevel? vzManagementLevel; //Kaderstufe
+        public ManagementLevel? VzManagementLevel
         {
             get => vzManagementLevel;
             set

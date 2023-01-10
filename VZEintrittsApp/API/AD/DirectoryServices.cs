@@ -43,27 +43,42 @@ namespace VZEintrittsApp.API.AD
             }
         }
 
-        public bool WriteIndividualAttribute(string employeeAttributeName, string abbreviation, string value)
+        public bool WriteIndividualAttribute(string employeeAttributeName, string abbreviation, string value, List<ManagementLevel> managementLevels)
         {
             try
             {
-                using var context = new PrincipalContext(ContextType.Domain, "vz.ch", "OU=Standarduser,OU=VZ_Users,DC=vz,DC=ch");
+                if (employeeAttributeName == "VzManagementLevel.MgmtLevelId")
                 {
-                    UserPrincipal user = UserPrincipal.FindByIdentity(context, abbreviation);
-                    DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
-                    var attribute = AttributeList.FirstOrDefault(e => e.EmployeeAttributeName == employeeAttributeName);
-                    if (attribute != null)
+                    foreach (var managementGroup in managementLevels)
                     {
-                        userEntry.Properties[attribute.ActiveDirectoryName].Value = value;
-                        userEntry.CommitChanges();
-                        Log.Write(DateTime.Now,
-                            WindowsIdentity.GetCurrent().Name,
-                            abbreviation,
-                            ($"Das AD-Attribut {attribute.ActiveDirectoryName} wurde mit dem Wert {value} geschrieben"));
-                        return true;
+                        if (!string.IsNullOrWhiteSpace(managementGroup.MgmtLevelGroupName))
+                        {
+                            RemoveGroupFromUser(abbreviation, managementGroup.MgmtLevelGroupName);
+                        }
                     }
-                    return false;
+                    AddManagementGroupToUser(abbreviation, managementLevels.Find(m => m.MgmtLevelId == Int32.Parse(value)));
                 }
+                else
+                {
+                    using var context = new PrincipalContext(ContextType.Domain, "vz.ch", "OU=Standarduser,OU=VZ_Users,DC=vz,DC=ch");
+                    {
+                        UserPrincipal user = UserPrincipal.FindByIdentity(context, abbreviation);
+                        DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
+                        var attribute = AttributeList.FirstOrDefault(e => e.EmployeeAttributeName == employeeAttributeName);
+                        if (attribute != null)
+                        {
+                            userEntry.Properties[attribute.ActiveDirectoryName].Value = value;
+                            userEntry.CommitChanges();
+                            Log.Write(DateTime.Now,
+                                WindowsIdentity.GetCurrent().Name,
+                                abbreviation,
+                                ($"Das AD-Attribut {attribute.ActiveDirectoryName} wurde mit dem Wert {value} geschrieben"));
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+                return false;
             }
             catch (Exception e)
             {
@@ -81,14 +96,13 @@ namespace VZEintrittsApp.API.AD
             var result = new List<ActiveDirectoryGroup>();
             using (UserPrincipal user = UserPrincipal.FindByIdentity(new PrincipalContext(ContextType.Domain), IdentityType.SamAccountName, abbreviation))
                 foreach (GroupPrincipal group in user.GetGroups())
-            {
-                result.Add(new ActiveDirectoryGroup()
                 {
-                    AdGroupName = group.Name,
-                    AdGroupDescription = group.Description
-                });
-            }
-                
+                    result.Add(new ActiveDirectoryGroup()
+                    {
+                        AdGroupName = group.Name,
+                        AdGroupDescription = group.Description
+                    });
+                }
             return result;
         }
 
@@ -103,7 +117,7 @@ namespace VZEintrittsApp.API.AD
             }
         }
 
-        public Employee GetAttributes(string abbreviation)
+        public Employee GetAttributes(string abbreviation, List<ManagementLevel> managementLevels)
         {
             if (CheckIfUserExists(abbreviation))
             {
@@ -144,6 +158,7 @@ namespace VZEintrittsApp.API.AD
                     employee.VzBusinessUnitSupervisor = userEntry.Properties["vzBusinessUnitSupervisor"].Value?.ToString();
                     employee.VzRegionalSupervisor = userEntry.Properties["vzRegionalSupervisor"].Value?.ToString();
                     employee.VzBirthday = userEntry.Properties["vzBirthday"].Value?.ToString();
+                    employee.VzManagementLevel = ReadManagementLevel(employee.Abbreviation, managementLevels);
                     return employee;
                 }
             }
@@ -232,13 +247,67 @@ namespace VZEintrittsApp.API.AD
         {
             try
             {
+                if (!string.IsNullOrWhiteSpace(groupName))
+                {
+                    using PrincipalContext principalContext = new PrincipalContext(ContextType.Domain);
+                    using (GroupPrincipal group = GroupPrincipal.FindByIdentity(principalContext, groupName))
+                    {
+                        UserPrincipal user = UserPrincipal.FindByIdentity(principalContext, IdentityType.SamAccountName, abbreviation);
+                        group.Members.Remove(user);
+                        group.Save();
+                        Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, abbreviation, $"Die Gruppe {groupName} wurde entfernt");
+                    }
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+            return false;
+        }
+
+        public ManagementLevel ReadManagementLevel(string abbreviation, List<ManagementLevel> managementLevels)
+        {
+            try
+            {
+                PrincipalContext context = new PrincipalContext(ContextType.Domain);
+                UserPrincipal user = UserPrincipal.FindByIdentity(context, abbreviation);
+
+                foreach (var managementLevel in managementLevels)
+                {
+                    if (managementLevel.MgmtLevelGroupName != "")
+                    {
+                        using (GroupPrincipal group = GroupPrincipal.FindByIdentity(context, managementLevel.MgmtLevelGroupName))
+                        {
+                            if (group.Members.Contains(user))
+                                return managementLevel;
+                        }
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            { 
+                MessageBox.Show(ex.ToString());
+            }
+            return managementLevels.Find(m => m.MgmtLevel == "Keine");
+        }
+
+        public bool AddManagementGroupToUser(string abbreviation, ManagementLevel? managementLevel)
+        {
+            try
+            {
+                if (managementLevel == null || managementLevel.MgmtLevel.Contains("0"))
+                {
+                    return false;
+                }
                 using PrincipalContext principalContext = new PrincipalContext(ContextType.Domain);
-                using (GroupPrincipal group = GroupPrincipal.FindByIdentity(principalContext, groupName))
+                using (GroupPrincipal group = GroupPrincipal.FindByIdentity(principalContext, managementLevel.MgmtLevelGroupName))
                 {
                     UserPrincipal user = UserPrincipal.FindByIdentity(principalContext, IdentityType.SamAccountName, abbreviation);
-                    Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, abbreviation, $"Die Gruppe {groupName} wurde entfernt");
-                    group.Members.Remove(user);
+                    group.Members.Add(user);
                     group.Save();
+                    Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, abbreviation, $"Die Gruppe {managementLevel.MgmtLevelGroupName} wurde hinzugefügt");
                 }
                 return true;
             }
