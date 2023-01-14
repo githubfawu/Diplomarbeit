@@ -3,6 +3,7 @@ using System.Windows;
 using KellermanSoftware.CompareNetObjects;
 using VZEintrittsApp.API.AD;
 using VZEintrittsApp.DataAccess;
+using VZEintrittsApp.Domain;
 using VZEintrittsApp.Import.PDFReader;
 using VZEintrittsApp.Model;
 using VZEintrittsApp.View;

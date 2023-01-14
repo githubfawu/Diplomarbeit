@@ -1,14 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Prism.Mvvm;
-using VZEintrittsApp.Enums;
 
 namespace VZEintrittsApp.Domain
 {
     public class Record : BindableBase
     {
         [Key]
-        public int recordId;
+        private int recordId;
         public int RecordId
         {
             get => recordId;
@@ -18,7 +17,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public int employeeNr;
+        private int employeeNr;
         public int EmployeeNr
         {
             get => employeeNr;
@@ -28,7 +27,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? abbreviation;
+        private string? abbreviation;
         public string? Abbreviation
         {
             get => abbreviation;
@@ -38,7 +37,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? associatedFile;
+        private string? associatedFile;
         public string? AssociatedFile
         {
             get => associatedFile;
@@ -48,7 +47,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? recorder;
+        private string? recorder;
         public string? Recorder
         {
             get => recorder;
@@ -58,7 +57,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public string? comment;
+        private string? comment;
         public string? Comment
         {
             get => comment;
@@ -68,7 +67,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public RecordStatus? status;
+        private RecordStatus? status;
         public RecordStatus? Status
         {
             get => status;
@@ -78,7 +77,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public DateTime? entryDate;
+        private DateTime? entryDate;
         public DateTime? EntryDate
         {
             get => entryDate;
@@ -88,7 +87,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public DateTime? firstWorkingDay;
+        private DateTime? firstWorkingDay;
         public DateTime? FirstWorkingDay
         {
             get => firstWorkingDay;
@@ -98,7 +97,7 @@ namespace VZEintrittsApp.Domain
             }
         }
 
-        public DateTime? recordReadDate;
+        private DateTime? recordReadDate;
         public DateTime? RecordReadDate
         {
             get => recordReadDate;

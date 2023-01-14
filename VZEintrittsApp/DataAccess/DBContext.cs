@@ -21,6 +21,7 @@ namespace VZEintrittsApp.DataAccess
         public DbSet<AttributeNotations> AttributeNotations { get; set; }
         public DbSet<NumberFormat> NumberFormats { get; set; }
         public DbSet<ManagementLevel> ManagementLevels { get; set; }
+        public DbSet<RecordStatus> RecordStatus { get; set; }
         public DbSet<Log> Logs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -30,6 +31,10 @@ namespace VZEintrittsApp.DataAccess
         {
             modelBuilder.Entity<Record>()
                 .HasKey(p => p.RecordId);
+
+            modelBuilder.Entity<RecordStatus>()
+                .HasKey(p => p.RecordStatusId);
+            modelBuilder.Entity<RecordStatus>().HasData(RecordStatusSeeder.GetSeeds());
 
             modelBuilder.Entity<SavedFile>()
                 .HasKey(p => p.FileName);

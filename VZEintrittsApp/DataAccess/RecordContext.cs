@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 using VZEintrittsApp.Domain;
 
 namespace VZEintrittsApp.DataAccess
@@ -19,10 +18,20 @@ namespace VZEintrittsApp.DataAccess
             var getRecords = DbContext.Records.ToList();
             return getRecords;
         }
+        public List<RecordStatus> GetAllRecordStatus()
+        {
+            var getStatus = DbContext.RecordStatus.ToList();
+            return getStatus;
+        }
         public bool GetRecord(Record record)
         {
             if(DbContext.Records.FirstOrDefault(r => r.EmployeeNr == record.EmployeeNr) != null) return true;
             return false;
+        }
+        public byte[] GetEntryDocument(string filename)
+        {
+            SavedFile file = DbContext.SavedFiles.SingleOrDefault(x => x.FileName == filename);
+            return file?.File;
         }
         public bool SaveNewRecord(Record record)
         {
@@ -30,7 +39,20 @@ namespace VZEintrittsApp.DataAccess
             DbContext.SaveChanges();
             return true;
         }
-
+        public bool UpdateRecord(Record record)
+        {
+            if (record != null)
+            {
+                var recordOnDb = DbContext.Records.SingleOrDefault(x => x.RecordId == record.RecordId);
+                if (recordOnDb != null)
+                {
+                    DbContext.Records.Update(recordOnDb);
+                    DbContext.SaveChanges();
+                    return true;
+                }
+            }
+            return false;
+        }
         public bool SaveNewFile(SavedFile file)
         {
             DbContext.SavedFiles.AddRange(file);
@@ -38,10 +60,6 @@ namespace VZEintrittsApp.DataAccess
             return true;
         }
 
-        public byte[] GetEntryDocument(string filename)
-        {
-            SavedFile file = DbContext.SavedFiles.SingleOrDefault(x => x.FileName == filename);
-            return file?.File;
-        }
+        
     }
 }

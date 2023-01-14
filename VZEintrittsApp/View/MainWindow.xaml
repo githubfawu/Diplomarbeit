@@ -96,7 +96,7 @@
                             <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Status</GridViewColumnHeader>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Status}" Style="{StaticResource TextBlockListView}"/>
+                                    <TextBlock Text="{Binding Status.RecordStatusName}" Style="{StaticResource TextBlockListView}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -156,9 +156,15 @@
                                 </Grid.RowDefinitions>
                                 <Label Grid.Column="0" Grid.Row="0" Content="Details zur Person:" Foreground="White"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="1" Content="Kürzel:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="1" Text="{Binding CurrentEmployee.Abbreviation}" IsEnabled="False" ToolTip="Das Kürzel kann nicht in dieser App geändert werden"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="1" 
+                                         Text="{Binding CurrentEmployee.Abbreviation}" IsReadOnly="True" 
+                                         ToolTipService.InitialShowDelay="150" ToolTip="Das Kürzel muss ausserhalb dieser App geändert werden"
+                                         Background="Silver"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="2" Content="Name des AD-Objektes"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="2" Text="{Binding CurrentEmployee.NameOfAdObject}" IsEnabled="False" ToolTip="Der Name des AD-Objektes kann nicht in dieser App geändert werden"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="2" 
+                                         Text="{Binding CurrentEmployee.NameOfAdObject}" IsReadOnly="True" 
+                                         ToolTipService.InitialShowDelay="150" ToolTip="Der Name des AD-Objektes ausserhalb dieser App geändert werden"
+                                         Background="Silver"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="3" Content="Anzeigename:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="3" Text="{Binding CurrentEmployee.DisplayName}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="4" Content="Vorname:"/>
@@ -197,7 +203,10 @@
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="5" Content="Pensum:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="5" Text="{Binding CurrentEmployee.VzPensum}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="6" Content="Erster Arbeitstag:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="6" Text="{Binding CurrentEmployee.VzStartDate}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="6"
+                                         Text="{Binding CurrentEmployee.VzStartDate}" IsReadOnly="True" 
+                                         ToolTipService.InitialShowDelay="150" ToolTip="Der erste Arbeitstag muss im Reiter Datensatz geändert werden"
+                                         Background="Silver"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="6" Content="Büro:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="6" Text="{Binding CurrentEmployee.Office}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="1" Content="Strasse:"/>
@@ -254,7 +263,7 @@
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="5" Content="Webseite:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="5" Grid.RowSpan="2" Width="240" Height="40" TextWrapping="Wrap" Text="{Binding CurrentEmployee.HomePage}"/>
 
-                                <Label Grid.Column="2" Grid.Row="0" Content="Laufwerke und Postfach" Foreground="White"/>
+                                <Label Grid.Column="2" Grid.Row="0" Content="Laufwerke und Postfach:" Foreground="White"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="1" Content="Postfach (Scan-Ordner):"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="1" Text="{Binding CurrentEmployee.PostOfficeBox}"/>
                                 <Button Command="{Binding PlatzhalterCommand}" Grid.Column="2" Grid.Row="2" Margin="10,10,123,20" FontSize="18" Background="#09aded" Content="Ordner erstellen"/>
@@ -342,7 +351,57 @@
                             </Grid>
                         </TabPanel>
                     </TabItem>
-                    <TabItem Style="{StaticResource Tab}" Header="Datensatz" />
+                    <!-- Tab4 -->
+                    <TabItem Style="{StaticResource Tab}" Header="Datensatz">
+                        <TabPanel>
+                            <Grid Margin="10,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="330"/>
+                                    <ColumnDefinition Width="330" />
+                                    <ColumnDefinition Width="330" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="60" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Content="Datensatz:" Foreground="White"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="1" Content="Eingelesen am:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="1" Text="{Binding SelectedRecord.RecordReadDate, StringFormat=dd.MM.yyyy HH:mm:ss}" IsReadOnly="True"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="2" Content="Eingelesen von:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="2" Text="{Binding SelectedRecord.Recorder}" IsReadOnly="True"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="3" Content="Status:"/>
+                                <ComboBox Margin="0,30,110,5" Grid.Column="0" Grid.Row="3" Width="200" Height="25"
+                                          FontSize="16"
+                                          FontWeight="Bold"
+                                          FontFamily="Calibri"
+                                          DisplayMemberPath="RecordStatusName"
+                                          ItemsSource="{Binding RecordStatusList}"
+                                          SelectedItem="{Binding SelectedRecord.Status}">
+                                </ComboBox>
+
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="1" Content="Eintrittsdatum:"/>
+                                <DatePicker Style="{StaticResource DatePickerStandard}" Grid.Column="1" Grid.Row="1" SelectedDate="{Binding SelectedRecord.EntryDate, StringFormat=dd.MM.yyyy HH:mm:ss}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="2" Content="Erster Arbeitstag:"/>
+                                <DatePicker Style="{StaticResource DatePickerStandard}" Grid.Column="1" Grid.Row="2" SelectedDate="{Binding SelectedRecord.FirstWorkingDay, StringFormat=dd.MM.yyyy HH:mm:ss}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="1" Content="Notizen:"/>
+                                <TextBox Style="{StaticResource TextBoxIndividual}"
+                                         Grid.Column="2" Grid.Row="1" Grid.RowSpan="4" Margin="11,30,50,0"
+                                         TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible"
+                                         Text="{Binding SelectedRecord.Comment}"/>
+                                <Label Grid.Column="2" Grid.Row="7" Margin="-120,12,0,0"
+                                       FontSize="16" Foreground="LawnGreen" Content="Änderungen gespeichert..."
+                                       Visibility="{Binding ShowLabelSaved, Converter={StaticResource boolToVisibilityConverter}}"/>
+                                <Button Grid.Column="2" Grid.Row="7" Width="150" Height="35" Command="{Binding SaveRecordCommand}" FontSize="20" Background="#09aded">Speichern</Button>
+                                <Button Grid.Column="0" Grid.Row="7" Width="250" Height="35" Command="{Binding FinishRecordCommand}" FontSize="20" Background="#09aded">Datensatz abschliessen</Button>
+                            </Grid>
+                        </TabPanel>
+                    </TabItem>
                 </TabControl>
             </DockPanel>
         </Grid>

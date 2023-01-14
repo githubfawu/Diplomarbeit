@@ -5,13 +5,13 @@ using System.Windows;
 using VZEintrittsApp.DataAccess;
 using VZEintrittsApp.Domain;
 using VZEintrittsApp.API.AD;
-using VZEintrittsApp.Enums;
 using VZEintrittsApp.Import;
 using VZEintrittsApp.Import.PDFReader;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace VZEintrittsApp.Model
 {
@@ -58,6 +58,15 @@ namespace VZEintrittsApp.Model
         {
             RecordsList.AddRange(RecordContext.GetAllRecords());
         }
+        public bool UpdateRecord(Record record)
+        {
+            if (RecordContext.UpdateRecord(record))
+            {
+                WriteSpecificAdAttribute("VzStartDate", record.Abbreviation!, $"{record.FirstWorkingDay!:dd.MM.yyyy}");
+                return true;
+            }
+            return false;
+        }
 
         public Employee ReadAllAdAttributes(string abbreviation)
         {
@@ -80,7 +89,7 @@ namespace VZEintrittsApp.Model
 
             foreach (var recordFromDocument in documentReader.ReadRecords(file))
             {
-                recordFromDocument.Status = RecordStatus.Offen;
+                recordFromDocument.Status = RecordContext.GetAllRecordStatus().SingleOrDefault(x => x.RecordStatusId == 1);
                 recordFromDocument.AssociatedFile = fileName;
                 recordFromDocument.Recorder = WindowsIdentity.GetCurrent().Name;
                 recordFromDocument.RecordReadDate = DateTime.Now;
@@ -145,6 +154,15 @@ namespace VZEintrittsApp.Model
             return observableGroup;
         }
 
+        public ObservableCollection<RecordStatus> GetAllARecordStatus()
+        {
+            var observableGroup = new ObservableCollection<RecordStatus>();
+            foreach (var status in RecordContext.GetAllRecordStatus())
+            {
+                observableGroup.Add(status);
+            }
+            return observableGroup;
+        }
 
         public ObservableCollection<DirectReport> GetAllDirectReports(string managersAbbreviation)
         {

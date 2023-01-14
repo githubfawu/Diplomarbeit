@@ -15,6 +15,7 @@ namespace VZEintrittsApp.ViewModel
     class ViewModelUserView : BindableBase
     {
         public DelegateCommand SaveCommand { get; set; }
+        public DelegateCommand SaveRecordCommand { get; set; }
         public DelegateCommand GetNumberCommand { get; set; }
         public DelegateCommand OpenDocumentCommand { get; set; }
         public DelegateCommand CopyRightsCommand { get; set; }
@@ -127,6 +128,19 @@ namespace VZEintrittsApp.ViewModel
             }
         }
 
+        private ObservableCollection<RecordStatus> recordStatusList;
+        public ObservableCollection<RecordStatus> RecordStatusList
+        {
+            get => recordStatusList;
+            set
+            {
+                if (value != recordStatusList)
+                {
+                    SetProperty(ref recordStatusList, value);
+                }
+            }
+        }
+
         private ObservableCollection<DirectReport> directReportList;
         public ObservableCollection<DirectReport> DirectReportList
         {
@@ -156,7 +170,6 @@ namespace VZEintrittsApp.ViewModel
                 CurrentEmployeeBeforeChanges = CurrentEmployee.Clone() as Employee;
                 AdGroupList = Repository.GetAllAdGroups(selectedRecord.Abbreviation);
                 DirectReportList = Repository.GetAllDirectReports(CurrentEmployee.Manager);
-                MgmtLevels = Repository.GetAllManagementLevels();
                 IsBusy = false;
                 return selectedRecord;
             }
@@ -166,26 +179,28 @@ namespace VZEintrittsApp.ViewModel
         private bool isBusy;
         public bool IsBusy
         {
-            get { return isBusy; }
-            set
-            {
-                SetProperty(ref isBusy, value);
-            }
+            get => isBusy;
+            set => SetProperty(ref isBusy, value);
         }
 
         public ViewModelUserView(Repository repository)
         {
+            Repository = repository;
+            RecordsList = Repository.RecordsList;
+            RecordStatusList = Repository.GetAllARecordStatus();
+            MgmtLevels = Repository.GetAllManagementLevels();
+
             SaveCommand = new DelegateCommand(SaveChangesOnEmployee);
+            SaveRecordCommand = new DelegateCommand(SaveChangesOnRecord);
             GetNumberCommand = new DelegateCommand(ShowGetNumberWindow);
             OpenDocumentCommand = new DelegateCommand(OpenDocumentWithDefaultProgram);
             CopyRightsCommand = new DelegateCommand(CopyRights);
             RemoveGroupCommand = new DelegateCommand(RemoveGroup);
+            
             Compare = new CompareLogic();
-            Compare.Config.MaxDifferences = 500;
-            Repository = repository;
-            RecordsList = Repository.RecordsList;
+            Compare.Config.MaxDifferences = 200;
 
-            timer = new System.Timers.Timer(2000);
+            timer = new System.Timers.Timer(1800);
             timer.AutoReset = false;
             timer.Elapsed += TimerTicked;
             ShowLabelSaved = false;
@@ -219,8 +234,23 @@ namespace VZEintrittsApp.ViewModel
             }
             ChangeStatusSavedLabel();
             CurrentEmployeeBeforeChanges = CurrentEmployee.Clone() as Employee;
+            RefreshEmployee();
             isBusy = false;
         }
+
+        private void SaveChangesOnRecord()
+        {
+            isBusy = true;
+            if (Repository.UpdateRecord(selectedRecord)) ChangeStatusSavedLabel();
+            isBusy = false;
+        }
+
+        private void RefreshEmployee()
+        {
+            CurrentEmployee = Repository.ReadAllAdAttributes(selectedRecord.Abbreviation);
+            AdGroupList = Repository.GetAllAdGroups(selectedRecord.Abbreviation);
+        }
+
 
         public void OpenDocumentWithDefaultProgram()
         {
@@ -236,7 +266,7 @@ namespace VZEintrittsApp.ViewModel
         {
             isBusy = true;
             Repository.RemoveGroupFromUser(CurrentEmployee.Abbreviation, selectedAdGroup.AdGroupName);
-            AdGroupList = Repository.GetAllAdGroups(selectedRecord.Abbreviation);
+            RefreshEmployee();
             isBusy = false;
         }
 
@@ -244,7 +274,7 @@ namespace VZEintrittsApp.ViewModel
         {
             isBusy = true;
             Repository.CopyRightsFromUser(selectedDirectReport.SamAccountName, CurrentEmployee.Abbreviation);
-            AdGroupList = Repository.GetAllAdGroups(selectedRecord.Abbreviation);
+            RefreshEmployee();
             isBusy = false;
         }
         private void ShowGetNumberWindow()
@@ -253,7 +283,7 @@ namespace VZEintrittsApp.ViewModel
             {
                 GetNumberWindow window = new GetNumberWindow(CurrentEmployee, Repository);
                 window.ShowDialog();
-                CurrentEmployee = Repository.ReadAllAdAttributes(selectedRecord.Abbreviation);
+                RefreshEmployee();
             }
             else
             {

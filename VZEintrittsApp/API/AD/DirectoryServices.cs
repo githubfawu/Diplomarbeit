@@ -56,11 +56,15 @@ namespace VZEintrittsApp.API.AD
                             RemoveGroupFromUser(abbreviation, managementGroup.MgmtLevelGroupName);
                         }
                     }
-                    AddManagementGroupToUser(abbreviation, managementLevels.Find(m => m.MgmtLevelId == Int32.Parse(value)));
+                    var managementLevel = managementLevels.Find(m => m.MgmtLevelId == Int32.Parse(value));
+                    if (managementLevel?.MgmtLevelGroupName != "")
+                    {
+                        AddManagementGroupToUser(abbreviation, managementLevel);
+                    }
                 }
                 else
                 {
-                    using var context = new PrincipalContext(ContextType.Domain, "vz.ch", "OU=Standarduser,OU=VZ_Users,DC=vz,DC=ch");
+                    using var context = new PrincipalContext(ContextType.Domain);
                     {
                         UserPrincipal user = UserPrincipal.FindByIdentity(context, abbreviation);
                         DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
