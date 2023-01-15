@@ -51,12 +51,19 @@ namespace VZEintrittsApp.Model
             AddIndividualProperties = addIndividualProperties;
             ManagementLevelList = ManagementLevelContext.GetAllManagementLevels().ToList();
             Log = log;
-            ReadAllRecords();
+            GetAllOpenRecords();
         }
 
-        public void ReadAllRecords()
+        public void GetAllClosedRecords()
         {
-            RecordsList.AddRange(RecordContext.GetAllRecords());
+            RecordsList.Clear();
+            RecordsList.AddRange(RecordContext.GetAllClosedRecords());
+        }
+
+        public void GetAllOpenRecords()
+        {
+            RecordsList.Clear();
+            RecordsList.AddRange(RecordContext.GetAllOpenRecords());
         }
         public bool UpdateRecord(Record record)
         {

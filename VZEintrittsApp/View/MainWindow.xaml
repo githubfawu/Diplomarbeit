@@ -54,7 +54,7 @@
             </Rectangle>
         </Grid>
         <Grid Column="2" Row="1">
-            <Rectangle Style="{StaticResource Rectangle}" Margin="40, 35,40,20" Drop="Document_Drop">
+            <Rectangle Style="{StaticResource Rectangle}" Margin="50, 35,20,30" Drop="Document_Drop">
                 <Rectangle.Fill>
                     <ImageBrush ImageSource="/View/Ressources/drag-and-drop2.tif"/>
                 </Rectangle.Fill>
@@ -67,7 +67,16 @@
             </Rectangle>
         </Grid>
 
-        <Grid Column="0" Row="1" Grid.ColumnSpan="2">
+        <Button Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Width="100" Height="30"
+                Command="{Binding ShowClosedRecordsCommand}"
+                FontSize="14" Background="#09aded" Content="Geschlossene"
+                Margin="-70,0,0,60"/>
+        <Button Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Width="100" Height="30"
+                Command="{Binding ShowOpenRecordsCommand}"
+                FontSize="14" Background="#09aded" Content="Offene"
+                Margin="-70,0,0,-60"/>
+
+        <Grid Column="0" Row="1" Grid.ColumnSpan="2" Margin="5,0,91,5">
             <ListView 
                 Name ="ListViewOpenEntries"
                 ItemsSource="{Binding RecordsList}"
@@ -92,7 +101,7 @@
                 </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="140">
+                        <GridViewColumn Width="120">
                             <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Status</GridViewColumnHeader>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
@@ -101,7 +110,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Width="100">
+                        <GridViewColumn Width="75">
                             <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Kürzel</GridViewColumnHeader>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
@@ -110,7 +119,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Width="100">
+                        <GridViewColumn Width="75">
                             <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">MA-Nr.</GridViewColumnHeader>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
@@ -119,11 +128,20 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <GridViewColumn Width="180">
+                        <GridViewColumn Width="135">
                             <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Erster Arbeitstag</GridViewColumnHeader>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding FirstWorkingDay, StringFormat=dd.MM.yyyy}" Style="{StaticResource TextBlockListView}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Width="135">
+                            <GridViewColumnHeader Style="{StaticResource GridViewColumnHeader}">Eingelesen am</GridViewColumnHeader>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding RecordReadDate, StringFormat=dd.MM.yyyy}" Style="{StaticResource TextBlockListView}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -372,7 +390,7 @@
                                 </Grid.RowDefinitions>
                                 <Label Grid.Column="0" Grid.Row="0" Content="Datensatz:" Foreground="White"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="1" Content="Eingelesen am:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="1" Text="{Binding SelectedRecord.RecordReadDate, StringFormat=dd.MM.yyyy HH:mm:ss}" IsReadOnly="True"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" BorderBrush="{Binding BorderColor}" Grid.Column="0" Grid.Row="1" Text="{Binding SelectedRecord.RecordReadDate, StringFormat=dd.MM.yyyy HH:mm:ss}" IsReadOnly="True"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="2" Content="Eingelesen von:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="2" Text="{Binding SelectedRecord.Recorder}" IsReadOnly="True"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="0" Grid.Row="3" Content="Status:"/>

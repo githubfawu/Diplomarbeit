@@ -16,6 +16,8 @@ namespace VZEintrittsApp.ViewModel
     {
         public DelegateCommand SaveCommand { get; set; }
         public DelegateCommand SaveRecordCommand { get; set; }
+        public DelegateCommand ShowClosedRecordsCommand { get; set; }
+        public DelegateCommand ShowOpenRecordsCommand { get; set; }
         public DelegateCommand GetNumberCommand { get; set; }
         public DelegateCommand OpenDocumentCommand { get; set; }
         public DelegateCommand CopyRightsCommand { get; set; }
@@ -35,6 +37,13 @@ namespace VZEintrittsApp.ViewModel
                     SetProperty(ref showLabelSaved, value);
                 }
             }
+        }
+
+        private bool isBusy;
+        public bool IsBusy
+        {
+            get => isBusy;
+            set => SetProperty(ref isBusy, value);
         }
 
         private Employee currentEmployee;
@@ -163,24 +172,14 @@ namespace VZEintrittsApp.ViewModel
                 {
                     return null;
                 }
-
-                CompareEmployeeObjects(CurrentEmployee, CurrentEmployeeBeforeChanges);
                 IsBusy = true;
-                CurrentEmployee = Repository.ReadAllAdAttributes(selectedRecord.Abbreviation);
-                CurrentEmployeeBeforeChanges = CurrentEmployee.Clone() as Employee;
-                AdGroupList = Repository.GetAllAdGroups(selectedRecord.Abbreviation);
+                RefreshEmployee();
+                CloneEmployeeForDifferenceCheck();
                 DirectReportList = Repository.GetAllDirectReports(CurrentEmployee.Manager);
                 IsBusy = false;
                 return selectedRecord;
             }
             set => SetProperty(ref selectedRecord, value);
-        }
-
-        private bool isBusy;
-        public bool IsBusy
-        {
-            get => isBusy;
-            set => SetProperty(ref isBusy, value);
         }
 
         public ViewModelUserView(Repository repository)
@@ -192,6 +191,8 @@ namespace VZEintrittsApp.ViewModel
 
             SaveCommand = new DelegateCommand(SaveChangesOnEmployee);
             SaveRecordCommand = new DelegateCommand(SaveChangesOnRecord);
+            ShowClosedRecordsCommand = new DelegateCommand(GetAllClosedRecords);
+            ShowOpenRecordsCommand = new DelegateCommand(GetAllOpenRecords);
             GetNumberCommand = new DelegateCommand(ShowGetNumberWindow);
             OpenDocumentCommand = new DelegateCommand(OpenDocumentWithDefaultProgram);
             CopyRightsCommand = new DelegateCommand(CopyRights);
@@ -216,11 +217,14 @@ namespace VZEintrittsApp.ViewModel
         {
             ShowLabelSaved = false;
         }
-
-        private bool CompareEmployeeObjects(object currentUser, object currentUserBeforeChange)
+        private void GetAllClosedRecords()
         {
-            ComparisonResult result = Compare.Compare(currentUser, currentUserBeforeChange);
-            return result.AreEqual;
+            Repository.GetAllClosedRecords();
+        }
+
+        private void GetAllOpenRecords()
+        {
+            Repository.GetAllOpenRecords();
         }
 
         private void SaveChangesOnEmployee()
@@ -233,7 +237,7 @@ namespace VZEintrittsApp.ViewModel
                 Repository.WriteSpecificAdAttribute(difference.PropertyName, CurrentEmployee.Abbreviation, difference.Object1Value);
             }
             ChangeStatusSavedLabel();
-            CurrentEmployeeBeforeChanges = CurrentEmployee.Clone() as Employee;
+            CloneEmployeeForDifferenceCheck();
             RefreshEmployee();
             isBusy = false;
         }
@@ -242,6 +246,8 @@ namespace VZEintrittsApp.ViewModel
         {
             isBusy = true;
             if (Repository.UpdateRecord(selectedRecord)) ChangeStatusSavedLabel();
+            RefreshEmployee();
+            CloneEmployeeForDifferenceCheck();
             isBusy = false;
         }
 
@@ -251,6 +257,10 @@ namespace VZEintrittsApp.ViewModel
             AdGroupList = Repository.GetAllAdGroups(selectedRecord.Abbreviation);
         }
 
+        private void CloneEmployeeForDifferenceCheck()
+        {
+            CurrentEmployeeBeforeChanges = CurrentEmployee.Clone() as Employee;
+        }
 
         public void OpenDocumentWithDefaultProgram()
         {

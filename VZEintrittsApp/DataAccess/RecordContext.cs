@@ -13,9 +13,14 @@ namespace VZEintrittsApp.DataAccess
             DbContext = dbContext;
         }
 
-        public List<Record> GetAllRecords()
+        public List<Record> GetAllClosedRecords()
         {
-            var getRecords = DbContext.Records.ToList();
+            var getRecords = DbContext.Records.Where(r => r.Status.RecordStatusId == 5).ToList();
+            return getRecords;
+        }
+        public List<Record> GetAllOpenRecords()
+        {
+            var getRecords = DbContext.Records.Where(r => r.Status.RecordStatusId != 5).ToList();
             return getRecords;
         }
         public List<RecordStatus> GetAllRecordStatus()
