@@ -229,5 +229,15 @@ namespace VZEintrittsApp.Domain
                 if (value != manager) SetProperty(ref manager, value);
             }
         }
+
+        private DateTime? expirationDate;
+        public DateTime? ExpirationDate
+        {
+            get => expirationDate;
+            set
+            {
+                if (value != expirationDate) SetProperty(ref expirationDate, value);
+            }
+        }
     }
 }

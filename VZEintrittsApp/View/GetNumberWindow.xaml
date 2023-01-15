@@ -51,7 +51,7 @@
             Grid.Column="0"
             Grid.ColumnSpan="4"
             Grid.Row="5"
-            Margin="15,15,0,10" 
+            Margin="15,15,0,15" 
             HorizontalAlignment="Left"
             Width="370" 
             ItemsSource="{Binding SubsidiaryCompanies}"

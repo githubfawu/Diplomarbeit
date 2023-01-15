@@ -278,6 +278,8 @@
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="7" Text="{Binding CurrentEmployee.IpPhoneNumber}"/>
 
                                 <Label Grid.Column="1" Grid.Row="0" Content="Weitere Attribute:" Foreground="White"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="1" Content="Austrittsdatum:"/>
+                                <DatePicker Style="{StaticResource DatePickerStandard}" Grid.Column="1" Grid.Row="1" SelectedDate="{Binding CurrentEmployee.ExpirationDate, StringFormat=dd.MM.yyyy HH:mm:ss}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="5" Content="Webseite:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="5" Grid.RowSpan="2" Width="240" Height="40" TextWrapping="Wrap" Text="{Binding CurrentEmployee.HomePage}"/>
 
@@ -366,6 +368,22 @@
                                 </ListView>
                                 <Button Grid.Column="1" Grid.Row="6" Width="150" Height="30" Command="{Binding RemoveGroupCommand}" FontSize="18" Background="#09aded" Content="Gruppe entfernen" />
                                 <Button Grid.Column="3" Grid.Row="7" Width="150" Height="35" Command="{Binding UpdateCommand}" FontSize="20" Background="#09aded">Obsolet</Button>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="1" Content="Zusätzliche Hinweise:"/>
+                                <ListView Grid.Column="3" Grid.Row="2" Grid.RowSpan="4" 
+                                          Margin="10,-20,25,0" 
+                                          ItemsSource="{Binding AllNotes}"
+                                          Background="Transparent"
+                                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                          HorizontalContentAlignment="Stretch">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Style="{StaticResource TextBlockNotes}" Text="{Binding Path=Text}" TextWrapping="Wrap"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListView>
+
                             </Grid>
                         </TabPanel>
                     </TabItem>

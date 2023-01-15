@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
@@ -43,7 +44,7 @@ namespace VZEintrittsApp.API.AD
             }
         }
 
-        public bool WriteIndividualAttribute(string employeeAttributeName, string abbreviation, string value, List<ManagementLevel> managementLevels)
+        public bool WriteIndividualAttribute(string employeeAttributeName, string value, List<ManagementLevel> managementLevels, Employee employee)
         {
             try
             {
@@ -53,20 +54,24 @@ namespace VZEintrittsApp.API.AD
                     {
                         if (!string.IsNullOrWhiteSpace(managementGroup.MgmtLevelGroupName))
                         {
-                            RemoveGroupFromUser(abbreviation, managementGroup.MgmtLevelGroupName);
+                            RemoveGroupFromUser(employee.Abbreviation, managementGroup.MgmtLevelGroupName);
                         }
                     }
                     var managementLevel = managementLevels.Find(m => m.MgmtLevelId == Int32.Parse(value));
                     if (managementLevel?.MgmtLevelGroupName != "")
                     {
-                        AddManagementGroupToUser(abbreviation, managementLevel);
+                        AddManagementGroupToUser(employee.Abbreviation, managementLevel);
                     }
+                }
+                if (employeeAttributeName == "ExpirationDate")
+                {
+                    SetNewExpirationDate(employee);
                 }
                 else
                 {
                     using var context = new PrincipalContext(ContextType.Domain);
                     {
-                        UserPrincipal user = UserPrincipal.FindByIdentity(context, abbreviation);
+                        UserPrincipal user = UserPrincipal.FindByIdentity(context, employee.Abbreviation);
                         DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
                         var attribute = AttributeList.FirstOrDefault(e => e.EmployeeAttributeName == employeeAttributeName);
                         if (attribute != null)
@@ -75,23 +80,48 @@ namespace VZEintrittsApp.API.AD
                             userEntry.CommitChanges();
                             Log.Write(DateTime.Now,
                                 WindowsIdentity.GetCurrent().Name,
-                                abbreviation,
+                                employee.Abbreviation,
                                 ($"Das AD-Attribut {attribute.ActiveDirectoryName} wurde mit dem Wert {value} geschrieben"));
-                            return true;
                         }
-                        return false;
                     }
                 }
-                return false;
+                return true;
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.ToString());
                 Log.Write(DateTime.Now,
                     WindowsIdentity.GetCurrent().Name,
-                    abbreviation,
+                    employee.Abbreviation,
                     ($"Fehler beim schreiben des AD-Attributes {employeeAttributeName} mit dem Wert {value}"));
                 return false;
+            }
+        }
+
+        private bool SetNewExpirationDate(Employee employee)
+        {
+            try
+            {
+                using var context = new PrincipalContext(ContextType.Domain);
+                {
+                    if (employee.ExpirationDate != null)
+                    {
+                        UserPrincipal user = UserPrincipal.FindByIdentity(context, employee.Abbreviation);
+                        user.AccountExpirationDate = employee.ExpirationDate;
+                        user.Save();
+                        Log.Write(DateTime.Now,
+                            WindowsIdentity.GetCurrent().Name,
+                            employee.Abbreviation,
+                            ($"Das AD-Attribut 'Konto läuft ab' wurde mit dem Wert {employee.ExpirationDate} geschrieben"));
+                    }
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+                throw;
             }
         }
 
@@ -139,6 +169,7 @@ namespace VZEintrittsApp.API.AD
                         Description = user.Description
                     };
                     DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
+                    if (user.AccountExpirationDate != null) employee.ExpirationDate = user.AccountExpirationDate.Value;
                     employee.Company = userEntry.Properties["Company"].Value?.ToString();
                     employee.Department = userEntry.Properties["Department"].Value?.ToString();
                     employee.Position = userEntry.Properties["title"].Value?.ToString();
@@ -375,6 +406,11 @@ namespace VZEintrittsApp.API.AD
                            Enabled = false
                        })
                 {
+                    
+                    if (employee.ExpirationDate != null)
+                    {
+                        user.AccountExpirationDate = employee.ExpirationDate;
+                    }
                     user.SetPassword("Salamander2000"); //PW ebenfalls für Optionen auslagern
                     user.Save();
 

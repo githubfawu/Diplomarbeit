@@ -119,6 +119,11 @@ namespace VZEintrittsApp.Import.PDFReader
                                 {
                                     employee.VzManagementLevel = new ManagementLevel(){MgmtLevel = CheckForNullAndNewLines(entity, 12, splitString)};
                                 }
+                                if (entity.Contains("Austrittsdatum:"))
+                                {
+                                    var value = CheckForNullAndNewLines(entity, 16, splitString);
+                                    if (value != null) employee.ExpirationDate = DateTime.ParseExact(value, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                                }
                                 if (entity.Contains("Geburtstag:"))
                                 {
                                     employee.VzBirthday = CheckForNullAndNewLines(entity, 12, splitString);

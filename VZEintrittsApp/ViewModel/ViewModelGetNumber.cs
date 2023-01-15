@@ -70,9 +70,9 @@ namespace VZEintrittsApp.ViewModel
 
         private void Save()
         {
-            Repository.WriteSpecificAdAttribute(nameof(CurrentEmployee.IpPhoneNumber), CurrentEmployee.Abbreviation, CurrentEmployee.IpPhoneNumber);
-            Repository.WriteSpecificAdAttribute(nameof(CurrentEmployee.TelephoneNumber), CurrentEmployee.Abbreviation, CurrentEmployee.TelephoneNumber);
-            Repository.WriteSpecificAdAttribute(nameof(CurrentEmployee.Pager), CurrentEmployee.Abbreviation, CurrentEmployee.Pager);
+            Repository.WriteSpecificAdAttribute(nameof(CurrentEmployee.IpPhoneNumber), CurrentEmployee.IpPhoneNumber, CurrentEmployee);
+            Repository.WriteSpecificAdAttribute(nameof(CurrentEmployee.TelephoneNumber), CurrentEmployee.TelephoneNumber, CurrentEmployee);
+            Repository.WriteSpecificAdAttribute(nameof(CurrentEmployee.Pager), CurrentEmployee.Pager, CurrentEmployee);
             OnClosingRequest();
         }
         protected void OnClosingRequest()

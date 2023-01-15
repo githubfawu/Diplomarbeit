@@ -11,7 +11,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
-using Newtonsoft.Json.Linq;
 
 namespace VZEintrittsApp.Model
 {
@@ -65,14 +64,19 @@ namespace VZEintrittsApp.Model
             RecordsList.Clear();
             RecordsList.AddRange(RecordContext.GetAllOpenRecords());
         }
-        public bool UpdateRecord(Record record)
+        public bool UpdateRecord(Record record, Employee employee)
         {
             if (RecordContext.UpdateRecord(record))
             {
-                WriteSpecificAdAttribute("VzStartDate", record.Abbreviation!, $"{record.FirstWorkingDay!:dd.MM.yyyy}");
+                WriteSpecificAdAttribute("VzStartDate", $"{record.FirstWorkingDay!:dd.MM.yyyy}", employee);
                 return true;
             }
             return false;
+        }
+
+        public ObservableCollection<Note> GetAllNotes(string description)
+        {
+            return null;
         }
 
         public Employee ReadAllAdAttributes(string abbreviation)
@@ -211,9 +215,9 @@ namespace VZEintrittsApp.Model
             return false;
         }
 
-        public bool WriteSpecificAdAttribute(string employeeAttributeName, string abbreviation, string value)
+        public bool WriteSpecificAdAttribute(string employeeAttributeName, string value, Employee employee)
         {
-            if (activeDirectory.WriteIndividualAttribute(employeeAttributeName, abbreviation, value, ManagementLevelList)) return true;
+            if (activeDirectory.WriteIndividualAttribute(employeeAttributeName, value, ManagementLevelList, employee)) return true;
             return false;
         }
 

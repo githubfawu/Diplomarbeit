@@ -163,6 +163,19 @@ namespace VZEintrittsApp.ViewModel
             }
         }
 
+        private ObservableCollection<Note> allNotes;
+        public ObservableCollection<Note> AllNotes
+        {
+            get => allNotes;
+            set
+            {
+                if (value != allNotes)
+                {
+                    SetProperty(ref allNotes, value);
+                }
+            }
+        }
+
         private Record selectedRecord;
         public Record SelectedRecord
         {
@@ -173,9 +186,10 @@ namespace VZEintrittsApp.ViewModel
                     return null;
                 }
                 IsBusy = true;
-                RefreshEmployee();
+                LoadEmployeeFromAd();
                 CloneEmployeeForDifferenceCheck();
                 DirectReportList = Repository.GetAllDirectReports(CurrentEmployee.Manager);
+                AllNotes = Repository.GetAllNotes(CurrentEmployee.Description);
                 IsBusy = false;
                 return selectedRecord;
             }
@@ -188,6 +202,7 @@ namespace VZEintrittsApp.ViewModel
             RecordsList = Repository.RecordsList;
             RecordStatusList = Repository.GetAllARecordStatus();
             MgmtLevels = Repository.GetAllManagementLevels();
+            AllNotes = new ObservableCollection<Note>();
 
             SaveCommand = new DelegateCommand(SaveChangesOnEmployee);
             SaveRecordCommand = new DelegateCommand(SaveChangesOnRecord);
@@ -205,6 +220,7 @@ namespace VZEintrittsApp.ViewModel
             timer.AutoReset = false;
             timer.Elapsed += TimerTicked;
             ShowLabelSaved = false;
+
         }
 
         private void ChangeStatusSavedLabel()
@@ -234,24 +250,24 @@ namespace VZEintrittsApp.ViewModel
             if (result.AreEqual) return;
             foreach (var difference in result.Differences)
             {
-                Repository.WriteSpecificAdAttribute(difference.PropertyName, CurrentEmployee.Abbreviation, difference.Object1Value);
+                Repository.WriteSpecificAdAttribute(difference.PropertyName, difference.Object1Value, CurrentEmployee);
             }
             ChangeStatusSavedLabel();
             CloneEmployeeForDifferenceCheck();
-            RefreshEmployee();
+            LoadEmployeeFromAd();
             isBusy = false;
         }
 
         private void SaveChangesOnRecord()
         {
             isBusy = true;
-            if (Repository.UpdateRecord(selectedRecord)) ChangeStatusSavedLabel();
-            RefreshEmployee();
+            if (Repository.UpdateRecord(selectedRecord, CurrentEmployee)) ChangeStatusSavedLabel();
+            LoadEmployeeFromAd();
             CloneEmployeeForDifferenceCheck();
             isBusy = false;
         }
 
-        private void RefreshEmployee()
+        private void LoadEmployeeFromAd()
         {
             CurrentEmployee = Repository.ReadAllAdAttributes(selectedRecord.Abbreviation);
             AdGroupList = Repository.GetAllAdGroups(selectedRecord.Abbreviation);
@@ -276,7 +292,7 @@ namespace VZEintrittsApp.ViewModel
         {
             isBusy = true;
             Repository.RemoveGroupFromUser(CurrentEmployee.Abbreviation, selectedAdGroup.AdGroupName);
-            RefreshEmployee();
+            LoadEmployeeFromAd();
             isBusy = false;
         }
 
@@ -284,7 +300,7 @@ namespace VZEintrittsApp.ViewModel
         {
             isBusy = true;
             Repository.CopyRightsFromUser(selectedDirectReport.SamAccountName, CurrentEmployee.Abbreviation);
-            RefreshEmployee();
+            LoadEmployeeFromAd();
             isBusy = false;
         }
         private void ShowGetNumberWindow()
@@ -293,7 +309,7 @@ namespace VZEintrittsApp.ViewModel
             {
                 GetNumberWindow window = new GetNumberWindow(CurrentEmployee, Repository);
                 window.ShowDialog();
-                RefreshEmployee();
+                LoadEmployeeFromAd();
             }
             else
             {
