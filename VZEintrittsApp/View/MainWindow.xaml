@@ -278,11 +278,15 @@
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="0" Grid.Row="7" Text="{Binding CurrentEmployee.IpPhoneNumber}"/>
 
                                 <Label Grid.Column="1" Grid.Row="0" Content="Weitere Attribute:" Foreground="White"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="1" Content="Austrittsdatum:"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="1" Content="Konto läuft ab:"/>
                                 <DatePicker Style="{StaticResource DatePickerStandard}" Grid.Column="1" Grid.Row="1" SelectedDate="{Binding CurrentEmployee.ExpirationDate, StringFormat=dd.MM.yyyy HH:mm:ss}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="5" Content="Webseite:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="5" Grid.RowSpan="2" Width="240" Height="40" TextWrapping="Wrap" Text="{Binding CurrentEmployee.HomePage}"/>
-
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="2" Content="ExtensionAttribut 1:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="2" Text="{Binding CurrentEmployee.ExtensionAttribute1}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="3" Content="ExtensionAttribut 15:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="3" Text="{Binding CurrentEmployee.ExtensionAttribute15}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="4" Content="Webseite:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Width="240" Height="40" TextWrapping="Wrap" Text="{Binding CurrentEmployee.HomePage}"/>
+                                
                                 <Label Grid.Column="2" Grid.Row="0" Content="Laufwerke und Postfach:" Foreground="White"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="1" Content="Postfach (Scan-Ordner):"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="1" Text="{Binding CurrentEmployee.PostOfficeBox}"/>

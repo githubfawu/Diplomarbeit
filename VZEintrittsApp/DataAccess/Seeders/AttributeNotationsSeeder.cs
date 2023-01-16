@@ -38,7 +38,9 @@ namespace VZEintrittsApp.DataAccess.Seeders
                 new AttributeNotations(){NotationId = 26, EmployeeAttributeName = "VzStartDate", ActiveDirectoryName = "vzEmployeeStartDate"},
                 new AttributeNotations(){NotationId = 27, EmployeeAttributeName = "VzBusinessUnitSupervisor", ActiveDirectoryName = "vzBusinessUnitSupervisor"},
                 new AttributeNotations(){NotationId = 28, EmployeeAttributeName = "VzRegionalSupervisor", ActiveDirectoryName = "vzRegionalSupervisor"},
-                new AttributeNotations(){NotationId = 29, EmployeeAttributeName = "HomePage", ActiveDirectoryName = "wWWHomePage"}
+                new AttributeNotations(){NotationId = 29, EmployeeAttributeName = "HomePage", ActiveDirectoryName = "wWWHomePage"},
+                new AttributeNotations(){NotationId = 30, EmployeeAttributeName = "ExtensionAttribute1", ActiveDirectoryName = "extensionAttribute1"},
+                new AttributeNotations(){NotationId = 31, EmployeeAttributeName = "ExtensionAttribute15", ActiveDirectoryName = "extensionAttribute15"}
             };
             return list;
         }

@@ -102,5 +102,25 @@ namespace VZEintrittsApp.Domain
                 if (value != homePage) SetProperty(ref homePage, value);
             }
         }
+
+        private string extensionAttribute1;
+        public string? ExtensionAttribute1
+        {
+            get => extensionAttribute1;
+            set
+            {
+                if (value != extensionAttribute1) SetProperty(ref extensionAttribute1, value);
+            }
+        }
+
+        private string extensionAttribute15;
+        public string? ExtensionAttribute15
+        {
+            get => extensionAttribute15;
+            set
+            {
+                if (value != extensionAttribute15) SetProperty(ref extensionAttribute15, value);
+            }
+        }
     }
 }
