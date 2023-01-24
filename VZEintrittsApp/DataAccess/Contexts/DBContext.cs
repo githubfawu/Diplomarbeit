@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using VZEintrittsApp.DataAccess.Seeders;
-using VZEintrittsApp.Domain;
 using VZEintrittsApp.Logger;
+using VZEintrittsApp.Model.ActiveDirectory;
+using VZEintrittsApp.Model.Domain;
+using VZEintrittsApp.Model.RecordEntity;
 
-namespace VZEintrittsApp.DataAccess
+namespace VZEintrittsApp.DataAccess.Contexts
 {
     public class DbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         public string DbPath { get; }
         public DbContext()
         {
-            DbPath = System.IO.Path.GetFullPath("C:\\Temp\\Eintritte.db");
+            DbPath = System.IO.Path.GetFullPath("c:\\Temp\\Eintritte.db");
         }
         public DbSet<Record> Records { get; set; }
         public DbSet<SavedFile> SavedFiles { get; set; }

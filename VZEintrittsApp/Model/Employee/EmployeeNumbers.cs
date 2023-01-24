@@ -1,5 +1,5 @@
 ﻿
-namespace VZEintrittsApp.Domain
+namespace VZEintrittsApp.Model.Employee
 {
     public partial class Employee
     {

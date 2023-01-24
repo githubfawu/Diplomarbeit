@@ -1,7 +1,7 @@
 ﻿using System;
 using VZEintrittsApp.Logger;
 
-namespace VZEintrittsApp.DataAccess
+namespace VZEintrittsApp.DataAccess.Contexts
 {
     public class LoggerContext
     {

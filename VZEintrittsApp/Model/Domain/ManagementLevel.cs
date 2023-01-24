@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Prism.Mvvm;
 
-namespace VZEintrittsApp.Domain
+namespace VZEintrittsApp.Model.Domain
 {
     public class ManagementLevel : BindableBase
     {

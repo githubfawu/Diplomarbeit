@@ -1,10 +1,9 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using VZEintrittsApp.Domain;
+using VZEintrittsApp.Model.Domain;
 
-namespace VZEintrittsApp.DataAccess
+namespace VZEintrittsApp.DataAccess.Contexts
 {
     public class FinalizeContext
     {

@@ -1,4 +1,4 @@
-﻿using VZEintrittsApp.Domain;
+﻿using Employee = VZEintrittsApp.Model.Employee.Employee;
 
 namespace VZEintrittsApp.Import.PDFReader
 {

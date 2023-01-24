@@ -1,10 +1,11 @@
 ﻿using System.Windows;
 using Prism.Commands;
-using VZEintrittsApp.Domain;
 using VZEintrittsApp.Model;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
+using VZEintrittsApp.Model.Domain;
+using Employee = VZEintrittsApp.Model.Employee.Employee;
 
 namespace VZEintrittsApp.ViewModel
 {

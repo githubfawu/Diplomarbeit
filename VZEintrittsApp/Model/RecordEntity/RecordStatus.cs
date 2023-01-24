@@ -1,7 +1,7 @@
-﻿using Prism.Mvvm;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Prism.Mvvm;
 
-namespace VZEintrittsApp.Domain
+namespace VZEintrittsApp.Model.RecordEntity
 {
     public class RecordStatus : BindableBase
     {

@@ -5,7 +5,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Docnet.Core;
 using Docnet.Core.Models;
-using VZEintrittsApp.Domain;
+using VZEintrittsApp.Model.Domain;
+using VZEintrittsApp.Model.RecordEntity;
+using Employee = VZEintrittsApp.Model.Employee.Employee;
 
 namespace VZEintrittsApp.Import.PDFReader
 {

@@ -1,4 +1,4 @@
-﻿namespace VZEintrittsApp.Domain
+﻿namespace VZEintrittsApp.Model.ActiveDirectory
 {
     public class AttributeNotations
     {

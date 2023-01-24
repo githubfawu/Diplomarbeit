@@ -1,6 +1,6 @@
 ﻿using Prism.Mvvm;
 
-namespace VZEintrittsApp.Domain
+namespace VZEintrittsApp.Model.Domain
 {
     public class Note : BindableBase
     {

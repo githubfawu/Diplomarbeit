@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
-using VZEintrittsApp.DataAccess;
-using VZEintrittsApp.Domain;
 using VZEintrittsApp.API.AD;
 using VZEintrittsApp.Import;
 using VZEintrittsApp.Import.PDFReader;
@@ -11,6 +9,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
+using VZEintrittsApp.DataAccess.Contexts;
+using VZEintrittsApp.Model.ActiveDirectory;
+using VZEintrittsApp.Model.Domain;
+using VZEintrittsApp.Model.RecordEntity;
 
 namespace VZEintrittsApp.Model
 {
@@ -64,7 +66,7 @@ namespace VZEintrittsApp.Model
             RecordsList.Clear();
             RecordsList.AddRange(RecordContext.GetAllOpenRecords());
         }
-        public bool UpdateRecord(Record record, Employee employee)
+        public bool UpdateRecord(Record record, Employee.Employee employee)
         {
             if (RecordContext.UpdateRecord(record))
             {
@@ -79,7 +81,7 @@ namespace VZEintrittsApp.Model
             return null;
         }
 
-        public Employee ReadAllAdAttributes(string abbreviation)
+        public Employee.Employee ReadAllAdAttributes(string abbreviation)
         {
             return activeDirectory.GetAttributes(abbreviation, ManagementLevelContext.GetAllManagementLevels());
         }
@@ -215,7 +217,7 @@ namespace VZEintrittsApp.Model
             return false;
         }
 
-        public bool WriteSpecificAdAttribute(string employeeAttributeName, string value, Employee employee)
+        public bool WriteSpecificAdAttribute(string employeeAttributeName, string value, Employee.Employee employee)
         {
             if (activeDirectory.WriteIndividualAttribute(employeeAttributeName, value, ManagementLevelList, employee)) return true;
             return false;

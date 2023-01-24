@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using VZEintrittsApp.Domain;
+using VZEintrittsApp.Model.Domain;
 
 
 namespace VZEintrittsApp.DataAccess.Seeders

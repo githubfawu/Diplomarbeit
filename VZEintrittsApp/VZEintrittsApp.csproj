@@ -9,6 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="API\Exchange\**" />
+    <Compile Remove="API\File\**" />
+    <EmbeddedResource Remove="API\Exchange\**" />
+    <EmbeddedResource Remove="API\File\**" />
+    <None Remove="API\Exchange\**" />
+    <None Remove="API\File\**" />
+    <Page Remove="API\Exchange\**" />
+    <Page Remove="API\File\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="View\bg.jpg" />
     <None Remove="View\darkWood.png" />
     <None Remove="View\drag-and-drop2.tif" />
@@ -28,11 +39,6 @@
 
   <ItemGroup>
     <Page Include="App.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="API\File\" />
-    <Folder Include="API\Exchange\" />
   </ItemGroup>
 
   <ItemGroup>

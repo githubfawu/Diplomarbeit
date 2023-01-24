@@ -1,7 +1,7 @@
 ﻿using System;
 using Prism.Mvvm;
 
-namespace VZEintrittsApp.Domain
+namespace VZEintrittsApp.Model.Employee
 {
     public partial class Employee : BindableBase, ICloneable
     {

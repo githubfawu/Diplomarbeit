@@ -1,6 +1,6 @@
 ﻿
 using System.Collections.Generic;
-using VZEintrittsApp.Domain;
+using VZEintrittsApp.Model.ActiveDirectory;
 
 namespace VZEintrittsApp.DataAccess.Seeders
 {

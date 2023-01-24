@@ -2,17 +2,13 @@
 using System.Windows;
 using KellermanSoftware.CompareNetObjects;
 using VZEintrittsApp.API.AD;
-using VZEintrittsApp.DataAccess;
-using VZEintrittsApp.Domain;
+using VZEintrittsApp.DataAccess.Contexts;
 using VZEintrittsApp.Import.PDFReader;
 using VZEintrittsApp.Model;
 using VZEintrittsApp.View;
 
 namespace VZEintrittsApp
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         private ServiceProvider serviceProvider;

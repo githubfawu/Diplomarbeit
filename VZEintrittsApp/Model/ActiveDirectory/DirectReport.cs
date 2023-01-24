@@ -1,6 +1,6 @@
 ﻿using Prism.Mvvm;
 
-namespace VZEintrittsApp.Domain
+namespace VZEintrittsApp.Model.ActiveDirectory
 {
     public class DirectReport : BindableBase
     {

@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Documents;
-using VZEintrittsApp.Domain;
+﻿using System.Linq;
+using VZEintrittsApp.Model.Domain;
 
-namespace VZEintrittsApp.DataAccess
+namespace VZEintrittsApp.DataAccess.Contexts
 {
     public class PhoneFormatContext
     {

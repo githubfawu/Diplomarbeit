@@ -1,8 +1,8 @@
 ﻿
 using System.Windows;
-using VZEintrittsApp.Domain;
 using VZEintrittsApp.Model;
 using VZEintrittsApp.ViewModel;
+using Employee = VZEintrittsApp.Model.Employee.Employee;
 
 namespace VZEintrittsApp.View
 {

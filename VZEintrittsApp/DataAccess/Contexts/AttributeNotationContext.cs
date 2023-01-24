@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using VZEintrittsApp.Domain;
+using VZEintrittsApp.Model.ActiveDirectory;
 
-namespace VZEintrittsApp.DataAccess
+namespace VZEintrittsApp.DataAccess.Contexts
 {
     public class AttributeNotationContext
     {

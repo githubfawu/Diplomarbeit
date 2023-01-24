@@ -1,5 +1,5 @@
 ﻿
-namespace VZEintrittsApp.Domain
+namespace VZEintrittsApp.Model.Domain
 {
     public class SubsidiaryCompany
     {

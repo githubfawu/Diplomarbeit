@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace VZEintrittsApp.Domain
+namespace VZEintrittsApp.Model.RecordEntity
 {
     public class SavedFile
     {

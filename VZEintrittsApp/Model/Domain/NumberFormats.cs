@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace VZEintrittsApp.Domain
+namespace VZEintrittsApp.Model.Domain
 {
     public class NumberFormat
     {
