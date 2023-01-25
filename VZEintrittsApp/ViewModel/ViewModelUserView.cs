@@ -193,7 +193,7 @@ namespace VZEintrittsApp.ViewModel
                 IsBusy = true;
                 LoadEmployeeFromAd();
                 CloneEmployeeForDifferenceCheck();
-                DirectReportList = Repository.GetAllDirectReports(CurrentEmployee.Manager);
+                DirectReportList = Repository.GetAllDirectReports(CurrentEmployee.Manager, CurrentEmployee.Abbreviation);
                 AllNotes = Repository.GetAllNotes(CurrentEmployee.Description);
                 IsBusy = false;
                 return selectedRecord;

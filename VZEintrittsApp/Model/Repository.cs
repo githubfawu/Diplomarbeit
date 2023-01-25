@@ -177,10 +177,10 @@ namespace VZEintrittsApp.Model
             return observableGroup;
         }
 
-        public ObservableCollection<DirectReport> GetAllDirectReports(string managersAbbreviation)
+        public ObservableCollection<DirectReport> GetAllDirectReports(string managersAbbreviation, string abbreviation)
         {
             var observableGroup = new ObservableCollection<DirectReport>();
-            foreach (var directReport in activeDirectory.GetDirectReports(managersAbbreviation))
+            foreach (var directReport in activeDirectory.GetDirectReports(managersAbbreviation, abbreviation))
             {
                 observableGroup.Add(directReport);
             }

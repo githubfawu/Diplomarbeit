@@ -6,7 +6,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Windows;
 using VZEintrittsApp.Model.Domain;
-using Employee = VZEintrittsApp.Model.Employee.Employee;
+using VZEintrittsApp.Model.Employee;
 
 namespace VZEintrittsApp.API.AD
 {
@@ -26,7 +26,7 @@ namespace VZEintrittsApp.API.AD
                         }
                     }
                     var managementLevel = managementLevels.Find(m => m.MgmtLevelId == Int32.Parse(value));
-                    if (managementLevel?.MgmtLevelGroupName != "")
+                    if (!string.IsNullOrWhiteSpace(managementLevel?.MgmtLevelGroupName))
                     {
                         AddManagementGroupToUser(employee.Abbreviation, managementLevel);
                     }
@@ -34,6 +34,10 @@ namespace VZEintrittsApp.API.AD
                 if (employeeAttributeName == "ExpirationDate")
                 {
                     SetNewExpirationDate(employee);
+                }
+                if (employeeAttributeName == "Manager")
+                {
+                    ChangeManager(employee.Abbreviation, employeeAttributeName, value);
                 }
                 else
                 {
@@ -44,7 +48,7 @@ namespace VZEintrittsApp.API.AD
                         var attribute = AttributeList.FirstOrDefault(e => e.EmployeeAttributeName == employeeAttributeName);
                         if (attribute != null)
                         {
-                            if (String.IsNullOrWhiteSpace(value))
+                            if (string.IsNullOrWhiteSpace(value))
                             {
                                 userEntry.Properties[attribute.ActiveDirectoryName].Clear();
                                 userEntry.CommitChanges();
@@ -74,6 +78,49 @@ namespace VZEintrittsApp.API.AD
                     WindowsIdentity.GetCurrent().Name,
                     employee.Abbreviation,
                     ($"Fehler beim schreiben des AD-Attributes {employeeAttributeName} mit dem Wert {value}"));
+                return false;
+            }
+        }
+
+        private bool ChangeManager(string abbreviation, string attributeName, string value)
+        {
+            try
+            {
+                using var context = new PrincipalContext(ContextType.Domain);
+                {
+                    UserPrincipal employee = UserPrincipal.FindByIdentity(context, abbreviation);
+                    if (employee != null)
+                    {
+                        DirectoryEntry userEntry = (DirectoryEntry)employee.GetUnderlyingObject();
+                        if (string.IsNullOrWhiteSpace(value))
+                        {
+                            userEntry.Properties["manager"].Clear();
+                            userEntry.CommitChanges();
+                            Log.Write(DateTime.Now,
+                                WindowsIdentity.GetCurrent().Name,
+                                abbreviation,
+                                ($"Das AD-Attribut {attributeName} wurde gelöscht"));
+                            return true;
+                        }
+                        UserPrincipal manager = UserPrincipal.FindByIdentity(context, value);
+                        if (manager != null)
+                        {
+                            var managersCName = manager.DistinguishedName;
+                            userEntry.Properties["manager"].Value = managersCName;
+                            userEntry.CommitChanges();
+                            Log.Write(DateTime.Now,
+                                WindowsIdentity.GetCurrent().Name,
+                                abbreviation,
+                                ($"Das AD-Attribut {attributeName} wurde mit dem Wert {value} geschrieben"));
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
                 return false;
             }
         }

@@ -123,18 +123,27 @@ namespace VZEintrittsApp.API.AD
 
         public string SearchManager(string managerCn)
         {
-            if (managerCn != null)
+            try
             {
-                using (var context = new PrincipalContext(ContextType.Domain))
+                if (managerCn != null)
                 {
-                    if (UserPrincipal.FindByIdentity(context, managerCn) != null)
+                    using (var context = new PrincipalContext(ContextType.Domain))
                     {
-                        UserPrincipal user = UserPrincipal.FindByIdentity(context, managerCn);
-                        return user.SamAccountName;
+                        if (UserPrincipal.FindByIdentity(context, managerCn) != null)
+                        {
+                            UserPrincipal user = UserPrincipal.FindByIdentity(context, managerCn);
+                            return user.SamAccountName;
+                        }
+                        MessageBox.Show($"Der Benutzer {managerCn} wurde nicht gefunden.");
                     }
                 }
+                return null;
             }
-            return null;
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+                return null;
+            }
         }
 
         public ManagementLevel ReadManagementLevel(string abbreviation, List<ManagementLevel> managementLevels)
@@ -163,32 +172,37 @@ namespace VZEintrittsApp.API.AD
             return managementLevels.Find(m => m.MgmtLevel == "Keine");
         }
 
-        public List<DirectReport> GetDirectReports(string managersAbbreviation)
+        public List<DirectReport> GetDirectReports(string managersAbbreviation, string abbreviation)
         {
             List<DirectReport> ListDirectReports = new List<DirectReport>();
-
-            using (var context = new PrincipalContext(ContextType.Domain))
+            if (!String.IsNullOrWhiteSpace(managersAbbreviation))
             {
-                using (UserPrincipal manager = UserPrincipal.FindByIdentity(context, managersAbbreviation))
+                using (var context = new PrincipalContext(ContextType.Domain))
                 {
-                    DirectoryEntry managerEntry = (DirectoryEntry) manager.GetUnderlyingObject();
-                    foreach (var directReport in managerEntry.Properties["directReports"])
+                    using (UserPrincipal manager = UserPrincipal.FindByIdentity(context, managersAbbreviation))
                     {
-                        PrincipalContext ctx = new PrincipalContext(ContextType.Domain);
-                        UserPrincipal user = UserPrincipal.FindByIdentity(ctx, IdentityType.DistinguishedName, directReport.ToString());
-
-                        if (user != null)
+                        DirectoryEntry managerEntry = (DirectoryEntry)manager.GetUnderlyingObject();
+                        foreach (var directReport in managerEntry.Properties["directReports"])
                         {
-                            using (DirectoryEntry de = user.GetUnderlyingObject() as DirectoryEntry)
+                            PrincipalContext ctx = new PrincipalContext(ContextType.Domain);
+                            UserPrincipal user = UserPrincipal.FindByIdentity(ctx, IdentityType.DistinguishedName, directReport.ToString());
+
+                            if (user != null)
                             {
-                                var directReportEntity = new DirectReport()
+                                if (user.SamAccountName != abbreviation)
                                 {
-                                    SamAccountName = de.Properties["samAccountName"].Value as string,
-                                    DisplayName = de.Properties["displayName"].Value as string, 
-                                    Position = $"Titel: {de.Properties["title"].Value}",
-                                    StartDate = $"Eintrittsdatum: {de.Properties["vzEmployeeStartDate"].Value}"
-                                };
-                                ListDirectReports.Add(directReportEntity);
+                                    using (DirectoryEntry de = user.GetUnderlyingObject() as DirectoryEntry)
+                                    {
+                                        var directReportEntity = new DirectReport()
+                                        {
+                                            SamAccountName = de.Properties["samAccountName"].Value as string,
+                                            DisplayName = de.Properties["displayName"].Value as string,
+                                            Position = $"Titel: {de.Properties["title"].Value}",
+                                            StartDate = $"Eintrittsdatum: {de.Properties["vzEmployeeStartDate"].Value}"
+                                        };
+                                        ListDirectReports.Add(directReportEntity);
+                                    }
+                                }
                             }
                         }
                     }

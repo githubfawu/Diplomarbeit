@@ -211,7 +211,8 @@
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="6" Content="Abteilungsname:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="6" Text="{Binding CurrentEmployee.Department}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="1" Content="Vorgesetzter:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="1" Text="{Binding CurrentEmployee.Manager}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="1" Text="{Binding CurrentEmployee.Manager}"
+                                         ToolTipService.InitialShowDelay="150" ToolTip="Input: Kürzel des Vorgesetzten"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="2" Content="Regionenleiter:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="2" Text="{Binding CurrentEmployee.VzRegionalSupervisor}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="3" Content="Bereichsleiter:"/>
