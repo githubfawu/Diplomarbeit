@@ -2,15 +2,15 @@
 using System.Windows;
 using VZEintrittsApp.Model;
 using VZEintrittsApp.ViewModel;
-using Employee = VZEintrittsApp.Model.Employee.Employee;
+using Employee = VZEintrittsApp.Model.EmployeeEntity.Employee;
 
 namespace VZEintrittsApp.View
 {
     public partial class GetNumberWindow : Window
     {
         private Employee CurrentEmployee { get; set; }
-        private readonly Repository Repository;
-        public GetNumberWindow(Employee employee, Repository repository)
+        private readonly IRepository Repository;
+        public GetNumberWindow(Employee employee, IRepository repository)
         {
             InitializeComponent();
             CurrentEmployee = employee;

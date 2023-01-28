@@ -5,19 +5,19 @@ using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
 using VZEintrittsApp.Model.Domain;
-using Employee = VZEintrittsApp.Model.Employee.Employee;
+using Employee = VZEintrittsApp.Model.EmployeeEntity.Employee;
 
 namespace VZEintrittsApp.ViewModel
 {
     class ViewModelGetNumber : BindableBase
     {
-        private Repository Repository;
+        private IRepository Repository;
         public Employee CurrentEmployee { get; set; }
         public DelegateCommand GetFreeNumberCommand { get; set; }
         public DelegateCommand SaveCommand { get; set; }
         public event EventHandler ClosingRequest;
 
-        public ViewModelGetNumber(Employee employee, Repository repository)
+        public ViewModelGetNumber(Employee employee, IRepository repository)
         {
             CurrentEmployee = employee;
             Repository = repository;
@@ -33,12 +33,7 @@ namespace VZEintrittsApp.ViewModel
             set => SetProperty(ref showLabelDescription, value);
         }
 
-        private ObservableCollection<SubsidiaryCompany> subsidiaryCompanies;
-        public ObservableCollection<SubsidiaryCompany> SubsidiaryCompanies
-        {
-            get { return subsidiaryCompanies; }
-            set { subsidiaryCompanies = value; }
-        }
+        public ObservableCollection<SubsidiaryCompany> SubsidiaryCompanies { get; set; }
 
         private SubsidiaryCompany selectedCompany;
         public SubsidiaryCompany SelectedCompany

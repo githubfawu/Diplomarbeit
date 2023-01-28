@@ -12,24 +12,25 @@ using System.Text;
 using VZEintrittsApp.DataAccess.Contexts;
 using VZEintrittsApp.Model.ActiveDirectory;
 using VZEintrittsApp.Model.Domain;
+using VZEintrittsApp.Model.EmployeeEntity;
 using VZEintrittsApp.Model.RecordEntity;
 
 namespace VZEintrittsApp.Model
 {
-    public class Repository
+    public class Repository : IRepository
     {
         private RecordContext RecordContext;
         private FinalizeContext FinalizeContext;
         private LoggerContext Log;
         private PhoneFormatContext PhoneFormat;
         private ManagementLevelContext ManagementLevelContext;
-        private DirectoryServices activeDirectory;
+        private IDirectoryServices activeDirectory;
         private ReadPdfDocument ReadPdfDocument;
         private FinalizeEmployee FinalizeEmployee;
         private AddIndividualProperties AddIndividualProperties;
         private List<ManagementLevel> ManagementLevelList;
         private IReadDocument documentReader;
-        public ObservableCollection<Record> RecordsList = new ObservableCollection<Record>();
+        public ObservableCollection<Record> RecordsList { get; set; }
 
         public Repository(
             RecordContext recordContext,
@@ -37,7 +38,7 @@ namespace VZEintrittsApp.Model
             LoggerContext log,
             FinalizeContext finalizeContext,
             ManagementLevelContext managementLevelContext,
-            DirectoryServices directoryServices,
+            IDirectoryServices directoryServices,
             ReadPdfDocument readPdfDocument,
             FinalizeEmployee finalizeEmployee,
             AddIndividualProperties addIndividualProperties)
@@ -50,6 +51,7 @@ namespace VZEintrittsApp.Model
             ReadPdfDocument = readPdfDocument;
             FinalizeEmployee = finalizeEmployee;
             AddIndividualProperties = addIndividualProperties;
+            RecordsList = new ObservableCollection<Record>();
             ManagementLevelList = ManagementLevelContext.GetAllManagementLevels().ToList();
             Log = log;
             GetAllOpenRecords();
@@ -66,7 +68,7 @@ namespace VZEintrittsApp.Model
             RecordsList.Clear();
             RecordsList.AddRange(RecordContext.GetAllOpenRecords());
         }
-        public bool UpdateRecord(Record record, Employee.Employee employee)
+        public bool UpdateRecord(Record record, Employee employee)
         {
             if (RecordContext.UpdateRecord(record))
             {
@@ -81,7 +83,7 @@ namespace VZEintrittsApp.Model
             return null;
         }
 
-        public Employee.Employee ReadAllAdAttributes(string abbreviation)
+        public Employee ReadAllAdAttributes(string abbreviation)
         {
             return activeDirectory.GetAttributes(abbreviation, ManagementLevelContext.GetAllManagementLevels());
         }
@@ -217,7 +219,7 @@ namespace VZEintrittsApp.Model
             return false;
         }
 
-        public bool WriteSpecificAdAttribute(string employeeAttributeName, string value, Employee.Employee employee)
+        public bool WriteSpecificAdAttribute(string employeeAttributeName, string value, Employee employee)
         {
             if (activeDirectory.WriteIndividualAttribute(employeeAttributeName, value, ManagementLevelList, employee)) return true;
             return false;
@@ -232,7 +234,7 @@ namespace VZEintrittsApp.Model
             string[] numbers = new string[3];
             for (long i = lowRange; i < highRange; i++)
             {
-                if (activeDirectory.IsNumberFreeChecker(i))
+                if (activeDirectory.IsNumberFree(i))
                 {
                     MessageBoxResult result = MessageBox.Show($"Ist die Nummer +{i} verfügbar?", "Bitte Testanruf durchführen...", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                     if (result == MessageBoxResult.Yes)
@@ -254,7 +256,6 @@ namespace VZEintrittsApp.Model
                         {
                             numbers[2] = subsidiaryCompany.OfficialPhoneNumber;
                         }
-                        
                         break;
                     }
                     if (result == MessageBoxResult.Cancel)

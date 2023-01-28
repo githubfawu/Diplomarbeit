@@ -11,7 +11,7 @@ using VZEintrittsApp.Model.ActiveDirectory;
 using VZEintrittsApp.Model.Domain;
 using VZEintrittsApp.Model.RecordEntity;
 using VZEintrittsApp.View;
-using Employee = VZEintrittsApp.Model.Employee.Employee;
+using VZEintrittsApp.Model.EmployeeEntity;
 
 namespace VZEintrittsApp.ViewModel
 {
@@ -25,7 +25,7 @@ namespace VZEintrittsApp.ViewModel
         public DelegateCommand OpenDocumentCommand { get; set; }
         public DelegateCommand CopyRightsCommand { get; set; }
         public DelegateCommand RemoveGroupCommand { get; set; }
-        private Repository Repository { get; set; }
+        private IRepository Repository { get; set; }
         private CompareLogic Compare { get; set; }
 
         private System.Timers.Timer timer;
@@ -238,7 +238,7 @@ namespace VZEintrittsApp.ViewModel
 
 
 
-        public ViewModelUserView(Repository repository)
+        public ViewModelUserView(IRepository repository)
         {
             Repository = repository;
             RecordsList = Repository.RecordsList;
@@ -297,17 +297,21 @@ namespace VZEintrittsApp.ViewModel
             {
                 foreach (var difference in result.Differences)
                 {
-                    Repository.WriteSpecificAdAttribute(difference.PropertyName, difference.Object1Value, CurrentEmployee);
+                    if (Repository.WriteSpecificAdAttribute(difference.PropertyName, difference.Object1Value,
+                            CurrentEmployee))
+                    {
+                        if (showLabel)
+                        {
+                            ChangeStatusSavedLabel();
+                            CloneEmployeeForDifferenceCheck();
+                        }
+                        return true;
+                    }
+                    LoadEmployeeFromAd();
+                    return false;
                 }
-
-                if (showLabel == true)
-                {
-                    ChangeStatusSavedLabel();
-                }
-                CloneEmployeeForDifferenceCheck();
-                isBusy = false;
             }
-            LoadEmployeeFromAd();
+            isBusy = false;
             return true;
         }
 
@@ -362,6 +366,7 @@ namespace VZEintrittsApp.ViewModel
             {
                 GetNumberWindow window = new GetNumberWindow(CurrentEmployee, Repository);
                 window.ShowDialog();
+                CloneEmployeeForDifferenceCheck();
                 LoadEmployeeFromAd();
             }
             else

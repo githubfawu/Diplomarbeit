@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using VZEintrittsApp.Model.RecordEntity;
-using Employee = VZEintrittsApp.Model.Employee.Employee;
+using Employee = VZEintrittsApp.Model.EmployeeEntity.Employee;
 
 namespace VZEintrittsApp.Import
 {

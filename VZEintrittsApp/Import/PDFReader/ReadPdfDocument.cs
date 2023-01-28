@@ -7,7 +7,7 @@ using Docnet.Core;
 using Docnet.Core.Models;
 using VZEintrittsApp.Model.Domain;
 using VZEintrittsApp.Model.RecordEntity;
-using Employee = VZEintrittsApp.Model.Employee.Employee;
+using VZEintrittsApp.Model.EmployeeEntity;
 
 namespace VZEintrittsApp.Import.PDFReader
 {

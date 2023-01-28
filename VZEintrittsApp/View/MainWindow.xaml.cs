@@ -7,8 +7,8 @@ namespace VZEintrittsApp.View
 {
     public partial class MainWindow : Window
     {
-        private readonly Repository Repository;
-        public MainWindow(Repository repository)
+        private readonly IRepository Repository;
+        public MainWindow(IRepository repository)
         {
             InitializeComponent();
 

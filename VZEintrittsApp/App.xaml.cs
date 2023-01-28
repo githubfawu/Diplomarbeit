@@ -35,8 +35,8 @@ namespace VZEintrittsApp
             services.AddSingleton<ManagementLevelContext>();
             services.AddSingleton<AttributeNotationContext>();
             services.AddSingleton<PhoneFormatContext>();
-            services.AddSingleton<Repository>();
-            services.AddSingleton<DirectoryServices>();
+            services.AddSingleton<IRepository, Repository>();
+            services.AddSingleton<IDirectoryServices, DirectoryServices>();
             services.AddSingleton<FinalizeEmployee>();
             services.AddSingleton<AddIndividualProperties>();
             services.AddSingleton<ReadPdfDocument>();

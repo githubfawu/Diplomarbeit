@@ -6,7 +6,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Windows;
 using VZEintrittsApp.Model.Domain;
-using VZEintrittsApp.Model.Employee;
+using VZEintrittsApp.Model.EmployeeEntity;
 
 namespace VZEintrittsApp.API.AD
 {
@@ -37,7 +37,7 @@ namespace VZEintrittsApp.API.AD
                 }
                 if (employeeAttributeName == "Manager")
                 {
-                    ChangeManager(employee.Abbreviation, employeeAttributeName, value);
+                    return ChangeManager(employee.Abbreviation, employeeAttributeName, value);
                 }
                 else
                 {
@@ -114,6 +114,9 @@ namespace VZEintrittsApp.API.AD
                                 ($"Das AD-Attribut {attributeName} wurde mit dem Wert {value} geschrieben"));
                             return true;
                         }
+
+                        MessageBox.Show($"Der Vorgesetzte mit dem Kürzel {value} wurde nicht gefunden.");
+                        return false;
                     }
                     return false;
                 }
@@ -152,7 +155,7 @@ namespace VZEintrittsApp.API.AD
             }
         }
 
-        public bool SetManager(string employeeAbbreviation, string managersAbbreviation)
+        private bool SetManager(string employeeAbbreviation, string managersAbbreviation)
         {
             using (var context = new PrincipalContext(ContextType.Domain))
             {

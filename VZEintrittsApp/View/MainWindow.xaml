@@ -292,13 +292,13 @@
                                 <Label Grid.Column="2" Grid.Row="0" Content="Laufwerke und Postfach:" Foreground="White"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="1" Content="Postfach (Scan-Ordner):"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="1" Text="{Binding CurrentEmployee.PostOfficeBox}"/>
-                                <Button Command="{Binding PlatzhalterCommand}" Grid.Column="2" Grid.Row="2" Margin="10,10,123,20" FontSize="18" Background="#09aded" Content="Ordner erstellen"/>
+                                <Button Grid.Column="2" Grid.Row="2" Margin="10,10,123,20" FontSize="18" Background="#09aded" Content="Ordner erstellen"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="3" Content="Basisordner (P:-Laufwerk):"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="3" Text="{Binding CurrentEmployee.PDrive}"/>
-                                <Button Command="{Binding PlatzhalterCommand}" Grid.Column="2" Grid.Row="4" Margin="10,10,123,20" FontSize="18" Background="#09aded" Content="Ordner erstellen"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="3" Text=""/>
+                                <Button Grid.Column="2" Grid.Row="4" Margin="10,10,123,20" FontSize="18" Background="#09aded" Content="Ordner erstellen"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="5" Content="Mailbox:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="5" Text="{Binding CurrentEmployee.Mailbox}"/>
-                                <Button Command="{Binding PlatzhalterCommand}" Grid.Column="2" Grid.Row="6" Margin="10,10,123,20"  FontSize="18" Background="#09aded" Content="Mailbox erstellen"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="5" Text=""/>
+                                <Button Grid.Column="2" Grid.Row="6" Margin="10,10,123,20"  FontSize="18" Background="#09aded" Content="Mailbox erstellen"/>
 
                                 <Label Grid.Column="1" Grid.Row="7" Margin="-100,12,0,0" FontSize="16" Foreground="LawnGreen" Content="Änderungen gespeichert..." Visibility="{Binding ShowLabelSaved, Converter={StaticResource boolToVisibilityConverter}}"/>
                                 <Button Grid.Column="1" Grid.Row="7" Margin="20,5,0,10"  Width="150" Height="35"   Name="ButtonSavetest" Command="{Binding SaveCommand}" FontSize="20" Background="#09aded">Speichern</Button>
@@ -439,7 +439,6 @@
                                        FontSize="16" Foreground="LawnGreen" Content="Änderungen gespeichert..."
                                        Visibility="{Binding ShowLabelSaved, Converter={StaticResource boolToVisibilityConverter}}"/>
                                 <Button Grid.Column="2" Grid.Row="7" Width="150" Height="35" Command="{Binding SaveRecordCommand}" FontSize="20" Background="#09aded">Speichern</Button>
-                                <Button Grid.Column="0" Grid.Row="7" Width="250" Height="35" Command="{Binding FinishRecordCommand}" FontSize="20" Background="#09aded">Datensatz abschliessen</Button>
                             </Grid>
                         </TabPanel>
                     </TabItem>

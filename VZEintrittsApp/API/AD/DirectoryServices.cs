@@ -6,11 +6,11 @@ using System.Windows;
 using VZEintrittsApp.DataAccess.Contexts;
 using VZEintrittsApp.Model.ActiveDirectory;
 using VZEintrittsApp.Model.Domain;
-using VZEintrittsApp.Model.Employee;
+using VZEintrittsApp.Model.EmployeeEntity;
 
 namespace VZEintrittsApp.API.AD
 {
-    public partial class DirectoryServices
+    public partial class DirectoryServices : IDirectoryServices
     {
         private LoggerContext Log;
         private AttributeNotationContext AttributeNotationContext;
@@ -58,7 +58,7 @@ namespace VZEintrittsApp.API.AD
             return result;
         }
 
-        public bool IsNumberFreeChecker(long iPPhoneNumber)
+        public bool IsNumberFree(long iPPhoneNumber)
         {
             var entry = new DirectoryEntry("LDAP://OU=Standarduser,OU=VZ_Users,DC=vz,DC=ch");
             using (DirectorySearcher dsSearcher = new DirectorySearcher(entry))
@@ -121,7 +121,7 @@ namespace VZEintrittsApp.API.AD
             return null;
         }
 
-        public string SearchManager(string managerCn)
+        private string SearchManager(string managerCn)
         {
             try
             {
@@ -146,7 +146,7 @@ namespace VZEintrittsApp.API.AD
             }
         }
 
-        public ManagementLevel ReadManagementLevel(string abbreviation, List<ManagementLevel> managementLevels)
+        private ManagementLevel ReadManagementLevel(string abbreviation, List<ManagementLevel> managementLevels)
         {
             try
             {
