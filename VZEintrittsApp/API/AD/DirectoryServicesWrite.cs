@@ -246,7 +246,7 @@ namespace VZEintrittsApp.API.AD
         {
             try
             {
-                if (managementLevel == null || managementLevel.MgmtLevel.Contains("0"))
+                if (managementLevel == null || managementLevel.MgmtLevel.Contains("Keine"))
                 {
                     return false;
                 }
@@ -314,6 +314,7 @@ namespace VZEintrittsApp.API.AD
                     userEntry.Properties["vzBusinessUnitSupervisor"].Value = employee.VzBusinessUnitSupervisor;
                     userEntry.Properties["vzRegionalSupervisor"].Value = employee.VzRegionalSupervisor;
                     userEntry.Properties["vzBirthday"].Value = employee.VzBirthday;
+                    userEntry.Properties["vzTeam"].Value = employee.VzTeam;
                     SetManager(employee.Abbreviation, employee.Manager);
                     userEntry.CommitChanges();
 

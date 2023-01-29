@@ -85,6 +85,16 @@ namespace VZEintrittsApp.Model.EmployeeEntity
             }
         }
 
+        private string vzTeam;
+        public string? VzTeam
+        {
+            get => vzTeam;
+            set
+            {
+                if (value != vzTeam) SetProperty(ref vzTeam, value);
+            }
+        }
+
         private ManagementLevel? vzManagementLevel; //Kaderstufe
         public ManagementLevel? VzManagementLevel
         {

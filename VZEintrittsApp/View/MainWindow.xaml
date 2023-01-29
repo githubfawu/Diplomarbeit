@@ -206,8 +206,8 @@
                                           DisplayMemberPath="MgmtLevel"
                                           SelectedItem="{Binding CurrentEmployee.VzManagementLevel}">
                                 </ComboBox>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="5" Content="Geburtsdatum:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="5" Text="{Binding CurrentEmployee.VzBirthday}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="5" Content="Team/Org.-Einheit:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="5" Text="{Binding CurrentEmployee.VzTeam}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="6" Content="Abteilungsname:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="6" Text="{Binding CurrentEmployee.Department}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="1" Content="Vorgesetzter:"/>
@@ -221,22 +221,19 @@
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="4" Text="{Binding CurrentEmployee.MailAdress}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="5" Content="Pensum:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="5" Text="{Binding CurrentEmployee.VzPensum}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="6" Content="Erster Arbeitstag:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="6"
-                                         Text="{Binding CurrentEmployee.VzStartDate}" IsReadOnly="True" 
-                                         ToolTipService.InitialShowDelay="150" ToolTip="Der erste Arbeitstag muss im Reiter Datensatz geändert werden"
-                                         Background="Silver"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="6" Content="Geburtsdatum:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="6" Text="{Binding CurrentEmployee.VzBirthday}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="6" Content="Büro:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="6" Text="{Binding CurrentEmployee.Office}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="1" Content="Strasse:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="1" Text="{Binding CurrentEmployee.Street}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="2" Content="Ort:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="2" Text="{Binding CurrentEmployee.City}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="3" Content="Bundesland/Kanton"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="3" Content="Bundesland/Kanton:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="3" Text="{Binding CurrentEmployee.State}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="4" Content="PLZ"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="4" Content="PLZ:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="4" Text="{Binding CurrentEmployee.PostalCode}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="5" Content="Land"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="3" Grid.Row="5" Content="Land:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="3" Grid.Row="5" Text="{Binding CurrentEmployee.Country}"/>
                                 <Label Grid.Column="2" Grid.Row="7" Margin="40,12,0,0"
                                        FontSize="16" Foreground="LawnGreen" Content="Änderungen gespeichert..."
@@ -286,9 +283,11 @@
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="2" Text="{Binding CurrentEmployee.ExtensionAttribute1}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="3" Content="ExtensionAttribut 15:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="3" Text="{Binding CurrentEmployee.ExtensionAttribute15}"/>
-                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="4" Content="Webseite:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Width="240" Height="40" TextWrapping="Wrap" Text="{Binding CurrentEmployee.HomePage}"/>
-                                
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="4" Content="Sprache:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="4" Text="{Binding SelectedRecord.Language}"/>
+                                <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="5" Content="Webseite:"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="5" Grid.RowSpan="2" Width="240" Height="40" TextWrapping="Wrap" Text="{Binding CurrentEmployee.HomePage}"/>
+
                                 <Label Grid.Column="2" Grid.Row="0" Content="Laufwerke und Postfach:" Foreground="White"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="2" Grid.Row="1" Content="Postfach (Scan-Ordner):"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="2" Grid.Row="1" Text="{Binding CurrentEmployee.PostOfficeBox}"/>

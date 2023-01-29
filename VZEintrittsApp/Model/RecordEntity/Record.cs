@@ -67,6 +67,16 @@ namespace VZEintrittsApp.Model.RecordEntity
             }
         }
 
+        private string? language;
+        public string? Language
+        {
+            get => language;
+            set
+            {
+                if (value != language) SetProperty(ref language, value);
+            }
+        }
+
         private RecordStatus? status;
         public RecordStatus? Status
         {

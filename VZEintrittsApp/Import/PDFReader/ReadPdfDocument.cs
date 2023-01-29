@@ -50,7 +50,6 @@ namespace VZEintrittsApp.Import.PDFReader
                                     string abbreviation = CheckForNullAndNewLines(entity, 8, splitString);
                                     employee.Abbreviation = CorrectUpperLower(abbreviation);
                                 }
-
                                 if (entity.Contains("Vorname:"))
                                 {
                                     employee.FirstName = CheckForNullAndNewLines(entity, 9, splitString);
@@ -117,6 +116,10 @@ namespace VZEintrittsApp.Import.PDFReader
                                 {
                                     employee.VzRegionalSupervisor = CheckForNullAndNewLines(entity, 16, splitString);
                                 }
+                                if (entity.Contains("Org.-Einheit:"))
+                                {
+                                    if(!CheckForNullAndNewLines(entity, 14, splitString).Contains(".")) employee.VzTeam = CheckForNullAndNewLines(entity,14, splitString);
+                                }
                                 if (entity.Contains("Kaderstufe:"))
                                 {
                                     employee.VzManagementLevel = new ManagementLevel(){MgmtLevel = CheckForNullAndNewLines(entity, 12, splitString)};
@@ -136,7 +139,6 @@ namespace VZEintrittsApp.Import.PDFReader
                                     if (employee.Manager != null)
                                         employee.Manager = CleanManagerString(employee.Manager);
                                 }
-
                                 if (entity.Contains("Standort:"))
                                 {
                                     var entityString = CheckForNullAndNewLines(entity, 10, splitString);
@@ -280,6 +282,11 @@ namespace VZEintrittsApp.Import.PDFReader
                                 DateTime EntryDate = DateTime.Parse(entity.Substring(16));
                                 if (record != null) record.EntryDate = EntryDate;
 
+                            }
+
+                            if (entity.Contains("Sprache:"))
+                            {
+                                if (record != null) record.Language = entity.Substring(9);
                             }
                         }
                     }

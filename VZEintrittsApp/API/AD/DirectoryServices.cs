@@ -111,6 +111,7 @@ namespace VZEintrittsApp.API.AD
                     employee.VzBusinessUnitSupervisor = userEntry.Properties["vzBusinessUnitSupervisor"].Value?.ToString();
                     employee.VzRegionalSupervisor = userEntry.Properties["vzRegionalSupervisor"].Value?.ToString();
                     employee.VzBirthday = userEntry.Properties["vzBirthday"].Value?.ToString();
+                    employee.VzTeam = userEntry.Properties["vzTeam"].Value?.ToString();
                     employee.ExtensionAttribute1 = userEntry.Properties["extensionAttribute1"].Value?.ToString();
                     employee.ExtensionAttribute15 = userEntry.Properties["extensionAttribute15"].Value?.ToString();
                     employee.VzManagementLevel = ReadManagementLevel(employee.Abbreviation, managementLevels);
