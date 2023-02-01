@@ -284,7 +284,7 @@
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="3" Content="ExtensionAttribut 15:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="3" Text="{Binding CurrentEmployee.ExtensionAttribute15}"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="4" Content="Sprache:"/>
-                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="4" Text="{Binding SelectedRecord.Language}"/>
+                                <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="4" Text="{Binding SelectedRecord.Language}" IsReadOnly="True"/>
                                 <Label Style="{StaticResource LabelStandard}" Grid.Column="1" Grid.Row="5" Content="Webseite:"/>
                                 <TextBox Style="{StaticResource TextboxStandard}" Grid.Column="1" Grid.Row="5" Grid.RowSpan="2" Width="240" Height="40" TextWrapping="Wrap" Text="{Binding CurrentEmployee.HomePage}"/>
 

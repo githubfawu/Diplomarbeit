@@ -118,7 +118,8 @@ namespace VZEintrittsApp.Import.PDFReader
                                 }
                                 if (entity.Contains("Org.-Einheit:"))
                                 {
-                                    if(!CheckForNullAndNewLines(entity, 14, splitString).Contains(".")) employee.VzTeam = CheckForNullAndNewLines(entity,14, splitString);
+                                    if(entity.Length > 13 && !CheckForNullAndNewLines(entity, 14, splitString).Contains("."))
+                                        employee.VzTeam = CheckForNullAndNewLines(entity, 14, splitString);
                                 }
                                 if (entity.Contains("Kaderstufe:"))
                                 {
@@ -286,7 +287,7 @@ namespace VZEintrittsApp.Import.PDFReader
 
                             if (entity.Contains("Sprache:"))
                             {
-                                if (record != null) record.Language = entity.Substring(9);
+                                if (record != null && entity.Length > 8) record.Language = entity.Substring(9);
                             }
                         }
                     }

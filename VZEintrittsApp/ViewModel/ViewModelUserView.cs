@@ -34,13 +34,7 @@ namespace VZEintrittsApp.ViewModel
         public bool ShowLabelSaved
         {
             get => showLabelSaved;
-            set
-            {
-                if (value != showLabelSaved)
-                {
-                    SetProperty(ref showLabelSaved, value);
-                }
-            }
+            set => SetProperty(ref showLabelSaved, value);
         }
 
         private bool isBusy;
@@ -54,130 +48,70 @@ namespace VZEintrittsApp.ViewModel
         public Employee CurrentEmployee
         {
             get => currentEmployee;
-            set
-            {
-                if (value != currentEmployeeBeforeChanges)
-                {
-                    SetProperty(ref currentEmployee, value);
-                }
-            }
+            set => SetProperty(ref currentEmployee, value);
         }
 
         private Employee currentEmployeeBeforeChanges;
         public Employee CurrentEmployeeBeforeChanges
         {
             get => currentEmployeeBeforeChanges;
-            set
-            {
-                if (value != currentEmployeeBeforeChanges)
-                {
-                    SetProperty(ref currentEmployeeBeforeChanges, value);
-                }
-            }
+            set => SetProperty(ref currentEmployeeBeforeChanges, value);
         }
 
         private DirectReport selectedDirectReport;
         public DirectReport SelectedDirectReport
         {
             get => selectedDirectReport;
-            set
-            {
-                if (value != selectedDirectReport)
-                {
-                    SetProperty(ref selectedDirectReport, value);
-                }
-            }
+            set => SetProperty(ref selectedDirectReport, value);
         }
 
         private ActiveDirectoryGroup selectedAdGroup;
         public ActiveDirectoryGroup SelectedAdGroup
         {
             get => selectedAdGroup;
-            set
-            {
-                if (value != selectedAdGroup)
-                {
-                    SetProperty(ref selectedAdGroup, value);
-                }
-            }
+            set => SetProperty(ref selectedAdGroup, value);
         }
 
         private ObservableCollection<Record> recordsList;
         public ObservableCollection<Record> RecordsList
         {
             get => recordsList;
-            set
-            {
-                if (value != recordsList)
-                {
-                    SetProperty(ref recordsList, value);
-                }
-            }
+            set => SetProperty(ref recordsList, value);
         }
 
         private ObservableCollection<ActiveDirectoryGroup> adGroupList;
         public ObservableCollection<ActiveDirectoryGroup> AdGroupList
         {
             get => adGroupList;
-            set
-            {
-                if (value != adGroupList)
-                {
-                    SetProperty(ref adGroupList, value);
-                }
-            }
+            set => SetProperty(ref adGroupList, value);
         }
 
         private ObservableCollection<ManagementLevel> mgmtLevels;
         public ObservableCollection<ManagementLevel> MgmtLevels
         {
             get => mgmtLevels;
-            set
-            {
-                if (value != mgmtLevels)
-                {
-                    SetProperty(ref mgmtLevels, value);
-                }
-            }
+            set => SetProperty(ref mgmtLevels, value);
         }
 
         private ObservableCollection<RecordStatus> recordStatusList;
         public ObservableCollection<RecordStatus> RecordStatusList
         {
             get => recordStatusList;
-            set
-            {
-                if (value != recordStatusList)
-                {
-                    SetProperty(ref recordStatusList, value);
-                }
-            }
+            set => SetProperty(ref recordStatusList, value);
         }
 
         private ObservableCollection<DirectReport> directReportList;
         public ObservableCollection<DirectReport> DirectReportList
         {
             get => directReportList;
-            set
-            {
-                if (value != directReportList)
-                {
-                    SetProperty(ref directReportList, value);
-                }
-            }
+            set => SetProperty(ref directReportList, value);
         }
 
         private ObservableCollection<Note> allNotes;
         public ObservableCollection<Note> AllNotes
         {
             get => allNotes;
-            set
-            {
-                if (value != allNotes)
-                {
-                    SetProperty(ref allNotes, value);
-                }
-            }
+            set => SetProperty(ref allNotes, value);
         }
 
         private Record selectedRecord;
@@ -215,24 +149,15 @@ namespace VZEintrittsApp.ViewModel
                         }
                         else
                         {
-                            if (value != selectedRecord)
-                            {
-                                SetProperty(ref selectedRecord, value);
-                            }
+                            SetProperty(ref selectedRecord, value);
                         }
                     }
                     else
                     {
-                        if (value != selectedRecord)
-                        {
-                            SetProperty(ref selectedRecord, value);
-                        }
+                        SetProperty(ref selectedRecord, value);
                     }
                 }
-                if (value != selectedRecord)
-                {
-                    SetProperty(ref selectedRecord, value);
-                }
+                SetProperty(ref selectedRecord, value);
             }
         }
 
