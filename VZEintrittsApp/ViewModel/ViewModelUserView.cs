@@ -161,8 +161,6 @@ namespace VZEintrittsApp.ViewModel
             }
         }
 
-
-
         public ViewModelUserView(IRepository repository)
         {
             Repository = repository;

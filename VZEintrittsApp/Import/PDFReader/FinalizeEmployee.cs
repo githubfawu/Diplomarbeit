@@ -5,7 +5,7 @@ namespace VZEintrittsApp.Import.PDFReader
     public class FinalizeEmployee
     {
         private Employee Employee { get; set; }
-        public Employee FinalizeEmployees(Employee employee)
+        public Employee Finalize(Employee employee)
         {
             Employee = employee;
             CheckForCallSigns(Employee);

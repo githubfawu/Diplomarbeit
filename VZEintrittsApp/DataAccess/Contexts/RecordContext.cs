@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using VZEintrittsApp.Model.RecordEntity;
 
 namespace VZEintrittsApp.DataAccess.Contexts
@@ -28,9 +29,19 @@ namespace VZEintrittsApp.DataAccess.Contexts
             var getStatus = DbContext.RecordStatus.ToList();
             return getStatus;
         }
-        public bool GetRecord(Record record)
+        public bool RecordExists(Record record)
         {
             if(DbContext.Records.FirstOrDefault(r => r.EmployeeNr == record.EmployeeNr) != null) return true;
+            return false;
+        }
+
+        public bool DeleteRecord(Record record)
+        {
+            if (DbContext.Records.FirstOrDefault(r => r.RecordId == record.RecordId) != null)
+            {
+                DbContext.Records.Remove(record);
+                return true;
+            }
             return false;
         }
         public byte[] GetEntryDocument(string filename)

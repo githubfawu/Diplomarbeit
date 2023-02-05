@@ -109,7 +109,7 @@ namespace VZEintrittsApp.Model
                 recordFromDocument.Recorder = WindowsIdentity.GetCurrent().Name;
                 recordFromDocument.RecordReadDate = DateTime.Now;
 
-                if (RecordContext.GetRecord(recordFromDocument) == false)
+                if (RecordContext.RecordExists(recordFromDocument) == false)
                 {
                     RecordContext.SaveNewRecord(recordFromDocument);
                     Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, recordFromDocument.Abbreviation, "Ein neuer Eintrittsdatensatz wurde erstellt.");
@@ -138,7 +138,7 @@ namespace VZEintrittsApp.Model
             {
                 if (activeDirectory.CheckIfUserExists(user.Abbreviation) == false)
                 {
-                    FinalizeEmployee.FinalizeEmployees(user);
+                    FinalizeEmployee.Finalize(user);
                     AddIndividualProperties.AddProperties(user, FinalizeContext.GetAppropriateSubsidiaryCompany(user.City, user.Company));
                     activeDirectory.CreateNewAdAccount(user);
                     activeDirectory.AddManagementGroupToUser(user.Abbreviation, GetCorrespondingManagementLevel(user.VzManagementLevel.MgmtLevel));

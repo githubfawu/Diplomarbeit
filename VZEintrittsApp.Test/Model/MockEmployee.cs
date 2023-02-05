@@ -2,16 +2,22 @@
 
 namespace VZEintrittsApp.Test.Model
 {
-    public class MockEmployee
+    public static class MockEmployee
     {
-        public Employee GetEmployee()
+        public static Employee GetEmployee()
         {
             var employee = new Employee()
             {
-                Abbreviation = "Test",
-                FirstName = "Vorname",
-                LastName = "Nachname",
-                City = "Zürich"
+                Abbreviation = "TEst",
+                FirstName = "FirstName",
+                LastName = "LastName",
+                CallSignName = "CallSignFirstName",
+                CallSignLastName = "CallSignLastName",
+                Company = "",
+                BusinessArea = "TestBusinessArea",
+                TitleInMailFooter = false,
+                VzAcademicTitle = "TestAcademicTitle",
+                HomePage = ""
             };
             
             return employee;
