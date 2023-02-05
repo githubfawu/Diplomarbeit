@@ -23,7 +23,6 @@ public interface IRepository
     public bool RemoveGroupFromUser(string abbreviation, string groupName);
     public bool WriteSpecificAdAttribute(string employeeAttributeName, string value, Employee employee);
     public string[] GetFreeNumberFromAd(string description);
-    public string GetCorrectNumberFormat(string number, string cityName);
     public byte[] GetOriginalDocument(string filename);
     public ObservableCollection<SubsidiaryCompany> GetAllSubsidiaries();
 }
