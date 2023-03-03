@@ -224,7 +224,6 @@ namespace VZEintrittsApp.Import.PDFReader
             };
         }
 
-
         public List<Record> ReadRecords(string file)
         {
             List<Record> recordsList = new List<Record>();

@@ -9,7 +9,7 @@ using VZEintrittsApp.View;
 
 namespace VZEintrittsApp
 {
-    public partial class App : Application
+    public partial class App
     {
         private ServiceProvider serviceProvider;
         public App()

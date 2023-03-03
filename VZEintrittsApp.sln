@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prototyp3.GUI_1Window", "Pr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prototyp4.GUI_Tabs", "Prototyp4.GUI_Tabs\Prototyp4.GUI_Tabs.csproj", "{B9F624F7-8876-45E2-B07B-F5C51DFA5D6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VZEintrittsApp.Test", "VZEintrittsApp.Test\VZEintrittsApp.Test.csproj", "{6600ED0B-3B69-49C1-8E2F-EBF474D37081}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VZEintrittsApp.Test", "VZEintrittsApp.Test\VZEintrittsApp.Test.csproj", "{6600ED0B-3B69-49C1-8E2F-EBF474D37081}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
