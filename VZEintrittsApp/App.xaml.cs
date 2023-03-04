@@ -32,6 +32,7 @@ namespace VZEintrittsApp
             services.AddSingleton<RecordContext>();
             services.AddSingleton<LoggerContext>();
             services.AddSingleton<FinalizeContext>();
+            services.AddSingleton<NoteContext>();
             services.AddSingleton<ManagementLevelContext>();
             services.AddSingleton<AttributeNotationContext>();
             services.AddSingleton<PhoneFormatContext>();

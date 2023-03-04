@@ -15,6 +15,5 @@ namespace VZEintrittsApp.Model.Domain
         public bool IsOutgoingNumberAnonymous { get; set; }
         public long PhoneNumberRangeLow { get; set; }
         public long PhoneNumberRangeHigh { get; set; }
-
     }
 }

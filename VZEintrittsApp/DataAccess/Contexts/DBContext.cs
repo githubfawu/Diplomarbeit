@@ -24,6 +24,7 @@ namespace VZEintrittsApp.DataAccess.Contexts
         public DbSet<ManagementLevel> ManagementLevels { get; set; }
         public DbSet<RecordStatus> RecordStatus { get; set; }
         public DbSet<Log> Logs { get; set; }
+        public DbSet<Note> Notes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite($"Data Source={DbPath}");
@@ -54,6 +55,10 @@ namespace VZEintrittsApp.DataAccess.Contexts
             modelBuilder.Entity<ManagementLevel>()
                 .HasKey(p => p.MgmtLevelId);
             modelBuilder.Entity<ManagementLevel>().HasData(ManagementLevelSeeder.GetSeeds());
+
+            modelBuilder.Entity<Note>()
+                .HasKey(p => p.NoteId);
+            modelBuilder.Entity<Note>().HasData(NoteSeeder.GetSeeds());
 
             modelBuilder.Entity<NumberFormat>()
                 .Property(b => b.Formats)

@@ -21,6 +21,7 @@ namespace VZEintrittsApp.Model
     {
         private RecordContext RecordContext;
         private FinalizeContext FinalizeContext;
+        private NoteContext NoteContext;
         private LoggerContext Log;
         private PhoneFormatContext PhoneFormat;
         private ManagementLevelContext ManagementLevelContext;
@@ -37,6 +38,7 @@ namespace VZEintrittsApp.Model
             PhoneFormatContext phoneFormatContext,
             LoggerContext log,
             FinalizeContext finalizeContext,
+            NoteContext noteContext,
             ManagementLevelContext managementLevelContext,
             IDirectoryServices directoryServices,
             ReadPdfDocument readPdfDocument,
@@ -46,6 +48,7 @@ namespace VZEintrittsApp.Model
             activeDirectory = directoryServices;
             FinalizeContext = finalizeContext;
             RecordContext = recordContext;
+            NoteContext = noteContext;
             ManagementLevelContext = managementLevelContext;
             PhoneFormat = phoneFormatContext;
             ReadPdfDocument = readPdfDocument;
@@ -80,7 +83,19 @@ namespace VZEintrittsApp.Model
 
         public ObservableCollection<Note> GetAllNotes(string description)
         {
-            return null;
+            ObservableCollection<Note> list = new ObservableCollection<Note>()
+            {
+                new Note()
+                {
+                    Text = "Bitte stelle sicher, dass keine UpSec, DownSec, USR-U-MB oder MI-User Rechte vergeben sind."
+                }
+            };
+            list.Add(new Note()
+            {
+                Text = NoteContext.GetNote(description)
+            });
+
+            return list;
         }
 
         public Employee ReadAllAdAttributes(string abbreviation)
