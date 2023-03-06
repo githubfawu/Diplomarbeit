@@ -39,6 +39,7 @@ namespace VZEintrittsApp.DataAccess.Contexts
             if (DbContext.Records.FirstOrDefault(r => r.RecordId == record.RecordId) != null)
             {
                 DbContext.Records.Remove(record);
+                DbContext.SaveChanges();
                 return true;
             }
             return false;

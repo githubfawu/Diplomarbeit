@@ -1,5 +1,4 @@
 using FakeItEasy;
-using VZEintrittsApp.DataAccess.Contexts;
 using VZEintrittsApp.Import.PDFReader;
 using VZEintrittsApp.Model;
 using VZEintrittsApp.Model.EmployeeEntity;
@@ -11,9 +10,11 @@ namespace VZEintrittsApp.Test
     public class UnitTests
     {
         private FinalizeEmployee finalizeEmployee;
+        private AddIndividualProperties addIndividualProperties;
         public UnitTests()
         {
             finalizeEmployee = new FinalizeEmployee();
+            addIndividualProperties = new AddIndividualProperties();
         }
 
         [TestMethod]
@@ -31,6 +32,23 @@ namespace VZEintrittsApp.Test
             Assert.AreEqual("TestBusinessArea", result.Company);
             Assert.AreEqual(null, result.VzAcademicTitle);
             Assert.AreEqual($"http://mysite.vz.ch/Person.aspx?accountname=ZH01%5C{result.Abbreviation}", result.HomePage);
+        }
+
+        [TestMethod]
+        public void Test_AddIndividualProperties()
+        {
+            //Arrange
+            var employee = MockEmployee.GetEmployee();
+            var subsidiaryCompany = MockSubsidiaryCompany.GetSubsidiaryCompany();
+
+            //Act
+            var result = addIndividualProperties.AddProperties(employee, subsidiaryCompany);
+
+            //Assert
+            Assert.AreEqual("Zürich", result.State);
+            Assert.AreEqual("+41 44 563 63 63", result.OtherTelephone);
+            Assert.AreEqual("+41 44 563 63 64", result.FaxNumber);
+            Assert.AreEqual("+41 44 563 63 63", result.Pager);
         }
 
         [TestMethod]

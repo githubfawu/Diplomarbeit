@@ -14,6 +14,7 @@ namespace VZEintrittsApp.Test.Model
                 CallSignName = "CallSignFirstName",
                 CallSignLastName = "CallSignLastName",
                 Company = "",
+                Description = "HZ ZH",
                 BusinessArea = "TestBusinessArea",
                 TitleInMailFooter = false,
                 VzAcademicTitle = "TestAcademicTitle",
