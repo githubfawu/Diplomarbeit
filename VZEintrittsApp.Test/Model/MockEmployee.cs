@@ -8,7 +8,7 @@ namespace VZEintrittsApp.Test.Model
         {
             var employee = new Employee()
             {
-                Abbreviation = "TEst",
+                Abbreviation = "TestQQ",
                 FirstName = "FirstName",
                 LastName = "LastName",
                 CallSignName = "CallSignFirstName",
@@ -18,7 +18,8 @@ namespace VZEintrittsApp.Test.Model
                 BusinessArea = "TestBusinessArea",
                 TitleInMailFooter = false,
                 VzAcademicTitle = "TestAcademicTitle",
-                HomePage = ""
+                HomePage = "",
+                Manager = "OTsc"
             };
             
             return employee;

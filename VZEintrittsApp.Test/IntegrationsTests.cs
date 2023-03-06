@@ -12,12 +12,14 @@ namespace VZEintrittsApp.Test
         private IReadDocument documentReader;
         private DbContext dbContext;
         private RecordContext recordContext;
+        private API.AD.DirectoryServices directoryServices;
 
         public IntegrationsTests()
         {
             documentReader = new ReadPdfDocument();
             dbContext = new DbContext();
             recordContext = new RecordContext(dbContext);
+            directoryServices = new API.AD.DirectoryServices(new LoggerContext(dbContext), new AttributeNotationContext(dbContext));
         }
 
         [TestMethod]
@@ -50,6 +52,21 @@ namespace VZEintrittsApp.Test
 
             //Assert
             Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void Test_CreateUserInActiveDirectory()
+        {
+            //Arrange
+            var employee = MockEmployee.GetEmployee();
+
+            //Act
+            directoryServices.CreateNewAdAccount(employee);
+            var result = directoryServices.CheckIfUserExists(employee.Abbreviation);
+            directoryServices.DeleteAdAccount(employee.Abbreviation);
+
+            //Assert
+            Assert.AreEqual(true, result);
         }
     }
 }

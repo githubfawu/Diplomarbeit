@@ -12,7 +12,8 @@ namespace VZEintrittsApp.API.AD
 {
     public partial class DirectoryServices
     {
-        public bool WriteIndividualAttribute(string employeeAttributeName, string value, List<ManagementLevel> managementLevels, Employee employee)
+        public bool WriteIndividualAttribute(string employeeAttributeName, string value,
+            List<ManagementLevel> managementLevels, Employee employee)
         {
             try
             {
@@ -25,16 +26,19 @@ namespace VZEintrittsApp.API.AD
                             RemoveGroupFromUser(employee.Abbreviation, managementGroup.MgmtLevelGroupName);
                         }
                     }
+
                     var managementLevel = managementLevels.Find(m => m.MgmtLevelId == Int32.Parse(value));
                     if (!string.IsNullOrWhiteSpace(managementLevel?.MgmtLevelGroupName))
                     {
                         AddManagementGroupToUser(employee.Abbreviation, managementLevel);
                     }
                 }
+
                 if (employeeAttributeName == "ExpirationDate")
                 {
                     SetNewExpirationDate(employee);
                 }
+
                 if (employeeAttributeName == "Manager")
                 {
                     return ChangeManager(employee.Abbreviation, employeeAttributeName, value);
@@ -44,8 +48,9 @@ namespace VZEintrittsApp.API.AD
                     using var context = new PrincipalContext(ContextType.Domain);
                     {
                         UserPrincipal user = UserPrincipal.FindByIdentity(context, employee.Abbreviation);
-                        DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
-                        var attribute = AttributeList.FirstOrDefault(e => e.EmployeeAttributeName == employeeAttributeName);
+                        DirectoryEntry userEntry = (DirectoryEntry) user.GetUnderlyingObject();
+                        var attribute =
+                            AttributeList.FirstOrDefault(e => e.EmployeeAttributeName == employeeAttributeName);
                         if (attribute != null)
                         {
                             if (string.IsNullOrWhiteSpace(value))
@@ -69,6 +74,7 @@ namespace VZEintrittsApp.API.AD
                         }
                     }
                 }
+
                 return true;
             }
             catch (Exception e)
@@ -91,7 +97,7 @@ namespace VZEintrittsApp.API.AD
                     UserPrincipal employee = UserPrincipal.FindByIdentity(context, abbreviation);
                     if (employee != null)
                     {
-                        DirectoryEntry userEntry = (DirectoryEntry)employee.GetUnderlyingObject();
+                        DirectoryEntry userEntry = (DirectoryEntry) employee.GetUnderlyingObject();
                         if (string.IsNullOrWhiteSpace(value))
                         {
                             userEntry.Properties["manager"].Clear();
@@ -102,6 +108,7 @@ namespace VZEintrittsApp.API.AD
                                 ($"Das AD-Attribut {attributeName} wurde gelöscht"));
                             return true;
                         }
+
                         UserPrincipal manager = UserPrincipal.FindByIdentity(context, value);
                         if (manager != null)
                         {
@@ -118,6 +125,7 @@ namespace VZEintrittsApp.API.AD
                         MessageBox.Show($"Der Vorgesetzte mit dem Kürzel {value} wurde nicht gefunden.");
                         return false;
                     }
+
                     return false;
                 }
             }
@@ -144,6 +152,7 @@ namespace VZEintrittsApp.API.AD
                             employee.Abbreviation,
                             ($"Das AD-Attribut 'Konto läuft ab' wurde mit dem Wert {employee.ExpirationDate} geschrieben"));
                     }
+
                     return true;
                 }
             }
@@ -165,13 +174,16 @@ namespace VZEintrittsApp.API.AD
                     var managersCName = manager.DistinguishedName;
 
                     UserPrincipal employee = UserPrincipal.FindByIdentity(context, employeeAbbreviation);
-                    DirectoryEntry employeeEntry = (DirectoryEntry)employee.GetUnderlyingObject();
+                    DirectoryEntry employeeEntry = (DirectoryEntry) employee.GetUnderlyingObject();
                     employeeEntry.Properties["manager"].Value = managersCName;
                     employeeEntry.CommitChanges();
-                    Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, employeeAbbreviation, $"{managersAbbreviation} wurde als Vorgesetzter gesetzt");
+                    Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, employeeAbbreviation,
+                        $"{managersAbbreviation} wurde als Vorgesetzter gesetzt");
                     return true;
                 }
-                MessageBox.Show($"Der Vorgesetzte {managersAbbreviation} für den Benutzer {employeeAbbreviation} konnte im AD nicht gefunden werden!");
+
+                MessageBox.Show(
+                    $"Der Vorgesetzte {managersAbbreviation} für den Benutzer {employeeAbbreviation} konnte im AD nicht gefunden werden!");
                 return false;
             }
         }
@@ -183,7 +195,8 @@ namespace VZEintrittsApp.API.AD
             {
                 using (PrincipalContext principalContextSource = new PrincipalContext(ContextType.Domain))
                 {
-                    using (UserPrincipal sourceUser = UserPrincipal.FindByIdentity(principalContextSource, IdentityType.SamAccountName, sourceAbbreviation))
+                    using (UserPrincipal sourceUser = UserPrincipal.FindByIdentity(principalContextSource,
+                               IdentityType.SamAccountName, sourceAbbreviation))
                     {
                         foreach (GroupPrincipal groupcopy in sourceUser.GetGroups())
                         {
@@ -194,19 +207,23 @@ namespace VZEintrittsApp.API.AD
                         }
                     }
                 }
+
                 using (PrincipalContext principalContextTarget = new PrincipalContext(ContextType.Domain))
                 {
-                    using (UserPrincipal targetUser = UserPrincipal.FindByIdentity(principalContextTarget, IdentityType.SamAccountName, targetAbbreviation))
+                    using (UserPrincipal targetUser = UserPrincipal.FindByIdentity(principalContextTarget,
+                               IdentityType.SamAccountName, targetAbbreviation))
                     {
                         foreach (var groupName in groupNames)
                         {
                             GroupPrincipal group = GroupPrincipal.FindByIdentity(principalContextTarget, groupName);
-                            Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, targetAbbreviation, $"Die Gruppe {groupName} wurde beim kopieren der Rechte von {sourceAbbreviation} hinzugefügt");
+                            Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, targetAbbreviation,
+                                $"Die Gruppe {groupName} wurde beim kopieren der Rechte von {sourceAbbreviation} hinzugefügt");
                             group.Members.Add(targetUser);
                             group.Save();
                         }
                     }
                 }
+
                 return true;
             }
             catch (Exception e)
@@ -225,12 +242,14 @@ namespace VZEintrittsApp.API.AD
                     using PrincipalContext principalContext = new PrincipalContext(ContextType.Domain);
                     using (GroupPrincipal group = GroupPrincipal.FindByIdentity(principalContext, groupName))
                     {
-                        UserPrincipal user = UserPrincipal.FindByIdentity(principalContext, IdentityType.SamAccountName, abbreviation);
+                        UserPrincipal user = UserPrincipal.FindByIdentity(principalContext, IdentityType.SamAccountName,
+                            abbreviation);
                         if (group.Members.Contains(user))
                         {
                             group.Members.Remove(user);
                             group.Save();
-                            Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, abbreviation, $"Die Gruppe {groupName} wurde entfernt");
+                            Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, abbreviation,
+                                $"Die Gruppe {groupName} wurde entfernt");
                             return true;
                         }
                     }
@@ -240,8 +259,10 @@ namespace VZEintrittsApp.API.AD
             {
                 MessageBox.Show(e.ToString());
             }
+
             return false;
         }
+
         public bool AddManagementGroupToUser(string abbreviation, ManagementLevel? managementLevel)
         {
             try
@@ -250,14 +271,19 @@ namespace VZEintrittsApp.API.AD
                 {
                     return false;
                 }
+
                 using PrincipalContext principalContext = new PrincipalContext(ContextType.Domain);
-                using (GroupPrincipal group = GroupPrincipal.FindByIdentity(principalContext, managementLevel.MgmtLevelGroupName))
+                using (GroupPrincipal group =
+                       GroupPrincipal.FindByIdentity(principalContext, managementLevel.MgmtLevelGroupName))
                 {
-                    UserPrincipal user = UserPrincipal.FindByIdentity(principalContext, IdentityType.SamAccountName, abbreviation);
+                    UserPrincipal user =
+                        UserPrincipal.FindByIdentity(principalContext, IdentityType.SamAccountName, abbreviation);
                     group.Members.Add(user);
                     group.Save();
-                    Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, abbreviation, $"Die Gruppe {managementLevel.MgmtLevelGroupName} wurde hinzugefügt");
+                    Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, abbreviation,
+                        $"Die Gruppe {managementLevel.MgmtLevelGroupName} wurde hinzugefügt");
                 }
+
                 return true;
             }
             catch (Exception e)
@@ -266,6 +292,7 @@ namespace VZEintrittsApp.API.AD
                 return false;
             }
         }
+
         public bool CreateNewAdAccount(Employee employee)
         {
             try
@@ -273,27 +300,28 @@ namespace VZEintrittsApp.API.AD
                 using (var context = new PrincipalContext(ContextType.Domain, "vz.ch",
                            "OU=Standarduser,OU=VZ_Users,DC=vz,DC=ch")) //Pfade auslagern (in DB?)
                 using (var user = new UserPrincipal(context)
-                {
-                    Name = $"{employee.FirstName} {employee.LastName}",
-                    UserPrincipalName = employee.Abbreviation + "@vzch.com",
-                    SamAccountName = employee.Abbreviation,
-                    Surname = employee.LastName,
-                    GivenName = employee.FirstName,
-                    EmailAddress = employee.MailAdress,
-                    DisplayName = $"{employee.FirstName} {employee.LastName}",
-                    Description = employee.Description,
-                    Enabled = false
-                })
+                       {
+                           Name = $"{employee.FirstName} {employee.LastName}",
+                           UserPrincipalName = employee.Abbreviation + "@vzch.com",
+                           SamAccountName = employee.Abbreviation,
+                           Surname = employee.LastName,
+                           GivenName = employee.FirstName,
+                           EmailAddress = employee.MailAdress,
+                           DisplayName = $"{employee.FirstName} {employee.LastName}",
+                           Description = employee.Description,
+                           Enabled = false
+                       })
                 {
 
                     if (employee.ExpirationDate != null)
                     {
                         user.AccountExpirationDate = employee.ExpirationDate;
                     }
+
                     user.SetPassword("Salamander2000"); //PW ebenfalls für Optionen auslagern
                     user.Save();
 
-                    DirectoryEntry userEntry = (DirectoryEntry)user.GetUnderlyingObject();
+                    DirectoryEntry userEntry = (DirectoryEntry) user.GetUnderlyingObject();
                     userEntry.Properties["Company"].Value = employee.Company;
                     userEntry.Properties["Department"].Value = employee.Department;
                     userEntry.Properties["title"].Value = employee.Position;
@@ -318,7 +346,8 @@ namespace VZEintrittsApp.API.AD
                     SetManager(employee.Abbreviation, employee.Manager);
                     userEntry.CommitChanges();
 
-                    Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, employee.Abbreviation, "Ein neues AD-Benutzerkonto wurde erstellt");
+                    Log.Write(DateTime.Now, WindowsIdentity.GetCurrent().Name, employee.Abbreviation,
+                        "Ein neues AD-Benutzerkonto wurde erstellt");
                     return true;
                 }
             }
@@ -327,6 +356,14 @@ namespace VZEintrittsApp.API.AD
                 MessageBox.Show(e.ToString());
                 return false;
             }
+        }
+
+        public bool DeleteAdAccount(string abbreviation)
+        {
+            using PrincipalContext principalContext = new PrincipalContext(ContextType.Domain);
+            UserPrincipal user = UserPrincipal.FindByIdentity(principalContext, IdentityType.SamAccountName, abbreviation);
+            user.Delete();
+            return true;
         }
     }
 }
